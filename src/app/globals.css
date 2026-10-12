@@ -1,0 +1,282 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design tokens.
+ * UI chrome uses neutral inks + one brand accent. Charts use the validated
+ * categorical palette (--series-*) and status colors, stepped per theme.
+ */
+:root {
+  color-scheme: light;
+  --page: #f7f7f5;
+  --surface: #ffffff;
+  --surface-2: #f2f2ef;
+  --surface-3: #e9e9e5;
+  --border: rgba(11, 11, 11, 0.08);
+  --border-strong: rgba(11, 11, 11, 0.14);
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-3: #7a7974;
+  --accent: #4f46e5;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(79, 70, 229, 0.09);
+  --accent-text: #4338ca;
+
+  --domain-ia: #6250d6;
+  --domain-eco: #2a78d6;
+  --domain-fin: #12936a;
+
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #6250d6;
+  --series-8: #e34948;
+
+  --chart-grid: #e1e0d9;
+  --chart-axis: #c3c2b7;
+  --chart-muted: #898781;
+
+  --good: #0ca30c;
+  --good-text: #006300;
+  --critical: #d03b3b;
+  --critical-text: #b42323;
+  --warning: #fab219;
+
+  --shadow-card: 0 1px 2px rgba(11, 11, 11, 0.04), 0 1px 1px rgba(11, 11, 11, 0.02);
+  --shadow-pop: 0 12px 32px -8px rgba(11, 11, 11, 0.18), 0 2px 6px rgba(11, 11, 11, 0.06);
+}
+
+.dark {
+  color-scheme: dark;
+  --page: #0c0c0c;
+  --surface: #151514;
+  --surface-2: #1c1c1b;
+  --surface-3: #262625;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --ink: #f0efec;
+  --ink-2: #c3c2b7;
+  --ink-3: #8f8e88;
+  --accent: #7c74f2;
+  --accent-ink: #0c0c0c;
+  --accent-soft: rgba(124, 116, 242, 0.14);
+  --accent-text: #a5a0f7;
+
+  --domain-ia: #9085e9;
+  --domain-eco: #3987e5;
+  --domain-fin: #22b383;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+
+  --chart-grid: #2c2c2a;
+  --chart-axis: #383835;
+  --chart-muted: #898781;
+
+  --good-text: #0ca30c;
+  --critical-text: #e66767;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-pop: 0 16px 40px -12px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-text: var(--accent-text);
+  --color-domain-ia: var(--domain-ia);
+  --color-domain-eco: var(--domain-eco);
+  --color-domain-fin: var(--domain-fin);
+  --color-good: var(--good);
+  --color-good-text: var(--good-text);
+  --color-critical: var(--critical);
+  --color-critical-text: var(--critical-text);
+  --color-warning: var(--warning);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --shadow-card: var(--shadow-card);
+  --shadow-pop: var(--shadow-pop);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+@layer components {
+  /* Long-form reading typography (lessons, concepts, assistant answers). */
+  .prose-app {
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 0.975rem;
+  }
+  .prose-app > * + * {
+    margin-top: 0.9em;
+  }
+  .prose-app h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-top: 1.8em;
+  }
+  .prose-app h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 1.5em;
+  }
+  .prose-app p,
+  .prose-app li {
+    color: var(--ink-2);
+  }
+  .prose-app strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .prose-app ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  .prose-app ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+  }
+  .prose-app li + li {
+    margin-top: 0.35em;
+  }
+  .prose-app a {
+    color: var(--accent-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .prose-app code {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.85em;
+    background: var(--surface-2);
+    border-radius: 4px;
+    padding: 0.1em 0.35em;
+  }
+  .prose-app pre {
+    background: var(--surface-2);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    overflow-x: auto;
+  }
+  .prose-app pre code {
+    background: none;
+    padding: 0;
+  }
+  .prose-app blockquote {
+    border-left: 2px solid var(--border-strong);
+    padding-left: 1rem;
+    color: var(--ink-2);
+  }
+  .prose-app table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    display: block;
+    overflow-x: auto;
+  }
+  .prose-app th,
+  .prose-app td {
+    border-bottom: 1px solid var(--border);
+    padding: 0.45rem 0.6rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  .prose-app th {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Subtle entrance animation, disabled for reduced motion. */
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-rise {
+    animation: rise-in 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes blink-caret {
+    50% {
+      opacity: 0;
+    }
+  }
+  .caret::after {
+    content: "";
+    display: inline-block;
+    width: 0.5ch;
+    height: 1em;
+    margin-left: 2px;
+    vertical-align: -0.15em;
+    background: var(--ink-3);
+    animation: blink-caret 1s steps(1) infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer utilities {
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
