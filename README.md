@@ -46,6 +46,8 @@ npm run dev                  # http://localhost:3000
 | `NEXT_PUBLIC_SITE_URL` | Non | URL publique, pour `sitemap.xml` et `robots.txt`. |
 | `COINGECKO_API_KEY` | Non | Clé « demo » CoinGecko si l'API publique limite les requêtes. |
 
+> **Sécurité :** ne mettez jamais une vraie clé dans `.env.example` ni dans un autre fichier suivi par git (le dépôt est public). En local, utilisez `.env.local` (ignoré par git) ; en production, les variables d'environnement de l'hébergeur. Si une clé a été publiée par erreur, révoquez-la et créez-en une nouvelle : la retirer du fichier ne l'efface pas de l'historique.
+
 ## Mettre en ligne
 
 Le plus simple est [Vercel](https://vercel.com) (gratuit pour un usage personnel), qui détecte Next.js automatiquement :
