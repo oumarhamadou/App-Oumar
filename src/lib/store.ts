@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from "react";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type { Level, Topic } from "@/lib/taxonomy";
+import type { Goal, Level, Topic } from "@/lib/taxonomy";
 
 export type ItemKind = "actualite" | "concept" | "lecon" | "cas" | "outil";
 
@@ -86,6 +86,7 @@ export interface Profile {
   name: string;
   level: Level;
   interests: Topic[];
+  goals: Goal[];
   onboarded: boolean;
 }
 
@@ -106,6 +107,7 @@ interface AppState {
 
   setProfile: (patch: Partial<Profile>) => void;
   toggleInterest: (topic: Topic) => void;
+  toggleGoal: (goal: Goal) => void;
 
   toggleSaved: (item: LibraryItem) => void;
   createList: (name: string) => string;
@@ -144,7 +146,7 @@ const MAX_EXPLANATIONS = 40;
 const MAX_CHAT = 40;
 
 const initialData = {
-  profile: { name: "", level: "debutant" as Level, interests: [] as Topic[], onboarded: false },
+  profile: { name: "", level: "debutant" as Level, interests: [] as Topic[], goals: [] as Goal[], onboarded: false },
   saved: [] as SavedItem[],
   lists: [] as ReadingList[],
   history: [] as HistoryEntry[],
@@ -185,6 +187,13 @@ export const useAppStore = create<AppState>()(
             interests: s.profile.interests.includes(topic)
               ? s.profile.interests.filter((t) => t !== topic)
               : [...s.profile.interests, topic],
+          },
+        })),
+      toggleGoal: (goal) =>
+        set((s) => ({
+          profile: {
+            ...s.profile,
+            goals: s.profile.goals.includes(goal) ? s.profile.goals.filter((g) => g !== goal) : [...s.profile.goals, goal],
           },
         })),
 

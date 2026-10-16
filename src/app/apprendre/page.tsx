@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoalProgram } from "@/components/learn/goal-program";
 import { LearningStats, PathCard } from "@/components/learn/path-progress";
 import { PageHeader } from "@/components/ui/page-header";
 import { learningPaths } from "@/content/learning-paths";
@@ -17,6 +18,7 @@ export default function LearnPage() {
         description="Des parcours courts et progressifs : chaque leçon dure moins de 10 minutes et se termine par un exercice pratique et un quiz."
       />
       <LearningStats />
+      <GoalProgram />
       <div className="grid gap-5 md:grid-cols-2">
         {learningPaths.map((path) => (
           <PathCard key={path.slug} path={path} />

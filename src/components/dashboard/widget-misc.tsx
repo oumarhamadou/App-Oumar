@@ -23,7 +23,7 @@ export function ProgressWidget({ editing }: { editing: boolean }) {
   const scored = Object.values(progress).filter((p) => p.total);
   const quizList = [...scored.map((p) => ({ score: p.score ?? 0, total: p.total ?? 0 })), ...Object.values(quizzes)];
   const avg = quizList.length > 0 ? (quizList.reduce((s, q) => s + q.score / q.total, 0) / quizList.length) * 100 : null;
-  const next = nextLessons({ interests: profile.interests, level: profile.level, history, progress }, 1)[0];
+  const next = nextLessons({ interests: profile.interests, goals: profile.goals, level: profile.level, history, progress }, 1)[0];
 
   return (
     <Widget id="progression" editing={editing} icon={<GraduationCap className="h-4 w-4" />}>
@@ -79,14 +79,14 @@ export function RecommendationsWidget({ editing }: { editing: boolean }) {
   const history = useAppStore((s) => s.history);
   const progress = useAppStore((s) => s.progress);
   const recs = useMemo(() => {
-    const signals = { interests: profile.interests, level: profile.level, history, progress };
+    const signals = { interests: profile.interests, goals: profile.goals, level: profile.level, history, progress };
     const lessons = nextLessons(signals, 2);
     const conceptRecs = recommendConcepts(signals, 3);
     return [lessons[0], conceptRecs[0], lessons[1], conceptRecs[1], conceptRecs[2]].filter(Boolean).slice(0, 4);
-  }, [profile.interests, profile.level, history, progress]);
+  }, [profile.interests, profile.goals, profile.level, history, progress]);
 
   return (
-    <Widget id="recommandations" editing={editing} icon={<Sparkles className="h-4 w-4" />} description="Selon vos intérêts, votre niveau et votre historique">
+    <Widget id="recommandations" editing={editing} icon={<Sparkles className="h-4 w-4" />} description="Selon vos objectifs, vos intérêts, votre niveau et votre historique">
       <ul className="space-y-1">
         {recs.map((r) => (
           <li key={r.key}>

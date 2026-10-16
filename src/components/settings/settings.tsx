@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Check, ChevronDown, ChevronUp, Download, Eye, EyeOff, LayoutDashboard, Monitor, Moon, Palette, RotateCcw, Sun, Trash2, Upload, User } from "lucide-react";
+import { Bell, Check, ChevronDown, ChevronUp, Download, Eye, EyeOff, LayoutDashboard, Monitor, Moon, Palette, RotateCcw, Sun, Target, Trash2, Upload, User } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useRef, useState, type ReactNode } from "react";
 import { WIDGET_META } from "@/components/dashboard/widget-shell";
@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/misc";
 import { useAiStatus } from "@/hooks/use-ai-status";
 import { cn } from "@/lib/cn";
 import { useAppStore, useHydrated, type NotificationPrefs } from "@/lib/store";
-import { LEVELS, LEVEL_IDS, TOPICS, TOPIC_IDS } from "@/lib/taxonomy";
+import { GOALS, GOAL_IDS, LEVELS, LEVEL_IDS, TOPICS, TOPIC_IDS } from "@/lib/taxonomy";
 
 function Section({ id, icon, title, description, children }: { id?: string; icon: ReactNode; title: string; description?: string; children: ReactNode }) {
   return (
@@ -158,6 +158,34 @@ export function Settings() {
               <span className="mt-0.5 block text-[12px] text-ink-3">{LEVELS[level].description}</span>
             </button>
           ))}
+        </div>
+      </Section>
+
+      <Section id="objectifs" icon={<Target className="h-5 w-5" />} title="Objectifs" description="Ils déterminent votre programme d'apprentissage et orientent l'assistant.">
+        <div className="grid gap-2 sm:grid-cols-2">
+          {GOAL_IDS.map((goal) => {
+            const selected = state.profile.goals.includes(goal);
+            return (
+              <button
+                key={goal}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => state.toggleGoal(goal)}
+                className={cn(
+                  "flex items-start gap-3 rounded-xl border px-4 py-3 text-left transition-colors",
+                  selected ? "border-accent bg-accent-soft" : "border-line hover:bg-surface-2",
+                )}
+              >
+                <span className={cn("mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border", selected ? "border-accent bg-accent text-accent-ink" : "border-line-strong")}>
+                  {selected ? <Check className="h-3 w-3" /> : null}
+                </span>
+                <span>
+                  <span className="block text-[14px] font-medium">{GOALS[goal].label}</span>
+                  <span className="mt-0.5 block text-[12px] text-ink-3">{GOALS[goal].description}</span>
+                </span>
+              </button>
+            );
+          })}
         </div>
       </Section>
 

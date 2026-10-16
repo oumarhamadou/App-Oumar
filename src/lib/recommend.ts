@@ -2,7 +2,7 @@ import { concepts } from "@/content/concepts";
 import { learningPaths, lessonKey } from "@/content/learning-paths";
 import type { NewsItem } from "@/lib/news/types";
 import type { HistoryEntry, LessonProgress } from "@/lib/store";
-import type { Level, Topic } from "@/lib/taxonomy";
+import { GOALS, type Goal, type Level, type Topic } from "@/lib/taxonomy";
 
 export interface Recommendation {
   key: string;
@@ -16,6 +16,7 @@ export interface Recommendation {
 
 interface Signals {
   interests: Topic[];
+  goals?: Goal[];
   level: Level;
   history: HistoryEntry[];
   progress: Record<string, LessonProgress>;
@@ -53,14 +54,19 @@ export function nextLessons(signals: Signals, limit = 3): Recommendation[] {
     if (!next) continue;
     const started = done.length > 0;
     const levelGap = Math.abs(LEVEL_ORDER.indexOf(path.level) - levelIndex);
-    const score = (started ? 10 : 0) + affinity(path.topics, weights) - levelGap;
+    const goal = (signals.goals ?? []).find((g) => GOALS[g].paths.includes(path.slug));
+    const score = (started ? 10 : 0) + (goal ? 8 : 0) + affinity(path.topics, weights) - levelGap;
     recs.push({
       key: `lecon:${path.slug}/${next.slug}`,
       kind: "lecon",
       title: next.title,
       description: `${path.title} · ${next.minutes} min`,
       href: `/apprendre/${path.slug}/${next.slug}`,
-      reason: started ? `Suite du parcours (${done.length}/${path.lessons.length})` : reasonFor(path.topics, signals.interests),
+      reason: started
+        ? `Suite du parcours (${done.length}/${path.lessons.length})`
+        : goal
+          ? `Pour votre objectif : ${GOALS[goal].label.toLowerCase()}`
+          : reasonFor(path.topics, signals.interests),
       score,
     });
   }
@@ -72,15 +78,18 @@ export function recommendConcepts(signals: Signals, limit = 3): Recommendation[]
   const seen = new Set(signals.history.map((h) => h.key));
   return concepts
     .filter((c) => !seen.has(`concept:${c.slug}`))
-    .map((c) => ({
-      key: `concept:${c.slug}`,
-      kind: "concept" as const,
-      title: c.title,
-      description: c.tagline,
-      href: `/savoir/${c.slug}`,
-      reason: reasonFor(c.topics, signals.interests),
-      score: affinity(c.topics, weights),
-    }))
+    .map((c) => {
+      const goal = (signals.goals ?? []).find((g) => GOALS[g].concepts.includes(c.slug));
+      return {
+        key: `concept:${c.slug}`,
+        kind: "concept" as const,
+        title: c.title,
+        description: c.tagline,
+        href: `/savoir/${c.slug}`,
+        reason: goal ? `Pour votre objectif : ${GOALS[goal].label.toLowerCase()}` : reasonFor(c.topics, signals.interests),
+        score: affinity(c.topics, weights) + (goal ? 4 : 0),
+      };
+    })
     .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title))
     .slice(0, limit);
 }

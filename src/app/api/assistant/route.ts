@@ -6,7 +6,7 @@ import { offlineAnswer } from "@/lib/ai/offline";
 import { MENTOR_SYSTEM_PROMPT, sessionContext } from "@/lib/ai/prompts";
 import { formatDate } from "@/lib/format";
 import { clientKey, rateLimit } from "@/lib/rate-limit";
-import { LEVEL_IDS, type Level } from "@/lib/taxonomy";
+import { GOAL_IDS, LEVEL_IDS, type Goal, type Level } from "@/lib/taxonomy";
 
 export const maxDuration = 120;
 
@@ -23,6 +23,7 @@ const RequestSchema = z.object({
     .refine((m) => m.length > 0 && m[m.length - 1].role === "user", "Le dernier message doit venir de l'utilisateur."),
   level: z.enum(LEVEL_IDS as [Level, ...Level[]]).default("debutant"),
   webSearch: z.boolean().default(true),
+  goals: z.array(z.enum(GOAL_IDS as [Goal, ...Goal[]])).max(GOAL_IDS.length).default([]),
   page: z
     .object({ title: z.string().max(300), excerpt: z.string().max(1500).optional() })
     .optional(),
@@ -89,7 +90,7 @@ async function* claudeEvents(
           output_config: { effort: "medium" },
           system: [
             { type: "text", text: MENTOR_SYSTEM_PROMPT, cache_control: { type: "ephemeral" } },
-            { type: "text", text: sessionContext(input.level, today, input.page) },
+            { type: "text", text: sessionContext(input.level, today, input.page, input.goals) },
           ],
           tools: webEnabled
             ? [
