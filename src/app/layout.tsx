@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: SITE.description,
   applicationName: SITE.name,
   openGraph: { title: SITE.name, description: SITE.description, type: "website", locale: "fr_FR" },
+  appleWebApp: { capable: true, title: SITE.name, statusBarStyle: "default" },
+  formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {

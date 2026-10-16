@@ -3,7 +3,7 @@ import { concepts, getConcept } from "@/content/concepts";
 import { caseStudyBySlug } from "@/content/case-studies";
 import { learningPaths } from "@/content/learning-paths";
 import { parseCoinGecko, parseFrankfurterSeries, parseWorldBank } from "@/lib/markets";
-import { nextLessons, rankNews } from "@/lib/recommend";
+import { nextLessons, rankNews, recommendConcepts } from "@/lib/recommend";
 import type { NewsItem } from "@/lib/news/types";
 import { decodeEntities, hashId, stripHtml, truncate } from "@/lib/text";
 import { rateLimit } from "@/lib/rate-limit";
@@ -69,6 +69,12 @@ describe("recommendations", () => {
     expect(recs[0].href).toBe("/apprendre/investir-fondamentaux/temps-et-interets-composes");
   });
 
+  it("puts the path serving a declared goal first, with the goal as reason", () => {
+    const recs = nextLessons({ ...base, interests: [], goals: ["entreprendre"] });
+    expect(recs[0].href).toBe("/apprendre/entreprendre-analyser/modele-economique");
+    expect(recs[0].reason).toContain("créer ou développer une entreprise");
+  });
+
   it("ranks news matching interests first", () => {
     const now = Date.parse("2025-06-10T00:00:00Z");
     const item = (id: string, topics: NewsItem["topics"]): NewsItem => ({
@@ -83,6 +89,13 @@ describe("recommendations", () => {
     });
     const ranked = rankNews([item("a", ["marches"]), item("b", ["ia"])], { interests: ["ia"], history: [] }, now);
     expect(ranked.map((i) => i.id)).toEqual(["b", "a"]);
+  });
+});
+
+describe("goal-aware concepts", () => {
+  it("boosts concepts linked to the user's goals", () => {
+    const recs = recommendConcepts({ level: "debutant", history: [], progress: {}, interests: [], goals: ["investir"] }, 3);
+    expect(recs.map((r) => r.key).sort()).toEqual(["concept:budget-personnel", "concept:diversification", "concept:interets-composes"]);
   });
 });
 

@@ -108,3 +108,46 @@ export function topicDomain(topic: Topic): Domain {
 export function isTopic(value: string): value is Topic {
   return value in TOPICS;
 }
+
+export type Goal = "comprendre-actualite" | "investir" | "ia-quotidien" | "entreprendre" | "etudes";
+
+/** Learning goals: each one maps to the paths, topics and concepts that serve it. */
+export const GOALS: Record<Goal, { label: string; description: string; paths: string[]; topics: Topic[]; concepts: string[] }> = {
+  "comprendre-actualite": {
+    label: "Comprendre l'actualité économique",
+    description: "Décrypter inflation, taux, croissance et décisions des banques centrales.",
+    paths: ["bases-economie"],
+    topics: ["economie-mondiale", "politique-monetaire"],
+    concepts: ["inflation", "banque-centrale", "croissance-pib"],
+  },
+  investir: {
+    label: "Mieux gérer et investir mon argent",
+    description: "Budget, épargne, placements et gestion du risque.",
+    paths: ["investir-fondamentaux"],
+    topics: ["finance-perso", "marches"],
+    concepts: ["budget-personnel", "interets-composes", "diversification"],
+  },
+  "ia-quotidien": {
+    label: "Utiliser l'IA pour étudier ou travailler",
+    description: "Choisir les bons outils, bien les utiliser, en connaître les limites.",
+    paths: ["ia-pour-tous"],
+    topics: ["ia", "innovation"],
+    concepts: [],
+  },
+  entreprendre: {
+    label: "Créer ou développer une entreprise",
+    description: "Modèle économique, chiffres clés, trésorerie et financement.",
+    paths: ["entreprendre-analyser"],
+    topics: ["startups", "entreprises"],
+    concepts: ["modele-economique", "analyse-financiere"],
+  },
+  etudes: {
+    label: "Réussir mes études en économie et finance",
+    description: "Maîtriser les notions fondamentales et s'entraîner avec des quiz.",
+    paths: ["bases-economie", "investir-fondamentaux", "entreprendre-analyser"],
+    topics: ["economie-mondiale", "marches"],
+    concepts: ["croissance-pib", "marches-financiers", "analyse-financiere"],
+  },
+};
+
+export const GOAL_IDS = Object.keys(GOALS) as Goal[];

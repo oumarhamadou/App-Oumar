@@ -13,9 +13,10 @@ Prisme est une plateforme web qui rend l'intelligence artificielle, l'économie 
 | **Espace IA** (`/ia`) | Tendances commentées, annuaire de 20 outils filtrable par usage (études, travail, création, entrepreneuriat, automatisation, développement), notions clés, bonnes pratiques. |
 | **Centre de connaissances** (`/savoir`) | 16 notions (inflation, taux, banques centrales, PIB, marchés, obligations, budget, diversification, analyse financière, modèle économique, change, commerce, monnaie, cryptoactifs…) expliquées à **3 niveaux**, avec exemple chiffré, quiz, sources ; 5 études de cas avec graphiques ; explorateur de données macroéconomiques. |
 | **Simulateurs** (`/savoir/simulateurs`) | Intérêts composés (avec frais), pouvoir d'achat, crédit, budget 50/30/20, prix des obligations, seuil de rentabilité. |
-| **Apprendre** (`/apprendre`) | 4 parcours, 16 leçons courtes avec exercice pratique et quiz, suivi de progression, série de jours, recommandations. |
+| **Apprendre** (`/apprendre`) | 4 parcours, 16 leçons courtes avec exercice pratique et quiz, **programme personnalisé selon vos objectifs** (comprendre l'actualité, investir, utiliser l'IA, entreprendre, réussir ses études), suivi de progression, série de jours, recommandations. |
 | **Tableau de bord** (`/`) | 8 widgets réorganisables et masquables : à la une, marchés (devises BCE, cryptoactifs), indicateurs économiques, progression, recommandations, tendances IA, concept du jour, liste de lecture. |
-| **Personnalisation** | Accueil en deux étapes (niveau, thèmes suivis), favoris, listes de lecture, historique, notifications in-app et navigateur, mode clair/sombre/système, export/import des données. |
+| **Personnalisation** | Accueil en trois étapes (niveau, objectifs, thèmes suivis) qui oriente le fil, les recommandations, le programme et l'assistant ; favoris, listes de lecture, historique, notifications in-app et navigateur, mode clair/sombre/système, export/import des données. |
+| **Application installable** | Manifeste web et icônes : Prisme s'ajoute à l'écran d'accueil d'un téléphone ou s'installe sur ordinateur, avec des raccourcis vers Actualités, Assistant et Apprendre. |
 | **Recherche** | Palette universelle (`Ctrl/⌘ + K` ou `/`), insensible aux accents, et page de recherche avancée. |
 
 ## Démarrer
@@ -44,6 +45,20 @@ npm run dev                  # http://localhost:3000
 | `ASSISTANT_WEB_SEARCH` | Non | `false` désactive la recherche web de l'assistant. |
 | `NEXT_PUBLIC_SITE_URL` | Non | URL publique, pour `sitemap.xml` et `robots.txt`. |
 | `COINGECKO_API_KEY` | Non | Clé « demo » CoinGecko si l'API publique limite les requêtes. |
+
+> **Sécurité :** ne mettez jamais une vraie clé dans `.env.example` ni dans un autre fichier suivi par git (le dépôt est public). En local, utilisez `.env.local` (ignoré par git) ; en production, les variables d'environnement de l'hébergeur. Si une clé a été publiée par erreur, révoquez-la et créez-en une nouvelle : la retirer du fichier ne l'efface pas de l'historique.
+
+## Mettre en ligne
+
+Le plus simple est [Vercel](https://vercel.com) (gratuit pour un usage personnel), qui détecte Next.js automatiquement :
+
+[![Déployer avec Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Foumarhamadou%2FApp-Oumar&env=ANTHROPIC_API_KEY&envDescription=Cl%C3%A9%20API%20Anthropic%20pour%20l%27assistant%20IA%20(facultative)&project-name=prisme)
+
+1. Fusionnez la branche de développement dans `main` (le bouton clone la branche par défaut).
+2. Cliquez sur le bouton, connectez votre compte GitHub et renseignez `ANTHROPIC_API_KEY` (clé à créer sur [console.anthropic.com](https://console.anthropic.com)).
+3. Une fois en ligne, les flux d'actualité et les données de marché se chargent en direct et se rafraîchissent automatiquement.
+
+Tout hébergeur compatible Node.js 20.9+ fonctionne aussi : `npm run build` puis `npm start`.
 
 ## Architecture
 
@@ -81,7 +96,7 @@ Ajouter une source d'actualité : une entrée dans `FEEDS` (`src/lib/news/feeds.
 
 ## Qualité
 
-- 38 tests unitaires : calculs financiers, analyse RSS/Atom, classification, recherche, recommandations, analyse des API de marché, intégrité des contenus (liens, réponses de quiz).
+- 40 tests unitaires : calculs financiers, analyse RSS/Atom, classification, recherche, recommandations (objectifs, intérêts), analyse des API de marché, intégrité des contenus (liens, réponses de quiz).
 - Accessibilité : navigation au clavier, rôles ARIA (onglets, interrupteurs, listes de choix), contraste clair/sombre, `prefers-reduced-motion`, chaque graphique a une **vue tableau**.
 - Graphiques : palette catégorielle validée pour les daltonismes, déclinée par thème, sans double axe.
 - Intégration continue : `.github/workflows/ci.yml` (lint, types, tests, build).

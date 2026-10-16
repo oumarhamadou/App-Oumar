@@ -7,7 +7,7 @@ import { DomainDot } from "@/components/ui/badge";
 import { cn } from "@/lib/cn";
 import { SITE } from "@/lib/site";
 import { useAppStore, useHydrated } from "@/lib/store";
-import { LEVELS, LEVEL_IDS, TOPICS, TOPIC_IDS } from "@/lib/taxonomy";
+import { GOALS, GOAL_IDS, LEVELS, LEVEL_IDS, TOPICS, TOPIC_IDS } from "@/lib/taxonomy";
 import { LogoMark } from "./logo";
 
 /** First-visit setup: level and interests drive the whole personalization. */
@@ -22,7 +22,16 @@ function OnboardingDialog() {
   const profile = useAppStore((s) => s.profile);
   const setProfile = useAppStore((s) => s.setProfile);
   const toggleInterest = useAppStore((s) => s.toggleInterest);
+  const toggleGoal = useAppStore((s) => s.toggleGoal);
   const [step, setStep] = useState(0);
+
+  // Leaving the goals step pre-selects the topics those goals rely on (still editable).
+  const goToTopics = () => {
+    if (profile.interests.length === 0 && profile.goals.length > 0) {
+      setProfile({ interests: [...new Set(profile.goals.flatMap((g) => GOALS[g].topics))] });
+    }
+    setStep(2);
+  };
 
   const finish = () => setProfile({ onboarded: true });
 
@@ -32,8 +41,8 @@ function OnboardingDialog() {
       <div className="animate-rise relative max-h-[92dvh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-line bg-surface p-6 shadow-pop sm:rounded-3xl sm:p-8">
         <div className="mb-6 flex items-center justify-between">
           <LogoMark className="h-8 w-8" />
-          <div className="flex gap-1.5" aria-label={`Étape ${step + 1} sur 2`}>
-            {[0, 1].map((i) => (
+          <div className="flex gap-1.5" aria-label={`Étape ${step + 1} sur 3`}>
+            {[0, 1, 2].map((i) => (
               <span key={i} className={cn("h-1.5 w-6 rounded-full", i <= step ? "bg-accent" : "bg-surface-3")} />
             ))}
           </div>
@@ -94,6 +103,48 @@ function OnboardingDialog() {
               </Button>
             </div>
           </>
+        ) : step === 1 ? (
+          <>
+            <h2 id="onboarding-title" className="text-[22px] font-semibold tracking-tight">
+              Quels sont vos objectifs ?
+            </h2>
+            <p className="mt-2 text-[14.5px] leading-relaxed text-ink-2">
+              Prisme vous proposera un programme d&apos;apprentissage et des contenus adaptés. Plusieurs choix possibles.
+            </p>
+            <div className="mt-6 grid gap-2">
+              {GOAL_IDS.map((goal) => {
+                const selected = profile.goals.includes(goal);
+                return (
+                  <button
+                    key={goal}
+                    type="button"
+                    onClick={() => toggleGoal(goal)}
+                    aria-pressed={selected}
+                    className={cn(
+                      "flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition-colors",
+                      selected ? "border-accent bg-accent-soft" : "border-line hover:bg-surface-2",
+                    )}
+                  >
+                    <span className={cn("flex h-5 w-5 shrink-0 items-center justify-center rounded-md border", selected ? "border-accent bg-accent text-accent-ink" : "border-line-strong")}>
+                      {selected ? <Check className="h-3 w-3" /> : null}
+                    </span>
+                    <span>
+                      <span className="block text-[14px] font-medium">{GOALS[goal].label}</span>
+                      <span className="block text-[12.5px] text-ink-3">{GOALS[goal].description}</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="mt-7 flex items-center justify-between">
+              <button type="button" onClick={() => setStep(0)} className="text-[13px] text-ink-3 hover:text-ink">
+                Retour
+              </button>
+              <Button onClick={goToTopics}>
+                Continuer <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </>
         ) : (
           <>
             <h2 id="onboarding-title" className="text-[22px] font-semibold tracking-tight">
@@ -123,7 +174,7 @@ function OnboardingDialog() {
               })}
             </div>
             <div className="mt-7 flex items-center justify-between">
-              <button type="button" onClick={() => setStep(0)} className="text-[13px] text-ink-3 hover:text-ink">
+              <button type="button" onClick={() => setStep(1)} className="text-[13px] text-ink-3 hover:text-ink">
                 Retour
               </button>
               <Button onClick={finish}>

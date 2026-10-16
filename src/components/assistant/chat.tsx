@@ -63,6 +63,7 @@ export function Chat() {
 function ChatSession() {
   const aiOnline = useAiStatus();
   const level = useAppStore((s) => s.profile.level);
+  const goals = useAppStore((s) => s.profile.goals);
   const setProfile = useAppStore((s) => s.setProfile);
   const setChat = useAppStore((s) => s.setChat);
   const clearChat = useAppStore((s) => s.clearChat);
@@ -111,6 +112,7 @@ function ChatSession() {
           signal: controller.signal,
           body: JSON.stringify({
             level,
+            goals,
             webSearch,
             messages: history.filter((m) => !m.error && m.content).map((m) => ({ role: m.role, content: m.content })),
           }),
@@ -160,7 +162,7 @@ function ChatSession() {
         abortRef.current = null;
       }
     },
-    [busy, level, webSearch, setChat],
+    [busy, level, goals, webSearch, setChat],
   );
 
   // A question passed in the URL (?q=…) is sent once, after the saved conversation.

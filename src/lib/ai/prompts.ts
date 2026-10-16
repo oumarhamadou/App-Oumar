@@ -1,4 +1,4 @@
-import type { Level } from "@/lib/taxonomy";
+import { GOALS, type Goal, type Level } from "@/lib/taxonomy";
 
 /** Stable instructions, kept byte-identical across requests so they can be cached. */
 export const MENTOR_SYSTEM_PROMPT = `Tu es « Mentor », l'assistant pédagogique de Prisme, une plateforme qui rend l'intelligence artificielle, l'économie et la finance accessibles à tous : étudiants, entrepreneurs, professionnels, investisseurs et curieux.
@@ -34,8 +34,13 @@ export const LEVEL_INSTRUCTIONS: Record<Level, string> = {
     "Niveau de l'utilisateur : avancé. Utilise le vocabulaire technique, les modèles théoriques, les nuances, les débats académiques et les limites des données. Tu peux citer des auteurs et des formules.",
 };
 
-export function sessionContext(level: Level, today: string, page?: { title: string; excerpt?: string }): string {
+export function sessionContext(level: Level, today: string, page?: { title: string; excerpt?: string }, goals: Goal[] = []): string {
   const parts = [LEVEL_INSTRUCTIONS[level], `Date du jour : ${today}.`];
+  if (goals.length > 0) {
+    parts.push(
+      `Objectifs déclarés par l'utilisateur : ${goals.map((g) => GOALS[g].label.toLowerCase()).join(" ; ")}. Quand c'est pertinent, relie tes explications à ces objectifs avec un exemple concret.`,
+    );
+  }
   if (page) {
     parts.push(
       `L'utilisateur consulte actuellement ce contenu de la plateforme : « ${page.title} ».${page.excerpt ? ` Extrait : ${page.excerpt}` : ""} Tiens-en compte si sa question s'y rapporte.`,

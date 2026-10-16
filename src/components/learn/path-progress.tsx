@@ -11,7 +11,7 @@ import { useNow } from "@/hooks/use-now";
 import { cn } from "@/lib/cn";
 import { formatNumber } from "@/lib/format";
 import { useAppStore, useHydrated, type LessonProgress } from "@/lib/store";
-import { LEVELS } from "@/lib/taxonomy";
+import { GOALS, LEVELS } from "@/lib/taxonomy";
 
 /** Consecutive days (ending today or yesterday) with at least one completed lesson. */
 export function learningStreak(progress: Record<string, LessonProgress>, now: number): number {
@@ -69,8 +69,12 @@ export function PathCard({ path }: { path: LearningPath }) {
   const { done, next, ratio } = usePathProgress(path);
   const level = useAppStore((s) => s.profile.level);
   const interests = useAppStore((s) => s.profile.interests);
+  const goals = useAppStore((s) => s.profile.goals);
   const hydrated = useHydrated();
-  const recommended = hydrated && path.level === level && (interests.length === 0 || path.topics.some((t) => interests.includes(t)));
+  const recommended =
+    hydrated &&
+    (goals.some((g) => GOALS[g].paths.includes(path.slug)) ||
+      (path.level === level && (interests.length === 0 || path.topics.some((t) => interests.includes(t)))));
   const minutes = path.lessons.reduce((s, l) => s + l.minutes, 0);
   return (
     <article className={cn("flex flex-col rounded-2xl border bg-surface p-6 shadow-card", recommended ? "border-accent/50" : "border-line")}>
