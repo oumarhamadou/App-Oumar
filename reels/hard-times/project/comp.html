@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Hard Times Reel</title>
+<style>
+@font-face{font-family:"Display";src:url(assets/fonts/inter-latin-opsz-normal.woff2) format("woff2");font-weight:100 900;unicode-range:U+0000-00FF,U+2000-206F,U+2190-21FF,U+2022,U+2026,U+20AC}
+@font-face{font-family:"Display";src:url(assets/fonts/inter-latin-ext-opsz-normal.woff2) format("woff2");font-weight:100 900;unicode-range:U+0100-024F,U+1E00-1EFF,U+2C60-2C7F}
+:root{
+  --blue:#0A84FF;--green:#30D158;--orange:#FF9F0A;--red:#FF453A;--yellow:#FFD60A;--teal:#64D2FF;
+  --ink:#06070A;--glass:rgba(18,20,26,.74);--line:rgba(255,255,255,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;background:var(--ink);overflow:hidden}
+body{font-family:"Display",system-ui,sans-serif;font-optical-sizing:auto;color:#fff;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01" 0,"cv11" 1}
+#stage{position:absolute;inset:0;width:1080px;height:1920px;overflow:hidden}
+.abs{position:absolute}
+.hv{font-weight:860}
+.mono{font-family:ui-monospace,"DejaVu Sans Mono",monospace}
+
+/* ---------- header ---------- */
+#header{position:absolute;left:60px;right:60px;top:212px}
+#pill{display:inline-flex;align-items:center;gap:12px;height:48px;padding:0 22px 0 16px;border-radius:24px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);font-size:22px;font-weight:640;letter-spacing:.14em;color:rgba(255,255,255,.86)}
+#pill img{width:30px;height:30px}
+#pill .live{width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 12px var(--red)}
+#headline{margin-top:20px;font-size:62px;line-height:1.06;letter-spacing:-.02em;font-weight:400}
+#headline .w{display:inline-block;will-change:transform}
+#headline .b{font-weight:860}
+#headline .red{transform-origin:0 70%;color:var(--red);text-shadow:0 0 28px rgba(255,69,58,.55)}
+
+/* ---------- card ---------- */
+#card{position:absolute;left:30px;top:450px;width:1020px;height:1050px;border-radius:46px;overflow:hidden;background:#000;isolation:isolate;
+  box-shadow:0 50px 140px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.06)}
+#card .layer{position:absolute;inset:0}
+#vidwrap,#seawrap{overflow:hidden}
+#vid,#sea{position:absolute;left:0;top:0;transform-origin:0 0;filter:contrast(1.06) saturate(1.1)}
+#sea{filter:saturate(.75) contrast(1.15) brightness(.9) hue-rotate(-8deg)}
+#seaTint{background:radial-gradient(120% 90% at 50% 40%,rgba(255,40,30,0) 40%,rgba(255,40,30,.38) 100%);mix-blend-mode:screen}
+#glitch{background:#000;display:none}
+#glitch img{position:absolute;left:0;top:0;transform-origin:0 0;mix-blend-mode:screen}
+#glitch .slice{position:absolute;left:0;width:100%;overflow:hidden}
+#glitch .slice img{mix-blend-mode:normal}
+#shade{background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 52%,rgba(0,0,0,.62) 100%)}
+#cardRing{border-radius:46px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.16);pointer-events:none}
+#alert{border-radius:46px;pointer-events:none;opacity:0}
+
+/* canvas scene (workflow canvas) */
+#scene{background:#0B0D12;opacity:0;overflow:hidden}
+#cam{position:absolute;left:0;top:0;transform-origin:0 0}
+#dots{position:absolute;left:-4000px;top:-4000px;width:8000px;height:8000px;
+  background-image:radial-gradient(circle,rgba(255,255,255,.16) 2.2px,transparent 2.6px);background-size:56px 56px;background-position:-28px -28px}
+#ringsvg{position:absolute;left:-1500px;top:-1500px;width:3000px;height:3000px;overflow:visible}
+.node{position:absolute;width:580px;left:0;top:0;border-radius:40px;background:rgba(20,22,29,.96);
+  border:2px solid rgba(255,255,255,.1);padding:22px 22px 26px;box-shadow:0 40px 90px rgba(0,0,0,.55)}
+.node .top{display:flex;align-items:center;justify-content:space-between;height:44px;margin-bottom:16px}
+.node .chip{display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 16px;border-radius:20px;font-size:21px;font-weight:700;letter-spacing:.12em}
+.node .chip i{width:10px;height:10px;border-radius:50%;display:block}
+.node .dotsmenu{font-size:30px;color:rgba(255,255,255,.35);letter-spacing:2px}
+.node .media{position:relative;width:536px;height:320px;border-radius:26px;overflow:hidden;background:#111}
+.node .media img.m{position:absolute;left:50%;top:50%;width:540px;height:540px;transform:translate(-50%,-50%)}
+.node .emo{position:absolute;width:132px;height:132px;right:-6px;top:268px;filter:drop-shadow(0 14px 22px rgba(0,0,0,.55))}
+.node .title{margin-top:22px;font-size:68px;line-height:1;font-weight:860;letter-spacing:-.025em}
+.node .sub{margin-top:12px;font-size:30px;color:rgba(255,255,255,.58);font-weight:400}
+#overLabel{position:absolute;left:0;top:0;width:1400px;text-align:center;transform:translate(-50%,-50%)}
+#overLabel .t1{font-size:132px;font-weight:860;letter-spacing:-.03em;line-height:1}
+#overLabel .t2{margin-top:18px;font-size:54px;color:rgba(255,255,255,.6);letter-spacing:.2em;font-weight:600}
+#overLabel img{width:240px;height:240px;display:block;margin:0 auto 20px}
+
+/* glass panels */
+.glass{position:absolute;background:var(--glass);border:1px solid var(--line);border-radius:34px;
+  backdrop-filter:blur(26px) saturate(1.5);-webkit-backdrop-filter:blur(26px) saturate(1.5);
+  box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08);opacity:0}
+
+/* command palette */
+#palette{left:70px;top:150px;width:880px;padding:0 0 18px}
+#palette .in{display:flex;align-items:center;height:118px;padding:0 34px;gap:22px;border-bottom:1px solid rgba(255,255,255,.1)}
+#palette .in svg{width:44px;height:44px;flex:none;stroke:rgba(255,255,255,.6)}
+#palette .typed{font-size:46px;font-weight:400;white-space:pre;letter-spacing:-.01em}
+#palette .ph{color:rgba(255,255,255,.35)}
+.caret{display:inline-block;width:3px;height:52px;background:var(--blue);vertical-align:middle;margin-left:4px;border-radius:2px}
+.kbd{margin-left:auto;font-size:22px;font-weight:600;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:6px 12px}
+#palette .sec{font-size:19px;letter-spacing:.16em;color:rgba(255,255,255,.42);font-weight:650;padding:22px 34px 12px}
+#palette .row{display:flex;align-items:center;gap:22px;margin:0 16px;padding:16px 18px;border-radius:24px}
+#palette .row img{width:76px;height:76px;flex:none}
+#palette .row .rt{font-size:34px;font-weight:860;letter-spacing:-.01em}
+#palette .row .rs{font-size:24px;color:rgba(255,255,255,.55);margin-top:4px}
+#palette .row.sel{background:rgba(10,132,255,.22);box-shadow:inset 0 0 0 1.5px rgba(10,132,255,.6)}
+#palette .row.dim .rt{font-weight:600;color:rgba(255,255,255,.8);font-size:30px}
+
+/* status page */
+#status{left:34px;top:36px;width:600px;padding:26px 28px 22px}
+#status .h{display:flex;align-items:center;gap:14px}
+#status .fav{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2c2f38,#15171c);border:1px solid rgba(255,255,255,.14);display:grid;place-items:center}
+#status .fav i{width:14px;height:14px;border-radius:50%;display:block}
+#status .url{font-size:25px;color:rgba(255,255,255,.75)}
+#status .state{margin-left:auto;display:flex;align-items:center;gap:10px;height:42px;padding:0 16px;border-radius:21px;font-size:21px;font-weight:800;letter-spacing:.04em}
+#status .state i{width:10px;height:10px;border-radius:50%;display:block}
+#status .ttl{font-size:38px;font-weight:860;letter-spacing:-.02em;margin:20px 0 6px}
+#status .r{margin-top:14px}
+#status .rl{display:flex;justify-content:space-between;font-size:24px;margin-bottom:8px}
+#status .rl b{font-weight:800;font-size:21px;letter-spacing:.03em}
+#status .bars{display:flex;gap:4px;height:26px}
+#status .bars i{flex:1;border-radius:3px;display:block}
+
+/* stepper */
+.stepper{left:30px;top:30px;width:960px;height:214px;padding:0}
+.stepper .track{position:absolute;left:150px;right:150px;top:84px;height:6px;border-radius:3px;background:rgba(255,255,255,.12)}
+.stepper .fill{position:absolute;left:150px;top:84px;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--green),var(--orange),var(--red))}
+.stepper .st{position:absolute;top:56px;width:240px;text-align:center}
+.stepper .c{width:62px;height:62px;border-radius:50%;margin:0 auto;display:grid;place-items:center;font-size:26px;font-weight:800;background:#1b1d24;border:2px solid rgba(255,255,255,.2)}
+.stepper .lb{margin-top:16px;font-size:27px;color:rgba(255,255,255,.7)}
+.stepper .pin{position:absolute;width:96px;height:96px}
+.stepper .here{position:absolute;height:44px;padding:0 18px;border-radius:22px;background:var(--red);font-size:20px;font-weight:860;letter-spacing:.1em;display:flex;align-items:center;white-space:nowrap;box-shadow:0 10px 30px rgba(255,69,58,.5)}
+.stepper .pulse{position:absolute;width:62px;height:62px;border-radius:50%;border:3px solid var(--red)}
+.stepper svg{position:absolute;left:0;top:0;overflow:visible}
+
+/* difficulty */
+#diff{left:150px;top:40px;width:720px;padding:26px 28px 28px}
+#diff .lab{display:flex;justify-content:space-between;font-size:25px;color:rgba(255,255,255,.62);margin-bottom:18px}
+#diff .lab b{color:#fff;font-weight:800}
+#diff .seg{position:relative;height:96px;border-radius:26px;background:rgba(255,255,255,.07);display:flex}
+#diff .seg .opt{flex:1;display:grid;place-items:center;font-size:34px;position:relative;z-index:2}
+#diff .seg .sel{position:absolute;top:7px;bottom:7px;border-radius:20px;z-index:1}
+
+/* search */
+#search{left:60px;top:40px;width:900px;overflow:hidden}
+#search .in{display:flex;align-items:center;height:116px;padding:0 34px;gap:22px}
+#search .in svg{width:44px;height:44px;flex:none;stroke:rgba(255,255,255,.6)}
+#search .typed{font-size:46px;white-space:pre}
+#search .res{border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:28px;padding:0 36px;height:0;overflow:hidden}
+#search .res img{width:118px;height:118px;flex:none}
+#search .res .a{font-size:44px;font-weight:860;letter-spacing:-.02em}
+#search .res .b{font-size:28px;color:rgba(255,255,255,.55);margin-top:6px}
+#spinner{width:40px;height:40px;margin-left:auto;border-radius:50%;border:4px solid rgba(255,255,255,.15);border-top-color:#fff;opacity:0}
+
+/* globe */
+#globeLayer{opacity:0}
+#globeDim{background:rgba(4,6,12,.66);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#globe{position:absolute;left:110px;top:60px;width:800px;height:800px}
+#hud{position:absolute;left:40px;top:36px;right:40px;display:flex;justify-content:space-between;font-size:22px;letter-spacing:.16em;font-weight:700;color:rgba(255,255,255,.75)}
+#hud .lv{display:flex;align-items:center;gap:10px;color:#fff}
+#hud .lv i{width:12px;height:12px;border-radius:50%;background:var(--red);display:block}
+
+/* host tag */
+#hosttag{position:absolute;left:30px;top:30px;height:56px;padding:0 22px 0 12px;border-radius:28px;display:flex;align-items:center;gap:10px;font-size:23px;font-weight:800;letter-spacing:.12em;opacity:0}
+#hosttag img{width:38px;height:38px}
+
+/* loom bubble */
+#loom{position:absolute;overflow:hidden;opacity:0;box-shadow:0 22px 60px rgba(0,0,0,.6)}
+#loom img{position:absolute;left:0;top:0;transform-origin:0 0;filter:contrast(1.06) saturate(1.1)}
+#loomRing{position:absolute;pointer-events:none;border-radius:50%;opacity:0}
+
+/* captions */
+#captions{position:absolute;left:60px;right:60px;top:1240px;height:220px;display:flex;align-items:center;justify-content:center;text-align:center}
+#cap{font-size:74px;line-height:1.12;letter-spacing:-.018em;font-weight:400;
+  text-shadow:0 4px 22px rgba(0,0,0,.65),0 2px 5px rgba(0,0,0,.7)}
+#cap .w{display:inline-block;margin:0 .02em;transform-origin:50% 80%}
+#cap .k{font-weight:860;font-size:1.12em;letter-spacing:-.025em}
+
+#cursor{position:absolute;width:62px;height:62px;left:0;top:0;opacity:0;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#grain{position:absolute;left:0;top:0;width:1080px;height:1920px;background:url(assets/grain.png);background-size:540px 960px;mix-blend-mode:overlay;opacity:.09;pointer-events:none}
+#vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 80% at 50% 45%,rgba(0,0,0,0) 60%,rgba(0,0,0,.45) 100%)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <filter id="onlyR" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter>
+  <filter id="onlyGB" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/></filter>
+</svg>
+<div id="stage">
+  <canvas id="bg" width="1080" height="1920" class="abs" style="left:0;top:0"></canvas>
+
+  <div id="header">
+    <div id="pill"><span class="live"></span><span>THE CYCLE OF HISTORY</span></div>
+    <div id="headline"></div>
+  </div>
+
+  <div id="card">
+    <div id="vidwrap" class="layer"><img id="vid"></div>
+    <div id="seawrap" class="layer" style="opacity:0"><img id="sea"><div id="seaTint" class="layer"></div></div>
+    <div id="glitch" class="layer"></div>
+    <div id="scene" class="layer">
+      <div id="cam">
+        <div id="dots"></div>
+        <svg id="ringsvg" viewBox="-1500 -1500 3000 3000"></svg>
+        <div id="nodes"></div>
+        <div id="overLabel"><img src="assets/emoji/loop.png"><div class="t1">And so it goes</div><div class="t2">REPEAT ∞</div></div>
+      </div>
+    </div>
+    <div id="shade" class="layer"></div>
+    <div id="hosttag" class="glass"><img src="assets/emoji/mic.png"><span>HOST</span></div>
+
+    <div id="palette" class="glass">
+      <div class="in">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7.5"/><path d="m20.5 20.5-4.2-4.2"/></svg>
+        <span class="typed" id="palTyped"></span><span class="caret" id="palCaret"></span>
+        <span class="kbd">⌘ K</span>
+      </div>
+      <div class="sec" id="palSec">QUOTES</div>
+      <div class="row sel" id="palR1"><img src="assets/emoji/scroll.png"><div><div class="rt">“Hard times create strong men…”</div><div class="rs">G. Michael Hopf · novelist</div></div><span class="kbd">↵</span></div>
+      <div class="row dim" id="palR2"><img src="assets/emoji/loop.png" style="width:60px;height:60px;margin:0 8px"><div><div class="rt">The 4-phase cycle of history</div><div class="rs">Strong → good → weak → hard</div></div></div>
+    </div>
+
+    <div id="status" class="glass">
+      <div class="h"><div class="fav"><i id="stFav"></i></div><span class="url mono">status.world</span>
+        <div class="state" id="stState"><i></i><span>DEGRADED</span></div></div>
+      <div class="ttl" id="stTitle">Current status</div>
+      <div id="stRows"></div>
+    </div>
+
+    <div id="stepper" class="glass stepper"></div>
+    <div id="stepper2" class="glass stepper"></div>
+
+    <div id="diff" class="glass">
+      <div class="lab"><span>Life · difficulty</span><b id="diffVal">EASY</b></div>
+      <div class="seg"><div class="sel" id="diffSel"></div><div class="opt" id="d0">Easy</div><div class="opt" id="d1">Normal</div><div class="opt" id="d2">Hard</div></div>
+    </div>
+
+    <div id="search" class="glass">
+      <div class="in">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7.5"/><path d="m20.5 20.5-4.2-4.2"/></svg>
+        <span class="typed" id="seTyped"></span><span class="caret" id="seCaret"></span><div id="spinner"></div>
+      </div>
+      <div class="res" id="seRes"><img src="assets/emoji/dotted.png"><div><div class="a">0 results found</div><div class="b">for “leadership” · try again later</div></div></div>
+    </div>
+
+    <div id="globeLayer" class="layer">
+      <div id="globeDim" class="layer"></div>
+      <canvas id="globe" width="1600" height="1600"></canvas>
+      <div id="hud"><span class="lv"><i></i>LIVE · WORLD VIEW</span><span class="mono" id="hudCoord"></span></div>
+    </div>
+
+    <div id="alert" class="layer"></div>
+    <div id="cardRing" class="layer"></div>
+  </div>
+
+  <div id="loom"><img id="loomImg"></div>
+  <div id="loomRing"></div>
+
+  <div id="captions"><div id="cap"></div></div>
+  <svg id="cursor" viewBox="0 0 32 32"><path d="M7 3.5v22.2l5.6-5.4 3.6 8.4 3.9-1.7-3.6-8.2h7.9z" fill="#fff" stroke="#000" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  <div id="vignette"></div>
+  <div id="grain"></div>
+  <div id="flash"></div>
+</div>
+<script src="assets/vendor/d3.min.js"></script>
+<script src="assets/vendor/topojson-client.min.js"></script>
+<script src="comp.js"></script>
+</body>
+</html>
