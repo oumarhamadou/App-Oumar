@@ -23,8 +23,8 @@ Captions use Regular weight for normal words and Heavy for keywords. Keywords ar
 
 ## Assets and licenses
 
-- **Stock footage and music:** licensed through the invideo stock library from the project "Hard Times Reel — B-roll": a fighter training, a rooftop champagne toast, a man on a couch with his phone, a lightning storm over a city, a stormy sea, and the track "Dark Ambient Hip-Hop Beat". The raw clips are not committed.
-- **Sound effects:** synthesized from scratch (`project/tools/sfx.py`).
+- **Stock footage:** licensed through the invideo stock library from the project "Hard Times Reel — B-roll": a fighter training, a rooftop champagne toast, a man on a couch with his phone, a lightning storm over a city, and a stormy sea. The raw clips are not committed.
+- **Audio:** only the original voice, plus quiet animation sound effects synthesized from scratch (`project/tools/sfx.py`). The music bed is switched off (`USE_MUSIC` in `project/tools/mix.py`). The effects sit about 15 dB under the voice, and the typing and tick clusters are off (`SFX_TRIM_DB` and `KEEP_CLUSTERS`).
 - **3D emoji:** Microsoft Fluent Emoji (MIT).
 - **Globe:** Natural Earth via `world-atlas` (public domain / ISC) rendered with d3-geo.
 - **Font:** Inter (SIL OFL), with optical sizing used as a stand-in for SF Pro. Apple's SF Pro download isn't reachable from the build environment, and its license limits it to Apple-platform UI mockups. If you hold a license, set `@font-face` in `project/comp.html` to `SF-Pro-Display-Regular` / `SF-Pro-Display-Heavy` and re-render.
@@ -36,5 +36,5 @@ The project is an HTML/JS motion-graphics timeline (`project/comp.html` + `proje
 1. Put the source frames in `frames/src/0000.jpg…` (`ffmpeg -i source.mov -vf fps=30 -q:v 2 -start_number 0 frames/src/%04d.jpg`). Put the B-roll pack frames in `frames/broll/`, and the assets in `assets/` (fonts, emoji, `d3`, `topojson-client`, `countries-110m.json`, `grain.png`).
 2. Serve the folder: `python3 -m http.server 8765 --bind 127.0.0.1`.
 3. Run `node render.mjs out/frames 4`.
-4. Mix the audio with `python3 tools/mix.py <dir>`. It expects `voice.wav`, `broll/music.wav` and `sfx/*.wav`.
+4. Mix the audio with `python3 tools/mix.py <dir>`. It expects `voice.wav` and `sfx/*.wav` (plus `broll/music.wav` if `USE_MUSIC` is on). Then normalize: `ffmpeg -i mix_pre.wav -af loudnorm=I=-14:TP=-1.2 mix_final.wav`.
 5. Encode: `ffmpeg -framerate 30 -i out/frames/%04d.jpg -i mix_final.wav -c:v libx264 -profile:v high -crf 17 -pix_fmt yuv420p -c:a aac -b:a 320k -movflags +faststart hard-times-reel.mp4`.
