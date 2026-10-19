@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Video production tooling (rendered with Playwright, not part of the app).
+    "video/**",
   ]),
 ]);
 

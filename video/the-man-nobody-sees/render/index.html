@@ -1,0 +1,604 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Motion layer</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
+body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;color:#fff;font-feature-settings:"ss01","cv11"}
+.scene{position:absolute;inset:0;opacity:0;overflow:hidden}
+.abs{position:absolute}
+.disp{font-family:'Inter Display','Inter',sans-serif}
+.glass{position:absolute;border-radius:48px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(40,44,62,.78),rgba(16,18,28,.72));
+  border:1.5px solid rgba(255,255,255,.16);
+  box-shadow:0 40px 90px rgba(0,0,0,.45),inset 0 1.5px 0 rgba(255,255,255,.14)}
+.glass.light{background:linear-gradient(160deg,rgba(255,255,255,.90),rgba(246,246,250,.82));
+  border:1.5px solid rgba(255,255,255,.9);color:#1D1D1F;box-shadow:0 40px 90px rgba(40,20,0,.28)}
+.sheen{position:absolute;top:-20%;bottom:-20%;width:45%;left:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.0) 30%,rgba(255,255,255,.22) 50%,rgba(255,255,255,0) 70%,transparent 100%);
+  transform:translateX(-160%)}
+.scrim{position:absolute;inset:0}
+.grid-bg{position:absolute;inset:-200px;
+  background-image:linear-gradient(rgba(255,255,255,.065) 1.5px,transparent 1.5px),linear-gradient(90deg,rgba(255,255,255,.065) 1.5px,transparent 1.5px);
+  background-size:90px 90px}
+/* captions */
+#cap{position:absolute;left:70px;right:70px;top:1330px;text-align:center;font-family:'Inter Display','Inter';
+  font-weight:600;font-size:66px;line-height:1.16;letter-spacing:-0.5px}
+#cap span{display:inline-block;margin:0 9px;will-change:transform,opacity;
+  text-shadow:0 6px 30px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.45)}
+/* iOS rows */
+.row{position:absolute;left:0;right:0;height:156px;display:flex;align-items:center;padding:0 40px}
+.ico{width:88px;height:88px;border-radius:24px;display:flex;align-items:center;justify-content:center;flex:none}
+.rt{margin-left:30px;flex:1}
+.rt b{display:block;font-size:44px;font-weight:600;letter-spacing:-.4px}
+.rt i{display:block;font-style:normal;font-size:31px;color:#8E8E93;margin-top:4px}
+.tog{width:124px;height:76px;border-radius:38px;position:relative;flex:none}
+.tog .k{position:absolute;top:5px;left:5px;width:66px;height:66px;border-radius:50%;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
+.sep{position:absolute;left:158px;right:0;height:1.5px;background:rgba(255,255,255,.1)}
+.chk{width:58px;height:58px;border-radius:50%;border:4px solid #C7C7CC;flex:none;position:relative}
+.task{position:absolute;left:40px;right:40px;height:104px;display:flex;align-items:center;font-size:42px;font-weight:600;letter-spacing:-.3px}
+.task .lbl{margin-left:28px;position:relative}
+.task .strike{position:absolute;left:0;top:52%;height:4px;background:#8E8E93;border-radius:2px;width:0}
+.q{position:absolute;left:0;right:0;height:112px;display:flex;align-items:center;padding:0 36px;font-size:40px;font-weight:500;letter-spacing:-.3px;
+  border-radius:30px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.18)}
+.q .qi{width:56px;height:56px;border-radius:16px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:34px;margin-right:26px;flex:none}
+.card-t{font-size:30px;font-weight:600;letter-spacing:2.5px;color:rgba(255,255,255,.6)}
+.big-w{position:absolute;left:0;right:0;text-align:center;font-family:'Inter Display';font-weight:900;letter-spacing:-4px;line-height:.95}
+</style>
+<script src="words.js"></script>
+</head>
+<body>
+<div id="stage" style="position:absolute;inset:0">
+
+<!-- ============ S1 0.00-3.40 : profile card over night stock ============ -->
+<div class="scene" id="s1">
+  <div class="scrim" style="background:linear-gradient(180deg,rgba(4,7,22,.78) 0%,rgba(4,7,22,.25) 38%,rgba(4,7,22,0) 55%,rgba(0,0,0,.5) 100%)"></div>
+  <div class="glass" id="s1card" style="left:110px;top:250px;width:860px;height:430px">
+    <div class="sheen"></div>
+    <div class="abs" id="s1av" style="left:48px;top:48px;width:132px;height:132px;border-radius:50%;padding:5px;background:conic-gradient(from 200deg,#6EA8FF,#8B5CF6,#DB2777,#6EA8FF)">
+      <div style="width:100%;height:100%;border-radius:50%;background:#1B2033;overflow:hidden;position:relative">
+        <svg viewBox="0 0 100 100" width="122" height="122" style="position:absolute;left:0;top:6px"><circle cx="50" cy="38" r="19" fill="#5B6685"/><path d="M14 100c2-24 18-36 36-36s34 12 36 36z" fill="#5B6685"/></svg>
+      </div>
+    </div>
+    <div class="abs" id="s1lock" style="left:138px;top:138px;width:50px;height:50px;border-radius:50%;background:#FF453A;display:flex;align-items:center;justify-content:center;opacity:0;border:4px solid #1c2030">
+      <svg width="24" height="26" viewBox="0 0 24 26"><rect x="3" y="11" width="18" height="14" rx="3" fill="#fff"/><path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="#fff" stroke-width="3" fill="none"/></svg>
+    </div>
+    <div class="abs" style="left:214px;top:62px">
+      <div style="font-size:54px;font-weight:700;letter-spacing:-1px">Him</div>
+      <div id="s1sub" style="font-size:32px;color:#8E93A8;margin-top:6px">Online · always smiling</div>
+    </div>
+    <div class="abs" style="left:48px;top:226px;font-size:28px;font-weight:600;letter-spacing:2.5px;color:#7D839B">WHO CAN SEE THE REAL ONE</div>
+    <div class="abs" style="left:48px;top:282px;width:764px;height:100px;border-radius:30px;background:rgba(255,255,255,.08);">
+      <div class="abs" id="s1pill" style="top:7px;left:7px;width:250px;height:86px;border-radius:24px;background:#3A4466;box-shadow:0 6px 18px rgba(0,0,0,.35)"></div>
+      <div class="abs" style="inset:0;display:flex;font-size:34px;font-weight:600">
+        <div id="s1o0" style="flex:1;display:flex;align-items:center;justify-content:center">Everyone</div>
+        <div id="s1o1" style="flex:1;display:flex;align-items:center;justify-content:center">Friends</div>
+        <div id="s1o2" style="flex:1;display:flex;align-items:center;justify-content:center">Nobody</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ S2 3.40-8.15 : grid palette, iOS sharing toggles (opaque) ============ -->
+<div class="scene" id="s2" style="background:#07090F">
+  <div class="grid-bg" id="s2grid"></div>
+  <div class="abs" id="s2glow" style="left:-300px;top:-420px;width:1680px;height:1400px;background:radial-gradient(closest-side,rgba(46,72,255,.42),rgba(46,72,255,0))"></div>
+  <div class="abs" style="left:0;right:0;bottom:0;height:900px;background:linear-gradient(0deg,#07090F 10%,rgba(7,9,15,0))"></div>
+  <div class="abs" id="s2wrap" style="left:70px;top:330px;width:940px">
+    <div style="font-size:30px;font-weight:600;letter-spacing:2.5px;color:#8E8E93;margin:0 0 22px 34px">WHO CAN SEE HOW HE REALLY FEELS</div>
+    <div class="glass" id="s2panel" style="position:relative;height:474px;border-radius:44px;background:rgba(28,28,32,.92)">
+      <div class="sheen"></div>
+      <div class="row" id="s2r0" style="top:3px">
+        <div class="ico" style="background:#0A84FF"><svg width="54" height="54" viewBox="0 0 24 24" fill="#fff"><circle cx="8" cy="8" r="3.4"/><circle cx="16.5" cy="9" r="2.8"/><path d="M1.8 19c.4-3.6 3-5.6 6.2-5.6s5.8 2 6.2 5.6z"/><path d="M13.6 14.2c.9-.6 1.9-.9 2.9-.9 2.7 0 4.9 1.7 5.3 4.9h-6.3c-.3-1.6-1-3-1.9-4z"/></svg></div>
+        <div class="rt"><b>Friends</b><i id="s2s0">Can see</i></div>
+        <div class="tog" id="s2t0"><div class="k"></div></div>
+      </div>
+      <div class="sep" style="top:158px"></div>
+      <div class="row" id="s2r1" style="top:160px">
+        <div class="ico" style="background:#FF9F0A"><svg width="52" height="52" viewBox="0 0 24 24" fill="#fff"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg></div>
+        <div class="rt"><b>Family</b><i id="s2s1">Can see</i></div>
+        <div class="tog" id="s2t1"><div class="k"></div></div>
+      </div>
+      <div class="sep" style="top:315px"></div>
+      <div class="row" id="s2r2" style="top:317px">
+        <div class="ico" style="background:#FF375F"><svg width="50" height="50" viewBox="0 0 24 24" fill="#fff"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.2 0 3.6 1.2 5.3 3.1 1.7-1.9 3.1-3.1 5.3-3.1 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg></div>
+        <div class="rt"><b>The person he loves</b><i id="s2s2">Can see</i></div>
+        <div class="tog" id="s2t2"><div class="k"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ S3 8.15-12.45 : lock screen at night over stock ============ -->
+<div class="scene" id="s3">
+  <div class="scrim" style="background:linear-gradient(180deg,rgba(3,6,24,.82) 0%,rgba(3,6,24,.35) 42%,rgba(3,6,24,0) 58%,rgba(0,0,0,.55) 100%)"></div>
+  <div class="abs" id="s3date" style="left:0;right:0;top:250px;text-align:center;font-size:40px;font-weight:600;color:rgba(255,255,255,.85)">Tuesday, 3 March</div>
+  <div class="abs disp" id="s3clock" style="left:0;right:0;top:290px;text-align:center;font-size:280px;font-weight:600;letter-spacing:-8px;color:rgba(235,240,255,.95)">2:47</div>
+  <div class="glass" id="s3n0" style="left:80px;top:690px;width:920px;height:150px;border-radius:40px">
+    <div class="sheen"></div>
+    <div class="abs" style="left:30px;top:33px;width:84px;height:84px;border-radius:22px;background:linear-gradient(160deg,#5E5CE6,#3634A3);display:flex;align-items:center;justify-content:center">
+      <svg width="46" height="46" viewBox="0 0 24 24" fill="#fff"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5z"/></svg></div>
+    <div class="abs" style="left:140px;top:30px;font-size:36px;font-weight:700">Sleep Focus <span style="font-weight:400;color:#9A9FB5;font-size:30px;margin-left:10px">now</span></div>
+    <div class="abs" style="left:140px;top:80px;font-size:33px;color:#D0D4E4">Still awake? It's been 3 hours.</div>
+  </div>
+  <div class="glass" id="s3n1" style="left:80px;top:860px;width:920px;height:150px;border-radius:40px">
+    <div class="abs" style="left:30px;top:33px;width:84px;height:84px;border-radius:22px;background:linear-gradient(160deg,#BF5AF2,#7D2AA8);display:flex;align-items:center;justify-content:center">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="#fff"><path d="M6 2h12v5l-4 5 4 5v5H6v-5l4-5-4-5z" opacity=".95"/></svg></div>
+    <div class="abs" style="left:140px;top:30px;font-size:36px;font-weight:700">Screen Time <span style="font-weight:400;color:#9A9FB5;font-size:30px;margin-left:10px">2m ago</span></div>
+    <div class="abs" style="left:140px;top:80px;font-size:33px;color:#D0D4E4">Overthinking: 3h 12m after midnight</div>
+  </div>
+</div>
+
+<!-- ============ S4 12.45-14.15 : vivid premium gradient, search (opaque) ============ -->
+<div class="scene" id="s4" style="background:#14052F">
+  <div class="abs" id="s4b0" style="width:1500px;height:1500px;border-radius:50%;background:radial-gradient(closest-side,#7C3AED,rgba(124,58,237,0))"></div>
+  <div class="abs" id="s4b1" style="width:1400px;height:1400px;border-radius:50%;background:radial-gradient(closest-side,#DB2777,rgba(219,39,119,0))"></div>
+  <div class="abs" id="s4b2" style="width:1500px;height:1500px;border-radius:50%;background:radial-gradient(closest-side,#F97316,rgba(249,115,22,0))"></div>
+  <div class="abs" id="s4b3" style="width:1200px;height:1200px;border-radius:50%;background:radial-gradient(closest-side,#2563EB,rgba(37,99,235,0))"></div>
+  <div class="grid-bg" style="opacity:.55;-webkit-mask-image:radial-gradient(circle at 50% 40%,#000 0%,transparent 70%)"></div>
+  <div class="abs" id="s4bar" style="left:90px;top:300px;width:900px;height:132px;border-radius:66px;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.32);box-shadow:0 30px 70px rgba(40,0,60,.35),inset 0 1.5px 0 rgba(255,255,255,.3);display:flex;align-items:center;padding:0 44px">
+    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+    <div id="s4txt" style="margin-left:26px;font-size:50px;font-weight:500;letter-spacing:-.5px;white-space:pre"></div>
+    <div id="s4car" style="width:4px;height:56px;background:#fff;margin-left:4px;border-radius:2px"></div>
+  </div>
+  <div class="abs" id="s4res" style="left:90px;top:470px;width:900px;height:640px">
+    <div class="q" id="s4q0" style="top:0"><div class="qi">?</div>am I enough?</div>
+    <div class="q" id="s4q1" style="top:128px"><div class="qi">?</div>is it too late for me?</div>
+    <div class="q" id="s4q2" style="top:256px"><div class="qi">?</div>what if I let them down?</div>
+    <div class="q" id="s4q3" style="top:384px"><div class="qi">?</div>does anyone actually see me?</div>
+    <div class="q" id="s4q4" style="top:512px"><div class="qi">?</div>why am I always this tired?</div>
+  </div>
+</div>
+
+<!-- ============ S5 14.15-18.30 : bento dashboard on grid (opaque) ============ -->
+<div class="scene" id="s5" style="background:#07080D">
+  <div class="grid-bg" id="s5grid"></div>
+  <div class="abs" id="s5glow" style="left:-260px;top:900px;width:1600px;height:1300px;background:radial-gradient(closest-side,rgba(124,58,237,.55),rgba(219,39,119,.25) 55%,rgba(249,115,22,0))"></div>
+  <div class="abs" style="left:110px;top:200px;display:flex;align-items:center;gap:18px">
+    <div style="width:18px;height:18px;border-radius:50%;background:#30D158;box-shadow:0 0 18px #30D158"></div>
+    <div style="font-size:30px;font-weight:600;letter-spacing:2.5px;color:rgba(255,255,255,.55)">LIFE DASHBOARD · LIVE</div>
+  </div>
+  <div id="s5cam" class="abs" style="inset:0">
+  <!-- card 1: choices -->
+  <div class="glass" id="s5c0" style="left:90px;top:270px;width:900px;height:330px">
+    <div class="sheen"></div>
+    <div class="abs card-t" style="left:44px;top:40px">CHOICES</div>
+    <div class="abs" style="left:44px;top:84px;font-size:44px;font-weight:700;letter-spacing:-.6px">2 paths · 0 answers</div>
+    <svg class="abs" style="left:40px;top:150px" width="820" height="160" viewBox="0 0 820 160">
+      <circle cx="40" cy="80" r="18" fill="#fff"/>
+      <path id="s5p0" d="M58 80 C 200 80, 240 30, 420 30 L 640 30" stroke="#8B5CF6" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <path id="s5p1" d="M58 80 C 200 80, 240 130, 420 130 L 640 130" stroke="#DB2777" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <g id="s5a"><rect x="650" y="2" width="150" height="56" rx="28" fill="rgba(139,92,246,.22)" stroke="#8B5CF6" stroke-width="3"/><text x="725" y="41" text-anchor="middle" font-size="32" font-weight="700" fill="#fff" font-family="Inter">A ?</text></g>
+      <g id="s5b"><rect x="650" y="102" width="150" height="56" rx="28" fill="rgba(219,39,119,.22)" stroke="#DB2777" stroke-width="3"/><text x="725" y="141" text-anchor="middle" font-size="32" font-weight="700" fill="#fff" font-family="Inter">B ?</text></g>
+    </svg>
+  </div>
+  <!-- card 2: worth -->
+  <div class="glass" id="s5c1" style="left:90px;top:630px;width:900px;height:290px">
+    <div class="sheen"></div>
+    <div class="abs card-t" style="left:44px;top:40px">WORTH</div>
+    <div class="abs disp" id="s5num" style="left:44px;top:80px;font-size:130px;font-weight:800;letter-spacing:-4px;font-variant-numeric:tabular-nums">00%</div>
+    <div class="abs" style="left:46px;top:228px;font-size:30px;color:#9A9FB5">Self-worth · <span style="color:#FF453A;font-weight:600">recalculating…</span></div>
+    <svg class="abs" style="left:520px;top:70px" width="340" height="170" viewBox="0 0 340 170">
+      <defs><linearGradient id="rg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FF453A" stop-opacity=".35"/><stop offset="1" stop-color="#FF453A" stop-opacity="0"/></linearGradient></defs>
+      <path id="s5spA" d="M5 30 L60 45 L105 38 L150 70 L195 62 L240 105 L285 98 L335 150 L335 170 L5 170 Z" fill="url(#rg)" opacity="0"/>
+      <path id="s5sp" d="M5 30 L60 45 L105 38 L150 70 L195 62 L240 105 L285 98 L335 150" stroke="#FF453A" stroke-width="6" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <!-- card 3: future -->
+  <div class="glass" id="s5c2" style="left:90px;top:950px;width:900px;height:330px">
+    <div class="sheen"></div>
+    <div class="abs card-t" style="left:44px;top:40px">FUTURE</div>
+    <div class="abs" style="left:44px;top:84px;font-size:44px;font-weight:700;letter-spacing:-.6px">Forecast</div>
+    <div class="abs" style="left:250px;top:88px;padding:6px 22px;border-radius:24px;background:rgba(255,159,10,.18);color:#FFB340;font-size:30px;font-weight:600">Unclear</div>
+    <svg class="abs" id="s5spin" style="left:800px;top:40px" width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="22" stroke="rgba(255,255,255,.18)" stroke-width="6" fill="none"/><path d="M28 6 A22 22 0 0 1 50 28" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round"/></svg>
+    <svg class="abs" style="left:40px;top:150px" width="820" height="160" viewBox="0 0 820 160">
+      <defs><linearGradient id="bg3" x1="0" x2="1"><stop offset="0" stop-color="#8B5CF6" stop-opacity=".55"/><stop offset="1" stop-color="#DB2777" stop-opacity=".15"/></linearGradient></defs>
+      <path id="s5band" d="" fill="url(#bg3)"/>
+      <path id="s5hist" d="M0 120 L80 100 L160 108 L240 86 L320 92 L400 80" stroke="#fff" stroke-width="6" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+      <path id="s5fc" d="M400 80 L820 80" stroke="#fff" stroke-width="5" fill="none" stroke-dasharray="14 12" stroke-linecap="round"/>
+      <circle cx="400" cy="80" r="11" fill="#fff"/>
+    </svg>
+  </div>
+  </div>
+</div>
+
+<!-- ============ S6 18.30-21.40 : iOS alert over stock ============ -->
+<div class="scene" id="s6">
+  <div class="scrim" style="background:linear-gradient(180deg,rgba(3,6,24,.55),rgba(3,6,24,.35) 50%,rgba(0,0,0,.55))"></div>
+  <div class="glass" id="s6alert" style="left:150px;top:520px;width:780px;height:470px;border-radius:52px;text-align:center">
+    <div class="sheen"></div>
+    <div class="abs" style="left:50px;right:50px;top:56px;font-size:46px;font-weight:700;letter-spacing:-.6px;line-height:1.15">Are you doing<br>life right?</div>
+    <div class="abs" style="left:60px;right:60px;top:186px;font-size:32px;color:#B8BCCB;line-height:1.35">He has asked himself this<br>every night for months.</div>
+    <div class="abs" style="left:0;right:0;top:330px;height:1.5px;background:rgba(255,255,255,.16)"></div>
+    <div class="abs" style="left:389px;top:331px;width:1.5px;height:139px;background:rgba(255,255,255,.16)"></div>
+    <div class="abs" id="s6yes" style="left:0;width:390px;top:331px;height:139px;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:500;color:#4DA3FF">Yes</div>
+    <div class="abs" id="s6no" style="left:391px;width:389px;top:331px;height:139px;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:700;color:#4DA3FF">I don't know</div>
+  </div>
+  <div class="abs" id="s6touch" style="width:96px;height:96px;border-radius:50%;background:rgba(255,255,255,.14);border:3px solid rgba(255,255,255,.55);box-shadow:0 0 30px rgba(255,255,255,.35);opacity:0"></div>
+</div>
+
+<!-- ============ S7 21.40-23.20 : morning alarm (Apple light) ============ -->
+<div class="scene" id="s7">
+  <div class="scrim" id="s7warm" style="background:radial-gradient(120% 70% at 85% 0%,rgba(255,176,96,.45),rgba(255,120,120,.12) 45%,rgba(0,0,0,0) 70%),linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(40,18,0,.5) 100%)"></div>
+  <div class="glass light" id="s7n" style="left:60px;top:150px;width:960px;height:170px;border-radius:44px">
+    <div class="abs" style="left:32px;top:38px;width:94px;height:94px;border-radius:24px;background:linear-gradient(160deg,#FFB340,#FF7A00);display:flex;align-items:center;justify-content:center">
+      <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="13" r="7.5"/><path d="M12 9v4l2.6 1.8M4 4.5 6.5 2.5M20 4.5l-2.5-2"/></svg></div>
+    <div class="abs" style="left:152px;top:36px;font-size:38px;font-weight:700">Alarm <span style="font-weight:400;color:#86868B;font-size:31px;margin-left:10px">now</span></div>
+    <div class="abs" style="left:152px;top:88px;font-size:35px;color:#3A3A3C">7:00 AM · Time to be okay.</div>
+  </div>
+</div>
+
+<!-- ============ S8-S10 23.20-29.70 : morning routine to-do (Apple light) ============ -->
+<div class="scene" id="s8">
+  <div class="scrim" style="background:linear-gradient(180deg,rgba(30,14,0,.35) 0%,rgba(0,0,0,0) 45%,rgba(0,0,0,0) 58%,rgba(20,8,0,.55) 100%)"></div>
+  <div class="glass light" id="s8w" style="left:90px;top:200px;width:900px;height:720px;border-radius:52px">
+    <div class="sheen"></div>
+    <div class="abs" style="left:44px;top:40px;font-size:30px;font-weight:600;letter-spacing:2.5px;color:#86868B">EVERY DAY</div>
+    <div class="abs" style="left:44px;top:82px;font-size:56px;font-weight:800;letter-spacing:-1.2px">Morning routine</div>
+    <svg class="abs" style="left:740px;top:44px" width="116" height="116" viewBox="0 0 116 116">
+      <circle cx="58" cy="58" r="48" stroke="#E5E5EA" stroke-width="12" fill="none"/>
+      <circle id="s8ring" cx="58" cy="58" r="48" stroke="#0A84FF" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="301.6" stroke-dashoffset="301.6" transform="rotate(-90 58 58)"/>
+      <text id="s8cnt" x="58" y="69" text-anchor="middle" font-family="Inter" font-weight="700" font-size="32" fill="#1D1D1F">0/4</text>
+    </svg>
+    <div class="abs" style="left:44px;right:44px;top:190px;height:1.5px;background:#E5E5EA"></div>
+    <div class="task" id="s8t0" style="top:206px"><div class="chk"></div><div class="lbl">Get up<div class="strike"></div></div></div>
+    <div class="task" id="s8t1" style="top:316px"><div class="chk"></div><div class="lbl">Smile<div class="strike"></div></div></div>
+    <div class="task" id="s8t2" style="top:426px"><div class="chk"></div><div class="lbl">Play the role<div class="strike"></div></div></div>
+    <div class="task" id="s8t3" style="top:536px"><div class="chk"></div><div class="lbl">Act like nothing happened<div class="strike"></div></div></div>
+    <div class="abs" id="s8streak" style="left:44px;top:650px;font-size:30px;font-weight:600;color:#FF7A00;opacity:0">🔥 Streak: 1,284 days</div>
+  </div>
+</div>
+
+<!-- ============ S11 29.70-32.40 : breaking heart over rain ============ -->
+<div class="scene" id="s11">
+  <div class="scrim" style="background:radial-gradient(70% 45% at 50% 40%,rgba(0,0,0,.15),rgba(0,0,0,.6))"></div>
+  <div class="abs" id="s11glow" style="left:190px;top:330px;width:700px;height:700px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,45,85,.55),rgba(255,45,85,0))"></div>
+  <div class="abs" id="s11h" style="left:290px;top:430px;width:500px;height:500px">
+    <svg id="s11L" class="abs" style="left:0;top:0" width="500" height="500" viewBox="0 0 24 24">
+      <defs><linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF6B8B"/><stop offset="1" stop-color="#FF1F4B"/></linearGradient>
+      <clipPath id="cl"><polygon points="0,0 12.6,0 11.2,6.5 13.4,10 10.6,13.6 12.8,17 11.6,24 0,24"/></clipPath>
+      <clipPath id="cr"><polygon points="12.6,0 24,0 24,24 11.6,24 12.8,17 10.6,13.6 13.4,10 11.2,6.5"/></clipPath></defs>
+      <path clip-path="url(#cl)" d="M12 21.6s-7.7-4.7-9.8-9.4C.7 8.7 2.9 4.6 6.7 4.6c2.2 0 3.7 1.2 5.3 3.1 1.6-1.9 3.1-3.1 5.3-3.1 3.8 0 6 4.1 4.5 7.6C19.7 16.9 12 21.6 12 21.6z" fill="url(#hg)"/>
+    </svg>
+    <svg id="s11R" class="abs" style="left:0;top:0" width="500" height="500" viewBox="0 0 24 24">
+      <path clip-path="url(#cr)" d="M12 21.6s-7.7-4.7-9.8-9.4C.7 8.7 2.9 4.6 6.7 4.6c2.2 0 3.7 1.2 5.3 3.1 1.6-1.9 3.1-3.1 5.3-3.1 3.8 0 6 4.1 4.5 7.6C19.7 16.9 12 21.6 12 21.6z" fill="url(#hg)"/>
+    </svg>
+    <svg id="s11crack" class="abs" style="left:0;top:0" width="500" height="500" viewBox="0 0 24 24">
+      <polyline id="s11cl" points="12.6,4.8 11.2,6.5 13.4,10 10.6,13.6 12.8,17 11.9,21" fill="none" stroke="#fff" stroke-width=".55" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ============ S12 32.40-34.55 : big type, vivid premium ============ -->
+<div class="scene" id="s12">
+  <div class="scrim" style="background:radial-gradient(90% 60% at 50% 45%,rgba(20,0,40,.35),rgba(10,0,25,.75))"></div>
+  <div class="grid-bg" style="opacity:.5;-webkit-mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 65%)"></div>
+  <div class="abs" id="s12grp" style="left:0;right:0;top:0;bottom:0">
+    <div class="abs" id="s12w0" style="left:0;right:0;top:560px;text-align:center;font-size:46px;font-weight:500;letter-spacing:1px;color:rgba(255,255,255,.82)">Because</div>
+    <div class="big-w" id="s12w1" style="top:650px;font-size:120px;color:#fff">THE</div>
+    <div class="big-w" id="s12w2" style="top:785px;font-size:150px;background:linear-gradient(90deg,#FFB36B,#FF4D8D 50%,#8B5CF6);-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 10px 40px rgba(255,77,141,.35))">STRONGEST</div>
+    <div class="abs" style="left:0;right:0;top:960px;text-align:center;white-space:nowrap">
+      <span class="big-w" id="s12w3" style="position:relative;display:inline-block;font-size:108px;color:#fff;margin:0 14px">MAN</span><span class="big-w" id="s12w4" style="position:relative;display:inline-block;font-size:108px;color:#fff;margin:0 14px">YOU</span><span class="big-w" id="s12w5" style="position:relative;display:inline-block;font-size:108px;color:#fff;margin:0 14px">KNOW</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ S13 34.55-36.80 : low battery ============ -->
+<div class="scene" id="s13">
+  <div class="scrim" style="background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.2) 45%,rgba(0,0,0,.6))"></div>
+  <div class="glass" id="s13card" style="left:150px;top:400px;width:780px;height:600px;border-radius:52px;text-align:center">
+    <div class="sheen"></div>
+    <svg class="abs" style="left:240px;top:60px" width="300" height="140" viewBox="0 0 300 140">
+      <rect x="6" y="6" width="262" height="128" rx="30" stroke="#fff" stroke-opacity=".85" stroke-width="10" fill="none" id="s13out"/>
+      <rect x="276" y="44" width="16" height="52" rx="7" fill="#fff" fill-opacity=".85"/>
+      <rect id="s13fill" x="22" y="22" width="230" height="96" rx="16" fill="#30D158"/>
+    </svg>
+    <div class="abs disp" id="s13pct" style="left:0;right:0;top:220px;font-size:120px;font-weight:800;letter-spacing:-3px;color:#fff">100%</div>
+    <div class="abs" id="s13t" style="left:0;right:0;top:372px;font-size:46px;font-weight:700;opacity:0">Low Battery</div>
+    <div class="abs" id="s13d" style="left:0;right:0;top:434px;font-size:33px;color:#B8BCCB;opacity:0">Running on empty. Nobody noticed.</div>
+    <div class="abs" id="s13btn" style="left:60px;right:60px;top:500px;height:1.5px;background:rgba(255,255,255,.16);opacity:0"></div>
+  </div>
+</div>
+
+<!-- ============ S14 36.80-39.60 : end card (opaque) ============ -->
+<div class="scene" id="s14" style="background:#000">
+  <div class="abs" id="s14glow" style="left:-300px;top:-500px;width:1680px;height:1300px;background:radial-gradient(closest-side,rgba(124,58,237,.38),rgba(219,39,119,.16) 55%,rgba(0,0,0,0))"></div>
+  <div class="grid-bg" style="opacity:.35;-webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 60%)"></div>
+  <div class="abs disp" style="left:0;right:0;top:470px;text-align:center;font-size:92px;font-weight:700;letter-spacing:-2.5px;line-height:1.08">
+    <div><span id="e0" style="display:inline-block">Check</span> <span id="e1" style="display:inline-block">on</span> <span id="e2" style="display:inline-block">your</span></div>
+    <div><span id="e3" style="display:inline-block;background:linear-gradient(90deg,#FFB36B,#FF4D8D);-webkit-background-clip:text;color:transparent">strong</span> <span id="e4" style="display:inline-block;background:linear-gradient(90deg,#FF4D8D,#8B5CF6);-webkit-background-clip:text;color:transparent">friend.</span></div>
+  </div>
+  <div class="abs" id="s14bub" style="right:90px;top:820px;max-width:820px;padding:30px 42px;border-radius:46px;background:linear-gradient(180deg,#2E8BFF,#0A6CFF);font-size:46px;font-weight:500;letter-spacing:-.3px;opacity:0">Hey… how are you, really?</div>
+  <div class="abs" id="s14del" style="right:104px;top:960px;font-size:28px;color:#8E8E93;font-weight:600;opacity:0">Delivered</div>
+  <div class="abs" id="s14bar" style="left:60px;right:60px;top:1150px;height:120px;border-radius:60px;border:2px solid #3A3A3C;background:#1C1C1E;display:flex;align-items:center;padding:0 20px 0 44px;opacity:0">
+    <div id="s14txt" style="flex:1;font-size:44px;color:#fff;white-space:pre"></div>
+    <div id="s14car" style="width:4px;height:52px;background:#0A84FF;border-radius:2px"></div>
+    <div id="s14send" style="width:84px;height:84px;border-radius:50%;background:#3A3A3C;display:flex;align-items:center;justify-content:center;margin-left:18px">
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg></div>
+  </div>
+</div>
+
+<!-- captions on top of everything -->
+<div id="cap"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const lerp=(a,b,p)=>a+(b-a)*p;
+const E={
+  lin:p=>p,
+  outExpo:p=>p>=1?1:1-Math.pow(2,-10*p),
+  inExpo:p=>p<=0?0:Math.pow(2,10*p-10),
+  outCubic:p=>1-Math.pow(1-p,3),
+  inCubic:p=>p*p*p,
+  inOut:p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2,
+  outBack:p=>{const c1=1.4,c3=c1+1;return 1+c3*Math.pow(p-1,3)+c1*Math.pow(p-1,2)},
+  spring:p=>p>=1?1:1-Math.exp(-8*p)*Math.cos(10*p),
+};
+const P=(t,s,d,e=E.outExpo)=>e(clamp((t-s)/d));
+// scene opacity with fade in/out windows
+const win=(t,s,e,fi=.2,fo=.2)=>Math.min(clamp((t-s)/fi),clamp((e-t)/fo));
+// pseudo random
+const rnd=n=>{const x=Math.sin(n*12.9898)*43758.5453;return x-Math.floor(x)};
+// sheen: sweep across a card at each chord change while visible
+function sheen(card,t,from,to){
+  const sh=card.querySelector('.sheen'); if(!sh) return;
+  let x=-160;
+  for(const c of CHORDS){ if(c>=from&&c<=to&&t>=c&&t<c+1.0){ x=lerp(-160,330,E.inOut((t-c)/1.0)); } }
+  sh.style.transform=`translateX(${x}%)`;
+}
+function set(el,o,tr,f){ if(typeof el==='string') el=$(el); el.style.opacity=o; if(tr!==undefined) el.style.transform=tr; if(f!==undefined) el.style.filter=f; }
+
+/* ---------------- captions ---------------- */
+const CAP_ACCENT=[[0,8.2,'#8FB8FF'],[8.2,12.45,'#8FB8FF'],[12.45,18.3,'#FF9CCB'],[18.3,21.4,'#8FB8FF'],[21.4,29.7,'#FFD27A'],[29.7,32.4,'#FF5C7A'],[34.5,37,'#FF6A5F']];
+let capCache=-1;
+function captions(t){
+  const cap=$('cap');
+  let gi=-1;
+  for(let i=0;i<CAPTION_GROUPS.length;i++){
+    const [a,b]=CAPTION_GROUPS[i]; const s=WORDS[a][1]-0.06; const nx=CAPTION_GROUPS[i+1]?WORDS[CAPTION_GROUPS[i+1][0]][1]-0.06:99;
+    const e=Math.min(WORDS[b][2]+0.55,nx,36.95);
+    if(t>=s&&t<e){gi=i;break;}
+  }
+  if(gi<0){cap.style.opacity=0;return;}
+  const [a,b]=CAPTION_GROUPS[gi];
+  if(capCache!==gi){
+    cap.innerHTML=''; for(let k=a;k<=b;k++){const sp=document.createElement('span');sp.textContent=WORDS[k][0];cap.appendChild(sp);} capCache=gi;
+  }
+  const nx=CAPTION_GROUPS[gi+1]?WORDS[CAPTION_GROUPS[gi+1][0]][1]-0.06:99;
+  const end=Math.min(WORDS[b][2]+0.55,nx,36.95);
+  cap.style.opacity=clamp((end-t)/0.12);
+  let acc='#8FB8FF'; for(const [s,e,c] of CAP_ACCENT) if(t>=s&&t<e) acc=c;
+  const spans=cap.children;
+  for(let k=a;k<=b;k++){
+    const sp=spans[k-a]; const ws=WORDS[k][1]; const we=(k<b?WORDS[k+1][1]:WORDS[k][2]+0.3);
+    const p=P(t,ws-0.05,0.26);
+    const active=t>=ws-0.02&&t<we;
+    const pop=active?1+0.06*Math.sin(Math.PI*clamp((t-ws)/0.25)):1;
+    sp.style.opacity=p;
+    sp.style.transform=`translateY(${(1-p)*22}px) scale(${pop})`;
+    sp.style.filter=`blur(${(1-p)*8}px)`;
+    sp.style.color=active?acc:'#fff';
+  }
+}
+
+/* ---------------- scenes ---------------- */
+function S1(t){
+  const o=win(t,-1,3.42,.2,.12); $('s1').style.opacity=o; if(o<=0) return;
+  const p=P(t,0.05,0.7,E.spring);
+  const push=t>2.72?lerp(1,0.965,P(t,2.72,0.6,E.outCubic)):1;
+  set('s1card',clamp((t-0.05)/0.3)*(t>2.72?lerp(1,.88,P(t,2.72,.6)):1),`translateY(${(1-p)*60}px) scale(${(0.9+0.1*p)*push})`);
+  // segmented control: Everyone -> Friends (at "that") -> Nobody (at "nobody")
+  const k1=P(t,1.62,0.38,E.spring), k2=P(t,2.0,0.42,E.spring);
+  const idx=k1+k2; $('s1pill').style.transform=`translateX(${idx*251}px)`;
+  const nob=clamp((t-2.0)/0.3);
+  $('s1pill').style.background=`rgb(${lerp(58,255,nob)},${lerp(68,69,nob)},${lerp(102,58,nob)})`;
+  for(let i=0;i<3;i++) $('s1o'+i).style.color=`rgba(255,255,255,${0.45+0.55*clamp(1-Math.abs(idx-i))})`;
+  const lockp=P(t,2.05,0.45,E.spring); set('s1lock',clamp((t-2.05)/0.15),`scale(${lockp})`);
+  $('s1av').style.filter=`blur(${8*clamp((t-2.0)/0.4)}px)`;
+  $('s1sub').textContent=t<2.0?'Online · always smiling':'Hidden from everyone';
+  $('s1sub').style.color=t<2.0?'#8E93A8':'#FF6961';
+  sheen($('s1card'),t,0,3.4);
+}
+function S2(t){
+  const o=win(t,3.30,8.22,.18,.22); $('s2').style.opacity=o; if(o<=0) return;
+  $('s2grid').style.transform=`translate(0,${-(t-3.3)*22}px)`;
+  const pulse=Math.max(...CHORDS.map(c=>t>=c?Math.exp(-(t-c)*3):0));
+  $('s2glow').style.opacity=0.75+0.35*pulse;
+  const pin=P(t,3.30,0.7);
+  const pout=P(t,7.95,0.3,E.inCubic);
+  $('s2wrap').style.transform=`scale(${lerp(1.06,1,pin)*lerp(1,.94,pout)}) translateY(${lerp(30,0,pin)}px)`;
+  $('s2wrap').style.filter=`blur(${12*pout}px)`;
+  const rows=[[3.52,4.08],[4.88,5.36],[6.32,7.48]];
+  rows.forEach(([ap,off],i)=>{
+    const a=P(t,ap-0.12,0.45,E.outCubic);
+    const q=P(t,off,0.32,E.spring);
+    const shake=t>off+0.05&&t<off+0.55?Math.sin((t-off)*55)*14*Math.exp(-(t-off)*8):0;
+    $('s2r'+i).style.opacity=0.28+0.72*a;
+    $('s2r'+i).style.transform=`translateX(${shake}px)`;
+    const tog=$('s2t'+i);
+    const g=clamp((t-off)/0.25);
+    tog.style.background=`rgb(${lerp(48,57,g)},${lerp(209,57,g)},${lerp(88,61,g)})`;
+    tog.firstElementChild.style.transform=`translateX(${(1-q)*48}px)`;
+    const s=$('s2s'+i); s.textContent=t<off?'Can see':'Hidden'; s.style.color=t<off?'#8E8E93':'#FF6961';
+  });
+  sheen($('s2panel'),t,3.4,8.2);
+}
+function S3(t){
+  const o=win(t,8.10,12.50,.15,.1); $('s3').style.opacity=o; if(o<=0) return;
+  const c=P(t,8.28,0.8);
+  set('s3clock',c,`scale(${lerp(1.1,1,c)})`,`blur(${(1-c)*18}px)`);
+  set('s3date',P(t,8.4,0.6),`translateY(${(1-P(t,8.4,.6))*16}px)`);
+  $('s3clock').textContent=t<11.50?'2:47':'2:48';
+  for(let i=0;i<2;i++){
+    const s=[11.84,12.02][i]; const p=P(t,s,0.55,E.spring);
+    set('s3n'+i,clamp((t-s)/0.15),`translateY(${(1-p)*-90}px) scale(${0.94+0.06*p})`);
+  }
+  sheen($('s3n0'),t,8,12.5);
+}
+function S4(t){
+  const o=win(t,12.38,14.30,.12,.18); $('s4').style.opacity=o; if(o<=0) return;
+  const k=t-12.4, pulse=Math.max(...CHORDS.map(c=>t>=c?Math.exp(-(t-c)*3.5):0));
+  const B=[[ -400+Math.sin(k*1.3)*80, -300+Math.cos(k*1.1)*70,1],[ 250+Math.cos(k*1.2)*90, 200+Math.sin(k)*80,1],[ -100+Math.sin(k*.9)*70, 900+Math.cos(k*1.4)*60,1],[ -500+Math.cos(k*.8)*60, 1100+Math.sin(k*1.2)*70,1]];
+  B.forEach(([x,y],i)=>{$('s4b'+i).style.transform=`translate(${x}px,${y}px) scale(${1+0.08*pulse})`;});
+  const zin=P(t,12.38,0.6);
+  const txt='am I doing enough?';
+  const n=Math.round(clamp((t-12.64)/0.66)*txt.length);
+  $('s4txt').textContent=txt.slice(0,n);
+  $('s4car').style.opacity=(Math.floor(t*3.2)%2===0||t<13.4)?1:0;
+  $('s4bar').style.transform=`scale(${lerp(1.08,1,zin)})`;
+  for(let i=0;i<5;i++){
+    const s=13.32+i*0.07; const p=P(t,s,0.45,E.spring);
+    set('s4q'+i,clamp((t-s)/0.15),`translateY(${(1-p)*50}px) scale(${0.95+0.05*p})`);
+  }
+  const out=P(t,14.02,0.28,E.inCubic);
+  $('s4res').style.filter=`blur(${out*10}px)`; $('s4bar').style.filter=`blur(${out*10}px)`;
+}
+function S5(t){
+  const o=win(t,14.10,18.40,.2,.22); $('s5').style.opacity=o; if(o<=0) return;
+  $('s5grid').style.transform=`translate(${-(t-14)*14}px,${-(t-14)*10}px)`;
+  const pulse=Math.max(...CHORDS.map(c=>t>=c?Math.exp(-(t-c)*3):0));
+  $('s5glow').style.opacity=0.8+0.3*pulse;
+  $('s5cam').style.transform=`scale(${lerp(1.0,1.045,clamp((t-14.15)/4.15))})`;
+  const ents=[14.64,16.08,17.24];
+  ents.forEach((s,i)=>{const p=P(t,s-0.08,0.62,E.spring); set('s5c'+i,clamp((t-s+0.08)/0.2),`translateY(${(1-p)*90}px) scale(${0.92+0.08*p})`); sheen($('s5c'+i),t,s,18.3);});
+  // choices tree draws
+  const d=P(t,14.8,0.6,E.inOut);
+  ['s5p0','s5p1'].forEach(id=>{const el=$(id);const L=el.getTotalLength();el.style.strokeDasharray=L;el.style.strokeDashoffset=L*(1-d);});
+  const chip=P(t,15.25,0.4,E.spring), cp=1+0.06*Math.sin(t*7);
+  ['s5a','s5b'].forEach(id=>{$(id).style.opacity=clamp((t-15.25)/0.15);$(id).style.transform=`scale(${chip*cp})`;$(id).style.transformOrigin='725px 80px';});
+  // worth scramble
+  const f=Math.floor(t*15);
+  $('s5num').textContent=t<16.08?'—':(t<17.9?(Math.floor(rnd(f)*90+10))+'%':'??%');
+  const sp=$('s5sp'), L=sp.getTotalLength(), dd=P(t,16.35,0.7,E.inOut);
+  sp.style.strokeDasharray=L; sp.style.strokeDashoffset=L*(1-dd); $('s5spA').style.opacity=dd;
+  // future band widens
+  const w=P(t,17.35,0.9,E.outCubic);
+  const pts=[]; for(let i=0;i<=10;i++){const x=400+i*42; const sp2=(i/10)*(i/10)*75*w+4; pts.push([x,80-sp2,80+sp2]);}
+  $('s5band').setAttribute('d','M'+pts.map(p=>p[0]+' '+p[1]).join(' L')+' L'+pts.slice().reverse().map(p=>p[0]+' '+p[2]).join(' L')+' Z');
+  $('s5spin').style.transform=`rotate(${t*360}deg)`;
+}
+function S6(t){
+  const o=win(t,18.25,21.45,.15,.2); $('s6').style.opacity=o; if(o<=0) return;
+  const p=P(t,18.56,0.45,E.outBack);
+  const shake=t>20.76&&t<21.3?Math.sin((t-20.76)*60)*26*Math.exp(-(t-20.76)*6):0;
+  const out=P(t,21.2,0.25,E.inCubic);
+  set('s6alert',clamp((t-18.56)/0.15)*(1-out),`translateX(${shake}px) scale(${lerp(1.18,1,p)*(1-0.05*out)})`,`blur(${out*14}px)`);
+  // touch indicator: appears, hovers Yes, drifts to "I don't know", hesitates
+  const tp=clamp((t-19.25)/0.2)*(1-clamp((t-20.95)/0.2));
+  const xs=[[19.25,345,925],[19.6,352,918],[20.05,700,920],[20.4,560,926],[20.7,650,920]];
+  let x=xs[0][1],y=xs[0][2];
+  for(let i=0;i<xs.length-1;i++){ if(t>=xs[i][0]){const q=E.inOut(clamp((t-xs[i][0])/(xs[i+1][0]-xs[i][0])));x=lerp(xs[i][1],xs[i+1][1],q);y=lerp(xs[i][2],xs[i+1][2],q);} }
+  set('s6touch',tp*0.9,`translate(${x-48}px,${y-48}px) scale(${t>20.62&&t<20.8?0.85:1})`);
+  const dim=clamp((t-20.8)/0.2); $('s6yes').style.color=`rgba(${lerp(77,140,dim)},${lerp(163,140,dim)},${lerp(255,150,dim)},${1-0.4*dim})`;
+  sheen($('s6alert'),t,18.3,21.4);
+}
+function S7(t){
+  const o=win(t,21.32,23.30,.25,.15); $('s7').style.opacity=o; if(o<=0) return;
+  $('s7warm').style.opacity=P(t,21.45,1.0,E.outCubic);
+  const p=P(t,22.15,0.55,E.spring);
+  const up=P(t,23.0,0.3,E.inCubic);
+  set('s7n',clamp((t-22.15)/0.15),`translateY(${(1-p)*-260 - up*300}px)`);
+}
+function S8(t){
+  const o=win(t,23.12,29.72,.15,.25); $('s8').style.opacity=o; if(o<=0) return;
+  const p=P(t,23.15,0.6,E.spring);
+  const out=P(t,29.45,0.3,E.inCubic);
+  set('s8w',clamp((t-23.15)/0.2),`translateY(${(1-p)*-120 - out*40}px) scale(${(0.94+0.06*p)*(1-0.04*out)})`,`blur(${out*12}px)`);
+  const marks=[23.84,25.04,26.84,28.88];
+  let done=0;
+  marks.forEach((m,i)=>{
+    const row=$('s8t'+i), chk=row.querySelector('.chk'), st=row.querySelector('.strike'), lb=row.querySelector('.lbl');
+    const q=P(t,m,0.35,E.spring);
+    if(t>=m){done++;}
+    chk.style.background=t>=m?'#0A84FF':'transparent';
+    chk.style.borderColor=t>=m?'#0A84FF':'#C7C7CC';
+    chk.style.transform=`scale(${t>=m?0.8+0.2*q:1})`;
+    chk.innerHTML=t>=m?`<svg width="50" height="50" viewBox="0 0 24 24" style="position:absolute;left:0;top:0"><path d="M6 12.5l4 4 8-9" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="20" stroke-dashoffset="${20*(1-P(t,m,0.25,E.outCubic))}"/></svg>`:'';
+    st.style.width=(100*P(t,m+0.05,0.35,E.outCubic))+'%';
+    lb.style.color=t>=m?'#8E8E93':'#1D1D1F';
+    row.style.transform=`scale(${t>=m&&t<m+0.3?1+0.03*Math.sin(Math.PI*(t-m)/0.3):1})`;
+  });
+  const ring=$('s8ring'); let prog=0; marks.forEach(m=>{prog+=P(t,m,0.4,E.outCubic)/4;});
+  ring.setAttribute('stroke-dashoffset',301.6*(1-prog));
+  ring.setAttribute('stroke',prog>=0.999?'#30D158':'#0A84FF');
+  $('s8cnt').textContent=done+'/4';
+  set('s8streak',P(t,29.0,0.4),`translateY(${(1-P(t,29.0,.4))*12}px)`);
+  sheen($('s8w'),t,23.2,29.7);
+}
+function S11(t){
+  const o=win(t,29.66,32.45,.2,.25); $('s11').style.opacity=o; if(o<=0) return;
+  const a=P(t,29.98,0.55,E.spring);
+  const beat=1+0.07*Math.exp(-((t-30.32)**2)/0.004)+0.06*Math.exp(-((t-30.68)**2)/0.004);
+  const br=P(t,31.02,0.75,E.outCubic);
+  const fall=P(t,31.25,1.1,E.inCubic);
+  $('s11h').style.transform=`scale(${a*beat})`;
+  $('s11h').style.opacity=clamp((t-29.98)/0.15);
+  $('s11L').style.transform=`translate(${-br*70}px,${br*24+fall*120}px) rotate(${-br*13}deg)`;
+  $('s11R').style.transform=`translate(${br*70}px,${br*30+fall*140}px) rotate(${br*15}deg)`;
+  $('s11L').style.transformOrigin=$('s11R').style.transformOrigin='50% 90%';
+  const grey=clamp((t-31.3)/0.6);
+  $('s11L').style.filter=$('s11R').style.filter=`grayscale(${grey}) brightness(${1-0.35*grey})`;
+  const cl=$('s11cl'), L=cl.getTotalLength(), cd=P(t,30.88,0.16,E.lin);
+  cl.style.strokeDasharray=L; cl.style.strokeDashoffset=L*(1-cd); cl.style.opacity=t<31.1?1:clamp(1-(t-31.1)/0.2);
+  $('s11glow').style.opacity=clamp((t-30)/0.4)*(1-grey)*(0.85+0.15*beat);
+  $('s11h').style.filter=t>30.88&&t<31.0?'brightness(1.6)':'none';
+}
+function S12(t){
+  const o=win(t,32.38,34.62,.12,.18); $('s12').style.opacity=o; if(o<=0) return;
+  $('s12grp').style.transform=`scale(${lerp(1,1.06,clamp((t-32.4)/2.2))})`;
+  const items=[['s12w0',32.54,.3],['s12w1',32.74,.22],['s12w2',32.98,.26],['s12w3',33.46,.2],['s12w4',33.70,.2],['s12w5',33.94,.2]];
+  items.forEach(([id,s,d])=>{
+    const p=P(t,s-0.04,d,E.outExpo);
+    const el=$(id); el.style.opacity=p; el.style.transform=`scale(${lerp(1.35,1,p)})`;
+    if(id!=='s12w2') el.style.filter=`blur(${(1-p)*14}px)`;
+  });
+  const out=P(t,34.42,0.2,E.inCubic); $('s12grp').style.filter=`blur(${out*16}px)`; $('s12grp').style.opacity=1-out;
+}
+function S13(t){
+  const o=win(t,34.52,36.86,.15,.12); $('s13').style.opacity=o; if(o<=0) return;
+  const p=P(t,34.70,0.5,E.spring);
+  set('s13card',clamp((t-34.7)/0.2),`translateY(${(1-p)*80}px) scale(${0.93+0.07*p})`);
+  const lvl=1-0.97*P(t,34.85,1.0,E.inOut); // 100% -> 3% at "struggling"
+  const pct=Math.round(lvl*100);
+  $('s13pct').textContent=pct+'%';
+  const fill=$('s13fill'); fill.setAttribute('width',Math.max(10,230*lvl));
+  const col=lvl>0.5?'#30D158':(lvl>0.2?'#FFD60A':'#FF453A'); fill.setAttribute('fill',col);
+  $('s13pct').style.color=lvl>0.2?'#fff':'#FF453A';
+  const al=P(t,35.86,0.4,E.outCubic);
+  ['s13t','s13d'].forEach((id,i)=>set(id,P(t,35.86+i*0.08,0.4),`translateY(${(1-P(t,35.86+i*.08,.4))*20}px)`));
+  const flash=t>36.5?0.5+0.5*Math.cos((t-36.5)*18):1;
+  $('s13out').setAttribute('stroke',t>36.5?`rgba(255,69,58,${0.6+0.4*flash})`:'#fff');
+  sheen($('s13card'),t,34.5,36.8);
+}
+function S14(t){
+  const o=win(t,36.72,40,.18,.2); $('s14').style.opacity=o; if(o<=0) return;
+  $('s14glow').style.opacity=0.7+0.3*Math.exp(-Math.max(0,t-37.24)*2);
+  const ws=[37.24,37.36,37.48,37.62,37.78];
+  ws.forEach((s,i)=>{const p=P(t,s,0.5);set('e'+i,p,`translateY(${(1-p)*40}px)`,`blur(${(1-p)*12}px)`);});
+  const bar=P(t,37.95,0.5,E.spring); set('s14bar',clamp((t-37.95)/0.2),`translateY(${(1-bar)*120}px)`);
+  const msg='Hey… how are you, really?';
+  const n=Math.round(clamp((t-38.15)/0.75)*msg.length);
+  const sent=t>=38.98;
+  $('s14txt').textContent=sent?'':msg.slice(0,n);
+  $('s14txt').style.color='#fff';
+  $('s14car').style.opacity=(Math.floor(t*3)%2===0)?1:0;
+  $('s14send').style.background=n>0?'#0A84FF':'#3A3A3C';
+  $('s14send').style.transform=`scale(${t>38.9&&t<39.05?0.88:1})`;
+  const b=P(t,38.98,0.45,E.spring);
+  set('s14bub',clamp((t-38.98)/0.1),`translateY(${(1-b)*330}px) scale(${0.7+0.3*b})`);
+  $('s14bub').style.transformOrigin='100% 100%';
+  set('s14del',P(t,39.25,0.3));
+}
+window.renderAt=function(t){
+  S1(t);S2(t);S3(t);S4(t);S5(t);S6(t);S7(t);S8(t);S11(t);S12(t);S13(t);S14(t);
+  const capOn=!(t>=32.4&&t<34.6);
+  if(capOn) captions(t); else $('cap').style.opacity=0;
+};
+window.renderAt(0);
+</script>
+</body>
+</html>
