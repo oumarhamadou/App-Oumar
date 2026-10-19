@@ -6,6 +6,7 @@ près sur la voix et sur les changements d'accords de la musique.
 
 - Projet invideo : https://invideo.io/@oumars-workspace-44/prisme-montage-video-verticale
 - Timeline finale : https://invideo.io/@oumars-workspace-44/prisme-montage-video-verticale/tree/main/seq-3.1
+- Variante Adobe Stock (branche) : https://invideo.io/@oumars-workspace-44/prisme-montage-video-verticale/tree/version-adobe-stock/seq-3.1
 
 ## Analyse de la source
 
@@ -40,6 +41,22 @@ près sur la voix et sur les changements d'accords de la musique.
 | 13 | 34.55–36.80 | might be the one struggling the most. | Gros plan, désaturé | Batterie 100 % → 3 % sur « struggling », alerte « Low Battery » |
 | 14 | 36.80–39.60 | (queue musicale) | — | Carte de fin « Check on your strong friend. » + iMessage « Hey… how are you, really? » |
 
+## Variante « Version Adobe Stock »
+
+Six images Adobe Stock (collection gratuite, licenciées), recadrées en 2160×3840 :
+
+| Image | Usage |
+| --- | --- |
+| AdobeStock_195692258 — homme aux baies vitrées la nuit | Scène 1a (0.00–1.60), recadrée sur l'homme |
+| AdobeStock_335797584 — silhouette à la fenêtre | Scène 1b (1.60–3.40) |
+| AdobeStock_218647467 — contemplation au lever du soleil | Scène 7 (21.40–23.20) |
+| AdobeStock_679471153 — dégradé rose-violet-noir | Fond de la scène 2 |
+| AdobeStock_841735316 — dégradé bleu-violet-rose-orange | Fond de la scène 4 |
+| AdobeStock_788558151 — dégradé carmin-magenta | Fond de la scène 5 |
+
+La couche motion de cette variante est rendue avec `ALT=1` (page ouverte avec `?alt=1`) : les scènes
+2, 4 et 5 perdent leur fond opaque au profit d'un voile sombre, pour laisser voir les dégradés.
+
 ## Re-rendre la couche motion
 
 ```bash
@@ -47,6 +64,7 @@ export NODE_PATH=$(npm root -g)            # playwright global
 mkdir -p frames
 node scripts/stills.js render/index.html frames 2.6 17.9 33.95   # aperçus
 N=1188; for i in 0 1 2 3; do node scripts/capture.js render/index.html frames 30 $((i*N/4)) $(((i+1)*N/4)) & done; wait
+# variante Adobe Stock : préfixer les commandes node par ALT=1
 ffmpeg -framerate 30 -i frames/f_%05d.png -c:v libvpx-vp9 -pix_fmt yuva420p -crf 22 -b:v 0 \
   -row-mt 1 -auto-alt-ref 0 motion_layer_alpha.webm
 ```

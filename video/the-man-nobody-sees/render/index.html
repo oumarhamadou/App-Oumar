@@ -85,7 +85,7 @@ body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;color:#ff
 <div class="scene" id="s2" style="background:#07090F">
   <div class="grid-bg" id="s2grid"></div>
   <div class="abs" id="s2glow" style="left:-300px;top:-420px;width:1680px;height:1400px;background:radial-gradient(closest-side,rgba(46,72,255,.42),rgba(46,72,255,0))"></div>
-  <div class="abs" style="left:0;right:0;bottom:0;height:900px;background:linear-gradient(0deg,#07090F 10%,rgba(7,9,15,0))"></div>
+  <div class="abs" id="s2fade" style="left:0;right:0;bottom:0;height:900px;background:linear-gradient(0deg,#07090F 10%,rgba(7,9,15,0))"></div>
   <div class="abs" id="s2wrap" style="left:70px;top:330px;width:940px">
     <div style="font-size:30px;font-weight:600;letter-spacing:2.5px;color:#8E8E93;margin:0 0 22px 34px">WHO CAN SEE HOW HE REALLY FEELS</div>
     <div class="glass" id="s2panel" style="position:relative;height:474px;border-radius:44px;background:rgba(28,28,32,.92)">
@@ -598,6 +598,14 @@ window.renderAt=function(t){
   const capOn=!(t>=32.4&&t<34.6);
   if(capOn) captions(t); else $('cap').style.opacity=0;
 };
+// Alternate cut (?alt): scenes 2, 4 and 5 become see-through so the Adobe Stock
+// gradients placed under the layer in invideo show; a scrim keeps the UI readable.
+if(new URLSearchParams(location.search).has('alt')){
+  $('s2').style.background='rgba(4,5,12,.42)'; $('s2glow').style.display='none';
+  $('s2fade').style.background='linear-gradient(0deg,rgba(4,5,12,.55) 10%,rgba(4,5,12,0))';
+  $('s4').style.background='rgba(0,0,0,.12)'; for(let i=0;i<4;i++) $('s4b'+i).style.display='none';
+  $('s5').style.background='rgba(5,5,12,.5)'; $('s5glow').style.display='none';
+}
 window.renderAt(0);
 </script>
 </body>
