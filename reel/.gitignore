@@ -1,0 +1,12 @@
+node_modules
+dist
+.DS_Store
+.env
+
+# Renders and review stills.
+out
+
+# Your footage and generated media stay out of Git (large, personal).
+public/input.*
+public/standin.mp4
+whisper.cpp

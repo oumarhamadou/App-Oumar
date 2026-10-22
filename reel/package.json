@@ -1,0 +1,47 @@
+{
+  "name": "prisme-reel",
+  "version": "1.0.0",
+  "description": "Premium Instagram reel edit (Remotion): gradient transitions, kinetic text, SaaS UI motion, sound design.",
+  "repository": {},
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "private": true,
+  "dependencies": {
+    "@remotion/bundler": "4.0.538",
+    "@remotion/captions": "4.0.538",
+    "@remotion/cli": "4.0.538",
+    "@remotion/fonts": "4.0.538",
+    "@remotion/install-whisper-cpp": "4.0.538",
+    "@remotion/media": "4.0.538",
+    "@remotion/renderer": "4.0.538",
+    "mediabunny": "1.62.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.538"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.538",
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "eslint": "10.12.0",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion bundle",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc",
+    "sfx": "python3 scripts/make-sfx.py",
+    "standin": "remotion render StandIn public/standin.mp4 --muted",
+    "transcribe": "node scripts/transcribe.mjs",
+    "stills": "node scripts/stills.mjs",
+    "render:demo": "remotion render StyleDemo out/style-demo.mp4",
+    "render": "remotion render Reel out/reel-edited.mp4"
+  },
+  "allowScripts": {
+    "esbuild": false
+  }
+}
