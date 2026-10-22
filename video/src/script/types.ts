@@ -24,8 +24,6 @@ export type LineKind =
 /** Entrée de la scène par-dessus la précédente. */
 export type Enter = "fade" | "wipeDown" | "softWipeDown" | "blinds" | "wipeUp";
 
-export type BadgePosition = "top-right" | "left";
-
 export type ScriptLine = {
   kind: LineKind;
   /** Texte affiché ; chaque mot est calé sur la transcription de la voix. */
@@ -40,7 +38,6 @@ export type ScriptScene = {
   id: string;
   bg: Background;
   enter: Enter;
-  badge: BadgePosition;
   lines: ScriptLine[];
 };
 

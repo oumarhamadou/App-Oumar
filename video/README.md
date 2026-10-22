@@ -4,8 +4,8 @@ Projet [Remotion](https://www.remotion.dev) qui remonte la voix de la vidéo
 source (un homme récitant le poème de repentir attribué à Abû Nuwâs) en
 vidéo typographique, dans le style de la vidéo de référence : texte arabe
 tapé lettre par lettre au rythme de la voix, palette bordeaux / crème /
-rose poudré, encadré « surligneur », pastille, volets de transition, icône
-Instagram animée et carte de fin.
+rose poudré, encadré « surligneur », pastille et volets de transition.
+Seule la voix est conservée : la nappe musicale de la vidéo source est retirée.
 
 ## Commandes
 
@@ -19,7 +19,7 @@ npm run lint     # ESLint + TypeScript
 ## Le script
 
 Une scène par vers, deux lignes par scène, comme la référence (5 scènes
-de texte + carte de fin, environ 34 s).
+de texte, 31,5 s, fondu au noir final).
 
 | Scène | Fond | Entrée | Texte (style) | Voix |
 | --- | --- | --- | --- | --- |
@@ -28,7 +28,6 @@ de texte + carte de fin, environ 34 s).
 | Vers 3 | bordeaux | volets | "أدعوكَ ربِّ كما أمرتَ تضرُّعًا" (encadré) · — فإذا رددتَ يدي فمَنْ ذا يرحمُ؟ (flou → net) | 13,7 – 20,2 s |
 | Vers 4 | crème | rideau flou | ما لي إليكَ وسيلةٌ (pastille) · — إلّا الرَّجا (roqaa) | 21,5 – 23,9 s |
 | Final | rose poudré | montée | **وجميلُ عفوِكَ** (titre) · ثمَّ إنّي مسلمُ · signature أبو نواس | 25,2 – 28,5 s |
-| Fin | anthracite | coupe franche | icône Instagram qui s'illumine | — |
 
 Traduction :
 
@@ -56,7 +55,13 @@ Traduction :
 
 ## Audio
 
-- `public/voice.m4a` : voix extraite de la vidéo source, filtrée (passe-haut
-  80 Hz, légère compression) et normalisée à −15 LUFS, crête −1,5 dBTP.
-- `public/sfx/` : souffle de transition et impact de fin, synthétisés avec
-  FFmpeg (aucun échantillon tiers).
+`public/voice.m4a` est la seule piste : la voix extraite de la vidéo source,
+sans musique ni effet sonore.
+
+- La nappe musicale d'origine (accord tenu vers 82, 165, 196 et 330 Hz,
+  environ 25 dB sous la voix) est retirée par soustraction spectrale, avec
+  un profil appris dans les silences entre les vers, puis par une porte
+  douce entre les phrases. Dans les silences, elle passe de −50 dB à
+  −75/−90 dB ; le timbre de la voix varie de moins de 2 dB par bande.
+- La voix est ensuite filtrée (passe-haut 80 Hz, légère compression) et
+  normalisée vers −15 LUFS.

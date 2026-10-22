@@ -6,7 +6,6 @@ export const colors = {
   maroon: "#3A0808",
   cream: "#F8F2E4",
   blush: "#F3DFD2",
-  endCard: "#3C3734",
   // Encadré « surligneur » posé sur le bordeaux.
   boxOnMaroon: "#E4D8CC",
   // Pastille arrondie posée sur le crème.

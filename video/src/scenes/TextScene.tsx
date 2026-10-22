@@ -1,7 +1,6 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { AnimatedLine } from "../components/AnimatedLine";
-import { SocialBadge } from "../components/SocialBadge";
 import { Vignette } from "../components/Texture";
 import { easeInOut } from "../components/timing";
 import type { Enter, TimedScene } from "../script/types";
@@ -59,11 +58,9 @@ const enterStyle = (enter: Enter, p: number): React.CSSProperties => {
 
 export const TextScene: React.FC<{
   scene: TimedScene;
-  /** Première scène : l'icône entre en douceur puis prend ses couleurs. */
-  isFirst: boolean;
-  /** Dernière scène : le texte s'efface avant la coupe franche vers la carte de fin. */
+  /** Dernière scène : elle clôt la vidéo par un fondu au noir. */
   isLast: boolean;
-}> = ({ scene, isFirst, isLast }) => {
+}> = ({ scene, isLast }) => {
   const frame = useCurrentFrame();
   const length = scene.to - scene.from;
   const enter = interpolate(
@@ -76,49 +73,50 @@ export const TextScene: React.FC<{
     },
   );
   // Le texte s'efface dans le flou pendant que la scène suivante le recouvre.
-  const exit = interpolate(
-    frame,
-    isLast
-      ? [length - 14, length - 2]
-      : [length - 2, length + ENTER_FRAMES * 0.7],
-    [0, 1],
-    clamp,
-  );
-  const onLight = scene.bg !== "maroon";
+  const exit = isLast
+    ? 0
+    : interpolate(
+        frame,
+        [length - 2, length + ENTER_FRAMES * 0.7],
+        [0, 1],
+        clamp,
+      );
 
   return (
-    <AbsoluteFill style={enterStyle(scene.enter, enter)}>
-      <AbsoluteFill style={{ backgroundColor: backgroundColor[scene.bg] }} />
-      <Vignette bg={scene.bg} />
-      <AbsoluteFill
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          gap: 30,
-          padding: "0 220px",
-          textAlign: "center",
-          paddingBottom: 40,
-          scale: interpolate(frame, [0, length + ENTER_FRAMES], [1, 1.035]),
-          opacity: 1 - exit,
-          filter: `blur(${exit * 10}px)`,
-        }}
-      >
-        {scene.lines.map((line, i) => (
-          <AnimatedLine
-            key={i}
-            line={line}
-            bg={scene.bg}
-            sceneFrom={scene.from}
-          />
-        ))}
+    <AbsoluteFill
+      style={{
+        opacity: isLast
+          ? interpolate(frame, [length - 20, length - 1], [1, 0], clamp)
+          : 1,
+      }}
+    >
+      <AbsoluteFill style={enterStyle(scene.enter, enter)}>
+        <AbsoluteFill style={{ backgroundColor: backgroundColor[scene.bg] }} />
+        <Vignette bg={scene.bg} />
+        <AbsoluteFill
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            gap: 30,
+            padding: "0 220px",
+            textAlign: "center",
+            paddingBottom: 40,
+            scale: interpolate(frame, [0, length + ENTER_FRAMES], [1, 1.035]),
+            opacity: 1 - exit,
+            filter: `blur(${exit * 10}px)`,
+          }}
+        >
+          {scene.lines.map((line, i) => (
+            <AnimatedLine
+              key={i}
+              line={line}
+              bg={scene.bg}
+              sceneFrom={scene.from}
+            />
+          ))}
+        </AbsoluteFill>
       </AbsoluteFill>
-      <SocialBadge
-        position={scene.badge}
-        onLight={onLight}
-        appearAt={isFirst ? 6 : undefined}
-        colorizeAt={isFirst ? 70 : undefined}
-      />
     </AbsoluteFill>
   );
 };
