@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Projet Remotion autonome, avec ses propres dépendances et sa config.
+    "video/**",
   ]),
 ]);
 

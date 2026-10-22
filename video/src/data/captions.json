@@ -1,0 +1,303 @@
+[
+  {
+    "text": " يا",
+    "startMs": 0,
+    "endMs": 220,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " ربِّ",
+    "startMs": 220,
+    "endMs": 500,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " إنْ",
+    "startMs": 500,
+    "endMs": 660,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " عظُمتْ",
+    "startMs": 660,
+    "endMs": 1100,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " ذنوبي",
+    "startMs": 1100,
+    "endMs": 1680,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " كثرةً",
+    "startMs": 1680,
+    "endMs": 2310,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " فلقدْ",
+    "startMs": 3120,
+    "endMs": 3400,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " علمتُ",
+    "startMs": 3400,
+    "endMs": 3880,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " بأنَّ",
+    "startMs": 3880,
+    "endMs": 4320,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " عفوَكَ",
+    "startMs": 4320,
+    "endMs": 4920,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " أعظمُ",
+    "startMs": 4920,
+    "endMs": 5670,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " إنْ",
+    "startMs": 6770,
+    "endMs": 6900,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " كانَ",
+    "startMs": 6900,
+    "endMs": 7040,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " لا",
+    "startMs": 7040,
+    "endMs": 7260,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " يرجوكَ",
+    "startMs": 7260,
+    "endMs": 7780,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " إلّا",
+    "startMs": 7780,
+    "endMs": 8020,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " محسنٌ",
+    "startMs": 8020,
+    "endMs": 8720,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " فبمَنْ",
+    "startMs": 9510,
+    "endMs": 10060,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " يلوذُ",
+    "startMs": 10060,
+    "endMs": 10520,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " ويستجيرُ",
+    "startMs": 10520,
+    "endMs": 11340,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " المجرمُ",
+    "startMs": 11340,
+    "endMs": 12000,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " أدعوكَ",
+    "startMs": 13670,
+    "endMs": 14200,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " ربِّ",
+    "startMs": 14200,
+    "endMs": 14580,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " كما",
+    "startMs": 14580,
+    "endMs": 15200,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " أمرتَ",
+    "startMs": 15200,
+    "endMs": 15620,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " تضرُّعًا",
+    "startMs": 15620,
+    "endMs": 16760,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " فإذا",
+    "startMs": 17390,
+    "endMs": 17920,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " رددتَ",
+    "startMs": 17920,
+    "endMs": 18220,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " يدي",
+    "startMs": 18220,
+    "endMs": 18700,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " فمَنْ",
+    "startMs": 19150,
+    "endMs": 19560,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " ذا",
+    "startMs": 19560,
+    "endMs": 19740,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " يرحمُ",
+    "startMs": 19740,
+    "endMs": 20240,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " ما",
+    "startMs": 21540,
+    "endMs": 21780,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " لي",
+    "startMs": 21780,
+    "endMs": 22020,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " إليكَ",
+    "startMs": 22020,
+    "endMs": 22560,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " وسيلةٌ",
+    "startMs": 22560,
+    "endMs": 23180,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " إلّا",
+    "startMs": 23180,
+    "endMs": 23500,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " الرَّجا",
+    "startMs": 23500,
+    "endMs": 23930,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " وجميلُ",
+    "startMs": 25180,
+    "endMs": 25560,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " عفوِكَ",
+    "startMs": 25560,
+    "endMs": 26300,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " ثمَّ",
+    "startMs": 26680,
+    "endMs": 26980,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " إنّي",
+    "startMs": 26980,
+    "endMs": 27420,
+    "timestampMs": null,
+    "confidence": null
+  },
+  {
+    "text": " مسلمُ",
+    "startMs": 27420,
+    "endMs": 28450,
+    "timestampMs": null,
+    "confidence": null
+  }
+]
