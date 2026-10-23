@@ -1,11 +1,11 @@
 import React from "react";
 import { AbsoluteFill, interpolate } from "remotion";
-import { HighlightBox } from "../components/HighlightBox";
-import { Ornament } from "../components/Ornament";
-import { Words } from "../components/Words";
+import { HighlightBox } from "../../components/HighlightBox";
+import { Ornament } from "../../components/Ornament";
+import { Words } from "../../components/Words";
 import { INTRO } from "../script";
-import { CLAMP, COLORS, EASE_IN, EASE_IN_OUT } from "../theme";
-import { useUnit, useVoiceTime } from "../time";
+import { CLAMP, COLORS, EASE_IN, EASE_IN_OUT } from "../../theme";
+import { useUnit, useVoiceTime } from "../../time";
 
 // Ouverture bordeaux : « التوبة » seul au centre, puis il remonte pour laisser
 // place à « لها ثلاثة شروط » et à l'encadré sable.

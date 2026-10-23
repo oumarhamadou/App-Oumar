@@ -1,12 +1,13 @@
 import React from "react";
 import { AbsoluteFill, interpolate } from "remotion";
-import { BLINDS } from "../script";
 import { CLAMP, COLORS, EASE_IN_OUT } from "../theme";
 import { useUnit, useVoiceTime } from "../time";
 
 // Volets verticaux bordeaux : ils se ferment de droite à gauche sur la scène crème
 // puis s'ouvrent sur la scène pêche (reprend les bandes noires de la référence).
-export const Blinds: React.FC = () => {
+export const Blinds: React.FC<{ start: number; mid: number; end: number }> = (
+  BLINDS,
+) => {
   const t = useVoiceTime(BLINDS.start);
   const { portrait } = useUnit();
   const count = portrait ? 6 : 9;

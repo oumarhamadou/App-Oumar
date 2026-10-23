@@ -1,10 +1,10 @@
 import React from "react";
 import { AbsoluteFill, interpolate } from "remotion";
-import { Ornament } from "../components/Ornament";
-import { Words } from "../components/Words";
+import { Ornament } from "../../components/Ornament";
+import { Words } from "../../components/Words";
 import { OUTRO } from "../script";
-import { CLAMP, COLORS, EASE_IN_OUT, EASE_OUT, fontFamily } from "../theme";
-import { useUnit, useVoiceTime } from "../time";
+import { CLAMP, COLORS, EASE_IN_OUT, EASE_OUT, fontFamily } from "../../theme";
+import { useUnit, useVoiceTime } from "../../time";
 
 // Carte récapitulative : les quatre conditions d'un coup d'œil (bon pour les captures d'écran).
 export const OutroScene: React.FC = () => {

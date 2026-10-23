@@ -1,6 +1,6 @@
 import React from "react";
 import { interpolate } from "remotion";
-import type { Word } from "../script";
+import type { Word } from "../text";
 import { CLAMP, EASE_OUT, fontFamily } from "../theme";
 import { useUnit } from "../time";
 

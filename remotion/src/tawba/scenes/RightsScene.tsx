@@ -1,10 +1,10 @@
 import React from "react";
 import { AbsoluteFill, interpolate } from "remotion";
-import { HighlightBox } from "../components/HighlightBox";
-import { Words } from "../components/Words";
+import { HighlightBox } from "../../components/HighlightBox";
+import { Words } from "../../components/Words";
 import { RIGHTS } from "../script";
-import { CLAMP, COLORS, EASE_IN } from "../theme";
-import { useUnit, useVoiceTime } from "../time";
+import { CLAMP, COLORS, EASE_IN } from "../../theme";
+import { useUnit, useVoiceTime } from "../../time";
 
 // Fond pêche, encadré bordeaux « إذا كان الذنب متعلقًا بحقوق الآخرين ! ».
 // Sortie en zoom arrière flouté qui laisse place à la quatrième condition.

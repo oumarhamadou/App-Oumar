@@ -1,7 +1,7 @@
 # Script de montage — « التوبة » (les conditions du repentir)
 
 Durée : 26,1 s · 30 i/s · 16:9 (1920×1080) et 9:16 (1080×1920)
-Voix : piste audio de la vidéo de référence (`public/voix.m4a`), placée à 0,5 s.
+Voix : piste audio de la vidéo de référence (`public/tawba/voix.m4a`), placée à 0,5 s.
 
 ## Charte reprise de la référence
 

@@ -1,11 +1,11 @@
 import React from "react";
 import { AbsoluteFill, interpolate } from "remotion";
-import { Divider } from "../components/Ornament";
-import { Watermark } from "../components/Watermark";
-import { Words } from "../components/Words";
+import { Divider } from "../../components/Ornament";
+import { Watermark } from "../../components/Watermark";
+import { Words } from "../../components/Words";
 import { CONDITIONS, CONDITIONS_SCENE, type Condition } from "../script";
-import { CLAMP, COLORS, EASE_IN, EASE_IN_OUT, fontFamily } from "../theme";
-import { useUnit, useVoiceTime } from "../time";
+import { CLAMP, COLORS, EASE_IN, EASE_IN_OUT, fontFamily } from "../../theme";
+import { useUnit, useVoiceTime } from "../../time";
 
 const ConditionBlock: React.FC<{
   condition: Condition;

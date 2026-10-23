@@ -1,35 +1,16 @@
 // Script minuté de la vidéo « التوبة ».
 //
-// Tous les temps sont en secondes dans la piste voix (public/voix.m4a) :
+// Tous les temps sont en secondes dans la piste voix (public/tawba/voix.m4a) :
 // chaque mot apparaît à l'instant où il est prononcé. Les temps ont été
 // relevés par détection de voix + transcription Whisper sur la voix.
 //
 // Pour monter une autre vidéo dans le même style : remplacer voix.m4a,
 // réécrire les textes ci-dessous et recaler les temps « at ».
 
-export type Word = {
-  text: string;
-  at: number;
-  accent?: boolean;
-  mark?: "underline";
-  // Retour à la ligne forcé avant ce mot, en vertical uniquement.
-  breakPortrait?: boolean;
-};
-
-const w = (
-  text: string,
-  at: number,
-  accent?: boolean,
-  mark?: Word["mark"],
-): Word => ({ text, at, accent, mark });
-
-// Même mot, avec un retour à la ligne avant lui dans la version verticale.
-const br = (word: Word): Word => ({ ...word, breakPortrait: true });
+import { br, w, type Word } from "../text";
 
 export const VOICE = {
-  file: "voix.m4a",
-  // Silence ajouté avant la voix pour laisser respirer l'ouverture.
-  offset: 0.5,
+  file: "tawba/voix.m4a",
   duration: 22.36,
 };
 

@@ -7,8 +7,8 @@ import {
   staticFile,
   useVideoConfig,
 } from "remotion";
-import { Blinds } from "./components/Blinds";
-import { Texture } from "./components/Texture";
+import { Blinds } from "../components/Blinds";
+import { Texture } from "../components/Texture";
 import { ConditionsScene } from "./scenes/ConditionsScene";
 import { FourthScene } from "./scenes/FourthScene";
 import { IntroScene } from "./scenes/IntroScene";
@@ -23,12 +23,8 @@ import {
   RIGHTS,
   VOICE,
 } from "./script";
-import { CLAMP, COLORS } from "./theme";
-import { voiceToFrame } from "./time";
-
-// Nombre d'images entre deux instants de la voix.
-export const span = (start: number, end: number, fps: number) =>
-  voiceToFrame(end, fps) - voiceToFrame(start, fps);
+import { CLAMP, COLORS } from "../theme";
+import { span, voiceToFrame } from "../time";
 
 export const Tawba: React.FC = () => {
   const { fps } = useVideoConfig();
@@ -90,7 +86,7 @@ export const Tawba: React.FC = () => {
         from={at(BLINDS.start)}
         durationInFrames={span(BLINDS.start, BLINDS.end, fps)}
       >
-        <Blinds />
+        <Blinds start={BLINDS.start} mid={BLINDS.mid} end={BLINDS.end} />
       </Sequence>
       <Texture />
     </AbsoluteFill>

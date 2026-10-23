@@ -1,10 +1,10 @@
 import React from "react";
 import { AbsoluteFill, interpolate } from "remotion";
-import { Watermark } from "../components/Watermark";
-import { Words } from "../components/Words";
+import { Watermark } from "../../components/Watermark";
+import { Words } from "../../components/Words";
 import { FOURTH } from "../script";
-import { CLAMP, COLORS, EASE_OUT } from "../theme";
-import { useUnit, useVoiceTime } from "../time";
+import { CLAMP, COLORS, EASE_OUT } from "../../theme";
+import { useUnit, useVoiceTime } from "../../time";
 
 // La quatrième condition arrive en zoom avant (comme la référence),
 // avec un « ٤ » en filigrane et « رابع » souligné.

@@ -1,10 +1,10 @@
 import React from "react";
 import { Composition, Folder } from "remotion";
-import { ConditionsScene } from "./scenes/ConditionsScene";
-import { FourthScene } from "./scenes/FourthScene";
-import { IntroScene } from "./scenes/IntroScene";
-import { OutroScene } from "./scenes/OutroScene";
-import { RightsScene } from "./scenes/RightsScene";
+import { ConditionsScene } from "./tawba/scenes/ConditionsScene";
+import { FourthScene } from "./tawba/scenes/FourthScene";
+import { IntroScene } from "./tawba/scenes/IntroScene";
+import { OutroScene } from "./tawba/scenes/OutroScene";
+import { RightsScene } from "./tawba/scenes/RightsScene";
 import {
   CONDITIONS_SCENE,
   FOURTH,
@@ -12,8 +12,11 @@ import {
   OUTRO,
   RIGHTS,
   VIDEO_END,
-} from "./script";
-import { span, Tawba } from "./Tawba";
+} from "./tawba/script";
+import { Daira } from "./daira/Daira";
+import { VIDEO_END as DAIRA_END } from "./daira/script";
+import { Tawba } from "./tawba/Tawba";
+import { span } from "./time";
 
 const FPS = 30;
 
@@ -34,6 +37,23 @@ export const RemotionRoot: React.FC = () => {
         id="Tawba-Vertical"
         component={Tawba}
         durationInFrames={span(-0.5, VIDEO_END, FPS)}
+        fps={FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* Vidéo « الدائرة » pour Inspi Story, avec le logo en fin. */}
+      <Composition
+        id="Daira"
+        component={Daira}
+        durationInFrames={span(-0.5, DAIRA_END, FPS)}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Daira-Vertical"
+        component={Daira}
+        durationInFrames={span(-0.5, DAIRA_END, FPS)}
         fps={FPS}
         width={1080}
         height={1920}
