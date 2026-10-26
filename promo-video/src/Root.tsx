@@ -1,60 +1,95 @@
 import React from "react";
+import { ALL_FORMATS, Input, UrlSource } from "mediabunny";
 import {
   CalculateMetadataFunction,
   Composition,
   Folder,
   staticFile,
 } from "remotion";
-import { Promo, PROMO_DURATION } from "./Promo";
-import { Cta, CTA_DURATION } from "./scenes/Cta";
-import { Hook, HOOK_DURATION } from "./scenes/Hook";
-import { Intro, INTRO_DURATION } from "./scenes/Intro";
-import { Reels, REELS_DURATION } from "./scenes/Reels";
-import { defaultPromoProps, PromoProps, promoSchema } from "./schema";
+import { Promo } from "./Promo";
+import { Cta } from "./scenes/Cta";
+import { Hook } from "./scenes/Hook";
+import { Intro } from "./scenes/Intro";
+import { Reels } from "./scenes/Reels";
+import { frProps, PromoProps, promoSchema, ruProps } from "./schema";
 import "./theme";
+import {
+  CTA_DURATION,
+  HOOK_DURATION,
+  INTRO_DURATION,
+  PROMO_DURATION,
+  REELS_DURATION,
+} from "./timeline";
 
-const exists = async (path: string) => {
+/** Width / height of a video in public/, or 0 when the file is missing. */
+const aspectOf = async (path: string) => {
   try {
-    const res = await fetch(staticFile(path), { method: "HEAD" });
-    return res.ok;
+    const input = new Input({
+      formats: ALL_FORMATS,
+      source: new UrlSource(staticFile(path)),
+    });
+    const track = await input.getPrimaryVideoTrack();
+    return track ? track.displayWidth / track.displayHeight : 0;
   } catch {
-    return false;
+    return 0;
   }
 };
 
-// Reels are optional: drop reel-1.mp4 / reel-2.mp4 into public/reels/ and they appear.
+// Portfolio videos are optional: drop reel-1.mp4 / reel-2.mp4 into public/reels/ and they appear.
 const detectReels: CalculateMetadataFunction<PromoProps> = async ({
   props,
 }) => ({
   props: {
     ...props,
-    hasReel1: await exists(props.reel1),
-    hasReel2: await exists(props.reel2),
+    reel1Aspect: await aspectOf(props.reel1),
+    reel2Aspect: await aspectOf(props.reel2),
   },
 });
 
 export const RemotionRoot: React.FC = () => (
   <>
     <Composition
-      id="OumarPromo"
+      id="Oumar-RU"
       component={Promo}
       durationInFrames={PROMO_DURATION}
       fps={30}
       width={1920}
       height={1080}
       schema={promoSchema}
-      defaultProps={defaultPromoProps}
+      defaultProps={ruProps}
       calculateMetadata={detectReels}
     />
     <Composition
-      id="OumarPromoVertical"
+      id="Oumar-RU-Vertical"
       component={Promo}
       durationInFrames={PROMO_DURATION}
       fps={30}
       width={1080}
       height={1920}
       schema={promoSchema}
-      defaultProps={defaultPromoProps}
+      defaultProps={ruProps}
+      calculateMetadata={detectReels}
+    />
+    <Composition
+      id="Oumar-FR"
+      component={Promo}
+      durationInFrames={PROMO_DURATION}
+      fps={30}
+      width={1920}
+      height={1080}
+      schema={promoSchema}
+      defaultProps={frProps}
+      calculateMetadata={detectReels}
+    />
+    <Composition
+      id="Oumar-FR-Vertical"
+      component={Promo}
+      durationInFrames={PROMO_DURATION}
+      fps={30}
+      width={1080}
+      height={1920}
+      schema={promoSchema}
+      defaultProps={frProps}
       calculateMetadata={detectReels}
     />
     <Folder name="Scenes">
@@ -66,7 +101,7 @@ export const RemotionRoot: React.FC = () => (
         width={1920}
         height={1080}
         schema={promoSchema}
-        defaultProps={defaultPromoProps}
+        defaultProps={ruProps}
       />
       <Composition
         id="Intro"
@@ -76,7 +111,7 @@ export const RemotionRoot: React.FC = () => (
         width={1920}
         height={1080}
         schema={promoSchema}
-        defaultProps={defaultPromoProps}
+        defaultProps={ruProps}
       />
       <Composition
         id="Reels"
@@ -86,7 +121,7 @@ export const RemotionRoot: React.FC = () => (
         width={1920}
         height={1080}
         schema={promoSchema}
-        defaultProps={defaultPromoProps}
+        defaultProps={ruProps}
         calculateMetadata={detectReels}
       />
       <Composition
@@ -97,7 +132,7 @@ export const RemotionRoot: React.FC = () => (
         width={1920}
         height={1080}
         schema={promoSchema}
-        defaultProps={defaultPromoProps}
+        defaultProps={ruProps}
       />
     </Folder>
   </>

@@ -12,8 +12,7 @@ import { GradientLine, Words } from "../components/Text";
 import { PillButton } from "../components/UI";
 import { C, DISPLAY, TEXT } from "../theme";
 import type { PromoProps } from "../schema";
-
-export const CTA_DURATION = 210;
+import { CTA_DURATION } from "../timeline";
 
 export const Cta: React.FC<PromoProps> = ({
   ctaLine1,

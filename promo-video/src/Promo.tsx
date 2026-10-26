@@ -1,27 +1,23 @@
 import React from "react";
 import { linearTiming, TransitionSeries } from "@remotion/transitions";
 import { AbsoluteFill, Easing } from "remotion";
-import { Cta, CTA_DURATION } from "./scenes/Cta";
-import { Hook, HOOK_DURATION } from "./scenes/Hook";
-import { Intro, INTRO_DURATION } from "./scenes/Intro";
-import { Reels, REELS_DURATION } from "./scenes/Reels";
-import { Sound } from "./Sound";
-import { depthDissolve, orbWipe } from "./transitions";
 import { fade } from "@remotion/transitions/fade";
+import { Cta } from "./scenes/Cta";
+import { Hook } from "./scenes/Hook";
+import { Intro } from "./scenes/Intro";
+import { Reels } from "./scenes/Reels";
+import { Sound } from "./Sound";
 import type { PromoProps } from "./schema";
-
-const ORB_WIPE = 24;
-const INTO_REELS = 12;
-const INTO_CTA = 20;
-
-export const PROMO_DURATION =
-  HOOK_DURATION +
-  INTRO_DURATION +
-  REELS_DURATION +
-  CTA_DURATION -
-  ORB_WIPE -
-  INTO_REELS -
-  INTO_CTA;
+import {
+  CTA_DURATION,
+  HOOK_DURATION,
+  INTO_CTA,
+  INTO_REELS,
+  INTRO_DURATION,
+  ORB_WIPE,
+  REELS_DURATION,
+} from "./timeline";
+import { depthDissolve, orbWipe } from "./transitions";
 
 export const Promo: React.FC<PromoProps> = (props) => (
   <AbsoluteFill style={{ backgroundColor: "#000" }}>

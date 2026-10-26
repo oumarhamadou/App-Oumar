@@ -10,8 +10,7 @@ import { Aurora } from "../components/Backgrounds";
 import { GradientLine, Words } from "../components/Text";
 import { C, DISPLAY } from "../theme";
 import type { PromoProps } from "../schema";
-
-export const HOOK_DURATION = 105;
+import { HOOK_DURATION } from "../timeline";
 
 /** Where the glowing orb sits; the next scene opens out of it. */
 export const orbPosition = (w: number, h: number): [number, number] =>
@@ -64,7 +63,7 @@ export const Hook: React.FC<PromoProps> = ({ hookLine1, hookLine2 }) => {
           style={{
             fontFamily: DISPLAY,
             fontWeight: 700,
-            fontSize: v ? 168 : 176,
+            fontSize: v ? 150 : 176,
             lineHeight: 1.02,
             letterSpacing: "-0.045em",
             textAlign: "center",

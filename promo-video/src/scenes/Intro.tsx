@@ -15,7 +15,6 @@ import { Chip, Cursor, LiveDot, PillButton } from "../components/UI";
 import { C, DISPLAY, TEXT } from "../theme";
 import type { PromoProps } from "../schema";
 
-export const INTRO_DURATION = 236;
 export const INTRO_CLICK = 190;
 
 // Every position is laid out by hand so the camera can aim at exact points.
@@ -120,19 +119,22 @@ export const Intro: React.FC<PromoProps> = ({
               <Avatar size={L.avatar.size} start={26} />
             </div>
 
-            <Chip
-              start={96}
+            {/* Zero-width anchor keeps the badge centred under the portrait whatever its text. */}
+            <div
               style={{
+                position: "absolute",
                 left: L.status.x,
                 top: L.status.y,
-                marginLeft: -150,
-                minWidth: 300,
+                width: 0,
+                display: "flex",
                 justifyContent: "center",
               }}
             >
-              <LiveDot size={16} />
-              {availability}
-            </Chip>
+              <Chip start={96} style={{ position: "relative" }}>
+                <LiveDot size={16} />
+                {availability}
+              </Chip>
+            </div>
 
             <div
               style={{
