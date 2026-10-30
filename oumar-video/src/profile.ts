@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const profileSchema = z.object({
+  handle: z.string(),
   name: z.string(),
   posts: z.number(),
   followers: z.number(),

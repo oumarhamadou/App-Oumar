@@ -6,6 +6,7 @@ import {
   interpolate,
   staticFile,
   useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
 import { GridBg } from "../components/GridBg";
 import { Line, Word } from "../components/Reveal";
@@ -84,6 +85,9 @@ const Stat: React.FC<{ at: number; value: number; label: string }> = ({
 
 export const S4Profile: React.FC<{ profile: Profile }> = ({ profile }) => {
   const frame = useCurrentFrame();
+  const { width, height } = useVideoConfig();
+  const cx = width / 2;
+  const cy = height / 2;
 
   // Camera
   const push = interpolate(frame, [72, 104], [1, 1.08], { ...clamp, easing: easeInOut });
@@ -100,10 +104,10 @@ export const S4Profile: React.FC<{ profile: Profile }> = ({ profile }) => {
   const flood = interpolate(frame, [136, 152], [0, 1], { ...clamp, easing: expoInOut });
   const w0 = lerp(220, CARD.w, grow) * s;
   const h0 = lerp(220, CARD.h, grow) * s;
-  const left = lerp(540 + tx - w0 / 2, 0, flood);
-  const top = lerp(960 + ty - h0 / 2, 0, flood);
-  const width = lerp(w0, 1080, flood);
-  const height = lerp(h0, 1920, flood);
+  const left = lerp(cx + tx - w0 / 2, 0, flood);
+  const top = lerp(cy + ty - h0 / 2, 0, flood);
+  const cardW = lerp(w0, width, flood);
+  const cardH = lerp(h0, height, flood);
   const radius = lerp(lerp(64, CARD.r, grow) * s, 0, flood);
 
   // Tap on Follow
@@ -125,15 +129,15 @@ export const S4Profile: React.FC<{ profile: Profile }> = ({ profile }) => {
           position: "absolute",
           left,
           top,
-          width,
-          height,
+          width: cardW,
+          height: cardH,
           borderRadius: radius,
           overflow: "hidden",
           opacity: interpolate(frame, [18, 20], [0, 1], clamp),
           boxShadow: `0 ${40 * (1 - flood)}px ${110 * (1 - flood)}px rgba(10,80,30,${0.28 * (1 - flood)})`,
         }}
       >
-        <div style={{ position: "absolute", left: -left, top: -top, width: 1080, height: 1920 }}>
+        <div style={{ position: "absolute", left: -left, top: -top, width, height }}>
           <GridBg variant="green" frameOffset={START} />
         </div>
       </div>
@@ -142,8 +146,8 @@ export const S4Profile: React.FC<{ profile: Profile }> = ({ profile }) => {
       <div
         style={{
           position: "absolute",
-          left: 540 - 120,
-          top: 960 - 120,
+          left: cx - 120,
+          top: cy - 120,
           opacity:
             interpolate(frame, [4, 6], [0, 1], clamp) *
             interpolate(frame, [24, 34], [1, 0], clamp),
@@ -164,8 +168,8 @@ export const S4Profile: React.FC<{ profile: Profile }> = ({ profile }) => {
       <div
         style={{
           position: "absolute",
-          left: 540 - CARD.w / 2,
-          top: 960 - CARD.h / 2,
+          left: cx - CARD.w / 2,
+          top: cy - CARD.h / 2,
           width: CARD.w,
           height: CARD.h,
           scale: `${s}`,
@@ -179,9 +183,9 @@ export const S4Profile: React.FC<{ profile: Profile }> = ({ profile }) => {
                 at={30}
                 space={false}
                 tint="#FFFFFF"
-                style={{ fontSize: 56, fontWeight: 800, letterSpacing: "-0.045em", color: "#0B0B0C" }}
+                style={{ fontSize: 50, fontWeight: 800, letterSpacing: "-0.035em", color: "#0B0B0C" }}
               >
-                {profile.name}
+                {profile.handle}
               </Word>
             </Line>
           </div>
@@ -209,12 +213,19 @@ export const S4Profile: React.FC<{ profile: Profile }> = ({ profile }) => {
             />
             <Stat at={48} value={profile.following} label="подписки" />
           </div>
-          <div style={{ position: "absolute", left: AVATAR.left, top: 344, fontSize: 38, fontWeight: 500, letterSpacing: "-0.02em" }}>
-            {profile.bio.split(" ").map((word, i, all) => (
-              <Word key={i} at={54 + i * 2} tint="#FFFFFF" space={i < all.length - 1} style={{ color: "#0B0B0C" }}>
-                {word}
+          <div style={{ position: "absolute", left: AVATAR.left, top: 330, fontSize: 38, letterSpacing: "-0.02em", lineHeight: 1.25 }}>
+            <div>
+              <Word at={52} tint="#FFFFFF" space={false} style={{ color: "#0B0B0C", fontWeight: 800 }}>
+                {profile.name}
               </Word>
-            ))}
+            </div>
+            <div style={{ fontWeight: 500 }}>
+              {profile.bio.split(" ").map((word, i, all) => (
+                <Word key={i} at={56 + i * 2} tint="#FFFFFF" space={i < all.length - 1} style={{ color: "#0B0B0C" }}>
+                  {word}
+                </Word>
+              ))}
+            </div>
           </div>
           {/* Message button */}
           <div

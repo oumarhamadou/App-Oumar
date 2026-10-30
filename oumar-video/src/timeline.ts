@@ -28,21 +28,15 @@ const followCx = FOLLOW.left + FOLLOW.w / 2 - CARD.w / 2;
 const followCy = FOLLOW.top + FOLLOW.h / 2 - CARD.h / 2;
 export const ZOOM_SHIFT = { x: -followCx * ZOOM, y: -followCy * ZOOM };
 
-// Screen-space hand-off values (1080×1920 frame, centre 540/960).
+// Hand-off values, relative to the frame centre (works for 9:16 and 16:9).
 export const PILL = {
   w: FOLLOW.w * ZOOM,
   h: FOLLOW.h * ZOOM,
   r: FOLLOW.r * ZOOM,
   font: FOLLOW.font * ZOOM,
 };
-export const AVATAR_ON_SCREEN = {
-  x:
-    540 +
-    ZOOM_SHIFT.x +
-    (AVATAR.left + AVATAR.size / 2 - CARD.w / 2) * ZOOM,
-  y:
-    960 +
-    ZOOM_SHIFT.y +
-    (AVATAR.top + AVATAR.size / 2 - CARD.h / 2) * ZOOM,
+export const AVATAR_ZOOMED = {
+  dx: ZOOM_SHIFT.x + (AVATAR.left + AVATAR.size / 2 - CARD.w / 2) * ZOOM,
+  dy: ZOOM_SHIFT.y + (AVATAR.top + AVATAR.size / 2 - CARD.h / 2) * ZOOM,
   size: AVATAR.size * ZOOM,
 };

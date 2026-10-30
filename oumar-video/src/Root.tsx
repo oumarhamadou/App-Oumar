@@ -21,6 +21,26 @@ export const RemotionRoot: React.FC = () => {
         schema={z.object({ profile: profileSchema })}
         defaultProps={{
           profile: {
+            handle: "oumar_hamadou",
+            name: "Oumar",
+            posts: 14,
+            followers: 2077,
+            following: 633,
+            bio: "Ты становишься тем, что повторяешь ⚡",
+          },
+        }}
+      />
+      <Composition
+        id="OumarReelHorizontal"
+        component={OumarReel}
+        width={1920}
+        height={1080}
+        fps={30}
+        durationInFrames={544}
+        schema={z.object({ profile: profileSchema })}
+        defaultProps={{
+          profile: {
+            handle: "oumar_hamadou",
             name: "Oumar",
             posts: 14,
             followers: 2077,
@@ -42,6 +62,7 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={152}
           defaultProps={{
             profile: {
+              handle: "oumar_hamadou",
               name: "Oumar",
               posts: 14,
               followers: 2077,
@@ -59,6 +80,7 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={192}
           defaultProps={{
             profile: {
+              handle: "oumar_hamadou",
               name: "Oumar",
               posts: 14,
               followers: 2077,
