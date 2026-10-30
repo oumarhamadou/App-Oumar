@@ -9,7 +9,7 @@ const looks: Record<
 > = {
   white: {
     base: "#FFFFFF",
-    line: "rgba(29,29,31,0.065)",
+    line: "rgba(29,29,31,0.07)",
     glow: "radial-gradient(ellipse 75% 60% at 50% 50%, rgba(255,255,255,0) 35%, rgba(245,245,247,0.95) 100%)",
     drift: 0,
   },
@@ -27,11 +27,14 @@ const looks: Record<
   },
 };
 
-export const GridBg: React.FC<{ variant: Variant; cell?: number }> = ({
-  variant,
-  cell = 60,
-}) => {
-  const frame = useCurrentFrame();
+// frameOffset keeps the drift continuous when the same grid is drawn by two
+// consecutive scenes (pass the scene's start frame).
+export const GridBg: React.FC<{
+  variant: Variant;
+  cell?: number;
+  frameOffset?: number;
+}> = ({ variant, cell = 60, frameOffset = 0 }) => {
+  const frame = useCurrentFrame() + frameOffset;
   const look = looks[variant];
   const offset = frame * look.drift;
 
