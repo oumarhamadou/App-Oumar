@@ -5,8 +5,10 @@ export type Lang = "fr" | "ru";
 export type Copy = {
   // Hook: each inner array is one line; the last word gets the "difference" box.
   hook: string[][];
+  hookWide: string[][]; // same words, split for the 16:9 canvas
   hookAccent: string; // word painted green
   play: string[][]; // last word = the "play" word that becomes the list header
+  playWide: string[][];
   services: string[];
   cards: {
     timeline: string;
@@ -31,8 +33,10 @@ export type Copy = {
 export const COPY: Record<Lang, Copy> = {
   fr: {
     hook: [["Le", "montage,"], ["c'est", "comme"], ["un", "jeu."]],
+    hookWide: [["Le", "montage,"], ["c'est", "comme", "un", "jeu."]],
     hookAccent: "montage,",
     play: [["Et", "oui,"], ["j'adore"], ["jouer."]],
+    playWide: [["Et", "oui,", "j'adore"], ["jouer."]],
     services: [
       "Montage vidéo",
       "Motion design",
@@ -66,8 +70,10 @@ export const COPY: Record<Lang, Copy> = {
   },
   ru: {
     hook: [["Монтаж", "—"], ["это", "как"], ["игра."]],
+    hookWide: [["Монтаж", "—"], ["это", "как", "игра."]],
     hookAccent: "Монтаж",
     play: [["И", "да,"], ["я", "обожаю"], ["играть."]],
+    playWide: [["И", "да,", "я", "обожаю"], ["играть."]],
     services: [
       "Видеомонтаж",
       "Моушн-дизайн",

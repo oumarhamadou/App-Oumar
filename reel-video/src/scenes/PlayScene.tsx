@@ -2,25 +2,29 @@ import React from "react";
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { KineticWord } from "../components/KineticWord";
 import { COPY, LangProps } from "../i18n";
+import { useLayout } from "../layout";
 import { CLAMP, COLORS, EASE_IN, EASE_IN_OUT, EASE_OUT, fontFamily } from "../theme";
 import { playTiming } from "../timings";
 import { FONT_SIZE, LINE_GAP } from "./HookScene";
 
-const HEADER_Y = 560;
 const HEADER_SCALE = 0.62;
-const WHEEL_Y = 1110;
 const R = 430; // wheel radius
 const SPACING = 17; // degrees between items
 
 export const PlayScene: React.FC<LangProps> = ({ lang }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const { wide, cx, cy } = useLayout();
   const copy = COPY[lang];
-  const words = copy.play.flat();
+  const lines = wide ? copy.playWide : copy.play;
+  const words = lines.flat();
   const n = words.length;
   const t = playTiming(n);
-  const lineTop = (i: number) => 960 + (i - (copy.play.length - 1) / 2) * LINE_GAP;
-  const lastLine = copy.play.length - 1;
+  const lineTop = (i: number) => cy + (i - (lines.length - 1) / 2) * LINE_GAP;
+  const lastLine = lines.length - 1;
+  // Vertical: header on top, wheel below. Horizontal: header left, wheel right (like the reference).
+  const header = wide ? { x: 400, y: cy } : { x: cx, y: 560 };
+  const wheel = wide ? { x: 1190, y: cy } : { x: cx, y: 1110 };
 
   // Header move of the last word ("jouer.")
   const move = interpolate(frame, [t.headerMove[0], t.headerMove[1]], [0, 1], { ...CLAMP, easing: EASE_IN_OUT });
@@ -40,7 +44,7 @@ export const PlayScene: React.FC<LangProps> = ({ lang }) => {
     <AbsoluteFill style={{ fontFamily, letterSpacing: "-0.04em" }}>
       {/* Sentence */}
       <AbsoluteFill style={{ fontSize: FONT_SIZE, fontWeight: 600 }}>
-        {copy.play.map((line, li) => (
+        {lines.map((line, li) => (
           <div
             key={li}
             style={{
@@ -64,7 +68,7 @@ export const PlayScene: React.FC<LangProps> = ({ lang }) => {
                     style={{
                       display: "inline-block",
                       position: "relative",
-                      translate: `0px ${move * (HEADER_Y - lineTop(li))}px`,
+                      translate: `${move * (header.x - cx)}px ${move * (header.y - lineTop(li))}px`,
                       scale: 1 - move * (1 - HEADER_SCALE),
                       opacity: 1 - exit,
                       filter: `blur(${exit * 10}px)`,
@@ -115,8 +119,8 @@ export const PlayScene: React.FC<LangProps> = ({ lang }) => {
       <div
         style={{
           position: "absolute",
-          left: 0,
-          top: WHEEL_Y,
+          left: wheel.x - 540,
+          top: wheel.y,
           width: 1080,
           height: 0,
           rotate: "-5deg",

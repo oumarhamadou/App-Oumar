@@ -55,6 +55,7 @@ export const outroTiming = {
   turns: [30, 45, 58],
   merge: 64,
   reveal: 75,
+  avatarMove: [80, 98] as const, // horizontal only: photo slides left
   nameDiffIn: 92,
   nameDiffOut: 110,
   handle: 112,

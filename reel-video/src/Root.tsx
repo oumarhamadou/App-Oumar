@@ -35,6 +35,26 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={fr}
       />
 
+      {/* Horizontal versions (16:9) */}
+      <Composition
+        id="Horizontal-RU-Instagram"
+        component={Reel}
+        durationInFrames={TOTAL_FRAMES}
+        fps={FPS}
+        width={HEIGHT}
+        height={WIDTH}
+        defaultProps={ru}
+      />
+      <Composition
+        id="Horizontal-FR-Facebook"
+        component={Reel}
+        durationInFrames={TOTAL_FRAMES}
+        fps={FPS}
+        width={HEIGHT}
+        height={WIDTH}
+        defaultProps={fr}
+      />
+
       {/* Individual scenes, connected to the timelines above */}
       <Folder name="Scenes">
         <Composition id="Hook" component={HookScene} durationInFrames={120} fps={FPS} width={WIDTH} height={HEIGHT} defaultProps={fr} />

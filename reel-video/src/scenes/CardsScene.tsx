@@ -14,6 +14,7 @@ import {
   UICard,
 } from "../components/Cards";
 import { COPY, LangProps } from "../i18n";
+import { useLayout } from "../layout";
 import { CLAMP, EASE_IN, fontFamily } from "../theme";
 import { cardsTiming } from "../timings";
 
@@ -24,6 +25,7 @@ const STEP = 36; // 10 cards around
 export const CardsScene: React.FC<LangProps> = ({ lang }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const { wide, cx, cy } = useLayout();
   const copy = COPY[lang];
 
   const cards: React.ReactNode[] = [
@@ -59,7 +61,7 @@ export const CardsScene: React.FC<LangProps> = ({ lang }) => {
     <AbsoluteFill style={{ fontFamily }}>
       <AbsoluteFill
         style={{
-          scale: 1 - collapse * 0.88,
+          scale: (wide ? 0.8 : 1) * (1 - collapse * 0.88),
           opacity: 1 - collapse,
           rotate: `${collapse * -25}deg`,
           filter: `blur(${collapse * 8}px)`,
@@ -73,8 +75,8 @@ export const CardsScene: React.FC<LangProps> = ({ lang }) => {
               key={i}
               style={{
                 position: "absolute",
-                left: 540 - CARD_W / 2,
-                top: 960 - CARD_H / 2,
+                left: cx - CARD_W / 2,
+                top: cy - CARD_H / 2,
                 width: CARD_W,
                 height: CARD_H,
                 transform: `perspective(${PERSPECTIVE}px) rotateX(6deg) translateZ(${R - (1 - fly) * 900}px) rotateY(${phi}deg) translateZ(${-R}px)`,

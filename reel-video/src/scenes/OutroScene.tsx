@@ -3,18 +3,39 @@ import { AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig
 import { MacCursor, TelegramGlyph } from "../components/Icons";
 import { KineticWord } from "../components/KineticWord";
 import { COPY, LangProps } from "../i18n";
+import { useLayout } from "../layout";
 import { CLAMP, COLORS, EASE_IN, EASE_IN_OUT, EASE_OUT, fontFamily } from "../theme";
 import { outroTiming as T } from "../timings";
 
-const AV_Y = 640;
 const AV_D = 420;
 const DOT = 96;
-const NAME_Y = 985;
-const HANDLE_Y = 1100;
-const SUB_Y = 1160;
-const BTN_Y = 1282;
-const CTA_Y = 1402;
-const LINK_Y = 1484;
+
+// Vertical: one centered column. Horizontal: the photo slides to the left
+// and the text column sits on the right.
+const getLayout = (wide: boolean, cx: number, cy: number) =>
+  wide
+    ? {
+        av: { x0: cx, x1: 560, y: cy },
+        col: { x: 1270, w: 1000 },
+        nameY: 360,
+        handleY: 462,
+        subY: 520,
+        btnY: 640,
+        ctaY: 772,
+        linkY: 852,
+        cursorFrom: { x: 1880, y: 1040 },
+      }
+    : {
+        av: { x0: cx, x1: cx, y: 640 },
+        col: { x: cx, w: 960 },
+        nameY: 985,
+        handleY: 1100,
+        subY: 1160,
+        btnY: 1282,
+        ctaY: 1402,
+        linkY: 1484,
+        cursorFrom: { x: 1040, y: 1760 },
+      };
 
 const fadeUp = (frame: number, at: number) => ({
   opacity: interpolate(frame, [at, at + 10], [0, 1], CLAMP),
@@ -25,7 +46,12 @@ const fadeUp = (frame: number, at: number) => ({
 export const OutroScene: React.FC<LangProps> = ({ lang }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const { wide, cx, cy } = useLayout();
+  const L = getLayout(wide, cx, cy);
   const copy = COPY[lang];
+  const avX = interpolate(frame, [T.avatarMove[0], T.avatarMove[1]], [L.av.x0, L.av.x1], { ...CLAMP, easing: EASE_IN_OUT });
+  const AV_Y = L.av.y;
+  const colLeft = L.col.x - L.col.w / 2;
 
   // ---- Three dots choreography (outline / target / filled) ----
   const turns = [-35, -55, -110];
@@ -44,7 +70,7 @@ export const OutroScene: React.FC<LangProps> = ({ lang }) => {
   const pos = (slot: number) => {
     const a = (angle * Math.PI) / 180;
     const d = (slot - 1) * spacing;
-    return { x: 540 + Math.cos(a) * d, y: AV_Y + Math.sin(a) * d };
+    return { x: avX + Math.cos(a) * d, y: AV_Y + Math.sin(a) * d };
   };
   const pop = (i: number) => spring({ frame: frame - T.dots[i], fps, config: { damping: 10, stiffness: 200, mass: 0.6 } });
 
@@ -55,8 +81,8 @@ export const OutroScene: React.FC<LangProps> = ({ lang }) => {
   const clickRipple = interpolate(frame, [T.click, T.click + 14], [0, 1], { ...CLAMP, easing: EASE_OUT });
   const cursorT = interpolate(frame, [T.cursorIn[0], T.cursorIn[1]], [0, 1], { ...CLAMP, easing: EASE_IN_OUT });
   const cursorLeave = interpolate(frame, [T.click + 12, T.click + 26], [0, 1], { ...CLAMP, easing: EASE_IN });
-  const cx = interpolate(cursorT, [0, 1], [1040, 660]) + cursorLeave * 240;
-  const cy = interpolate(cursorT, [0, 1], [1760, BTN_Y + 6]) - Math.sin(cursorT * Math.PI) * 120 + cursorLeave * 200;
+  const curX = interpolate(cursorT, [0, 1], [L.cursorFrom.x, L.col.x + 120]) + cursorLeave * 240;
+  const curY = interpolate(cursorT, [0, 1], [L.cursorFrom.y, L.btnY + 6]) - Math.sin(cursorT * Math.PI) * 120 + cursorLeave * 200;
   const cursorScale = interpolate(frame, [T.click - 2, T.click, T.click + 5], [1, 0.82, 1], CLAMP);
 
   // ---- End: everything melts back into the background (loop-friendly) ----
@@ -76,7 +102,7 @@ export const OutroScene: React.FC<LangProps> = ({ lang }) => {
       <div
         style={{
           position: "absolute",
-          left: 540 - AV_D / 2,
+          left: avX - AV_D / 2,
           top: AV_Y - AV_D / 2,
           width: AV_D,
           height: AV_D,
@@ -89,7 +115,7 @@ export const OutroScene: React.FC<LangProps> = ({ lang }) => {
       <div
         style={{
           position: "absolute",
-          left: 540 - AV_D / 2 - 22,
+          left: avX - AV_D / 2 - 22,
           top: AV_Y - AV_D / 2 - 22,
           width: AV_D + 44,
           height: AV_D + 44,
@@ -177,9 +203,9 @@ export const OutroScene: React.FC<LangProps> = ({ lang }) => {
       <div
         style={{
           position: "absolute",
-          left: 0,
-          right: 0,
-          top: NAME_Y - 90,
+          left: colLeft,
+          width: L.col.w,
+          top: L.nameY - 90,
           height: 180,
           lineHeight: "180px",
           textAlign: "center",
@@ -193,9 +219,9 @@ export const OutroScene: React.FC<LangProps> = ({ lang }) => {
       <div
         style={{
           position: "absolute",
-          left: 0,
-          right: 0,
-          top: HANDLE_Y - 30,
+          left: colLeft,
+          width: L.col.w,
+          top: L.handleY - 30,
           textAlign: "center",
           fontSize: 44,
           fontWeight: 600,
@@ -209,9 +235,9 @@ export const OutroScene: React.FC<LangProps> = ({ lang }) => {
       <div
         style={{
           position: "absolute",
-          left: 60,
-          right: 60,
-          top: SUB_Y - 30,
+          left: colLeft,
+          width: L.col.w,
+          top: L.subY - 30,
           textAlign: "center",
           fontSize: 44,
           fontWeight: 500,
@@ -227,9 +253,9 @@ export const OutroScene: React.FC<LangProps> = ({ lang }) => {
       <div
         style={{
           position: "absolute",
-          left: 0,
-          right: 0,
-          top: BTN_Y - 52,
+          left: colLeft,
+          width: L.col.w,
+          top: L.btnY - 52,
           display: "flex",
           justifyContent: "center",
           opacity: Math.min(1, btnIn * 1.4),
@@ -287,9 +313,9 @@ export const OutroScene: React.FC<LangProps> = ({ lang }) => {
       <div
         style={{
           position: "absolute",
-          left: 0,
-          right: 0,
-          top: CTA_Y - 30,
+          left: colLeft,
+          width: L.col.w,
+          top: L.ctaY - 30,
           textAlign: "center",
           fontSize: 46,
           fontWeight: 500,
@@ -303,9 +329,9 @@ export const OutroScene: React.FC<LangProps> = ({ lang }) => {
       <div
         style={{
           position: "absolute",
-          left: 0,
-          right: 0,
-          top: LINK_Y - 50,
+          left: colLeft,
+          width: L.col.w,
+          top: L.linkY - 50,
           display: "flex",
           justifyContent: "center",
           ...fadeUp(frame, T.link),
@@ -339,8 +365,8 @@ export const OutroScene: React.FC<LangProps> = ({ lang }) => {
       <div
         style={{
           position: "absolute",
-          left: cx,
-          top: cy,
+          left: curX,
+          top: curY,
           opacity: interpolate(frame, [T.cursorIn[0], T.cursorIn[0] + 6], [0, 1], CLAMP) * (1 - cursorLeave),
           scale: cursorScale,
           transformOrigin: "top left",
