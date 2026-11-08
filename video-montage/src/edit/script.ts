@@ -74,8 +74,8 @@ export const STACKS: Stack[] = [
   {
     name: "The",
     until: 97,
-    left: 1420,
-    top: 250,
+    left: 1440,
+    top: 270,
     lines: [{ words: [{ text: "The", at: 68, style: "sm" }] }],
   },
   {
@@ -91,7 +91,7 @@ export const STACKS: Stack[] = [
   },
   {
     name: "is in the work you're avoiding",
-    until: 147,
+    until: 144,
     left: 1350,
     top: 380,
     lines: [
@@ -134,12 +134,12 @@ export type BackgroundWord = {
 };
 
 export const BACKGROUND_WORDS: BackgroundWord[] = [
-  { name: "Quote mark", text: "\u201C", from: 14, until: 66, left: 1035, top: -52, size: 2040, font: "serif" },
-  { name: "magic", text: "magic", from: 70, until: 97, left: 1150, top: 250, size: 300, font: "serif" },
+  { name: "Quote mark", text: "\u201C", from: 14, until: 66, left: 1035, top: -100, size: 2040, font: "serif" },
+  { name: "magic", text: "magic", from: 70, until: 97, left: 1325, top: 290, size: 250, font: "serif" },
 ];
 
 /** Scrolling wall of "AVOIDING" behind the speaker during the silent beat. */
-export const WALL = { from: 141, until: 170, text: "AVOIDING" };
+export const WALL = { from: 143, until: 170, text: "AVOIDING" };
 
 /**
  * Virtual camera: punch-ins and pushes on the single source shot.
@@ -189,8 +189,8 @@ export const SFX: Sfx[] = [
   { file: "pop.wav", at: 116, volume: 0.09 },
   { file: "whoosh.wav", at: 123, volume: 0.12 },
   { file: "pop.wav", at: 130, volume: 0.08 },
-  { file: "boom.wav", at: 141, volume: 0.24 },
-  { file: "riser.wav", at: 143, volume: 0.13 },
+  { file: "boom.wav", at: 143, volume: 0.24 },
+  { file: "riser.wav", at: 144, volume: 0.13 },
   { file: "swish.wav", at: 169, volume: 0.12 },
   { file: "pop.wav", at: 188, volume: 0.07 },
 ];
