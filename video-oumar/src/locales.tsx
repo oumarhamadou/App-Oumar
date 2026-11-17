@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from "react";
+import { Platform } from "./components/PlatformLogo";
 import { buildTimeline, SceneId, Timeline, Voiceover } from "./timeline";
 import frVoiceover from "./voiceover-fr.json";
 import ruVoiceover from "./voiceover-ru.json";
@@ -26,7 +27,9 @@ export type Copy = {
     line2: Tok;
     badge: string;
     title: Tok[];
-    /** Spoken words for Instagram, X, YouTube. */
+    /** The three platforms shown in the carousel, in order. */
+    items: { id: Platform; label: string }[];
+    /** Spoken word at which each platform appears. */
     platformWords: [number, number, number];
   };
   keep: { phases: { startWord: number; lines: KeepToken[][] }[] };
@@ -89,6 +92,11 @@ const FR: Copy = {
       { label: "Je", word: 4 },
       { label: "publie", word: 5 },
       { label: "sur", word: 6 },
+    ],
+    items: [
+      { id: "instagram", label: "Instagram" },
+      { id: "x", label: "X" },
+      { id: "youtube", label: "YouTube" },
     ],
     platformWords: [7, 8, 10],
   },
@@ -186,7 +194,7 @@ const RU: Copy = {
   },
   challenge: { skipChars: 2 },
   stepper: { title: "монтаж видео", countUntilWord: 2, expandWord: 4 },
-  years: { text: "Последние несколько лет", fontSize: 60 },
+  years: { text: "Последнее время", fontSize: 80 },
   prompt: {
     text: "я занимаюсь тем, что люблю больше всего: монтирую видео",
     menu: ["Сейчас", "у меня", "ноль клиентов"],
@@ -210,6 +218,11 @@ const RU: Copy = {
       { label: "Я", word: 4 },
       { label: "публикую", word: 5 },
       { label: "в", word: 6 },
+    ],
+    items: [
+      { id: "instagram", label: "Instagram" },
+      { id: "threads", label: "Threads" },
+      { id: "facebook", label: "Facebook" },
     ],
     platformWords: [7, 8, 10],
   },

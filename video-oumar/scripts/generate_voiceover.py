@@ -64,20 +64,20 @@ LANGS = {
         "pause_after_comma": 0.0,
         "pause_after_sentence": 0.1,
         "max_gap": 0.62,
-        # Let "Последние несколько лет" finish typing before the next scene.
+        # Let "Последнее время" finish typing before the next scene.
         "scene_pauses": {"years": 0.35},
         "script": [
             ("intro", "Привет, я моушн-дизайнер,"),
             ("name", "меня зовут Умар,"),
             ("challenge", "и я бросаю себе вызов:"),
             ("stepper", "заработать тысячу долларов на монтаже видео."),
-            ("years", "Последние несколько лет"),
+            ("years", "Последнее время"),
             ("prompt", "я занимаюсь тем, что люблю больше всего: монтирую видео."),
             ("dropdown", "Сейчас у меня ноль клиентов,"),
             ("segmented", "ни аудитории, ни агентства за спиной,"),
             ("messages", "только одержимость: делать видео лучше."),
-            # Cyrillic spelling so the voice says "икс" clearly; the screen still shows the logos.
-            ("platforms", "Поэтому с сегодняшнего дня я публикую в Инстаграм, Икс и Ютуб."),
+            # Cyrillic spelling so the voice pronounces the names clearly; the screen shows the logos.
+            ("platforms", "Поэтому с сегодняшнего дня я публикую в Инстаграм, Тредс и Фейсбук."),
             ("keep", "Я буду продолжать создавать, продолжать публиковать и смотреть, что будет,"),
             ("client", "пока не найду своего первого клиента."),
             ("calendar", "Честно говоря, я не знаю, сколько времени это займёт."),

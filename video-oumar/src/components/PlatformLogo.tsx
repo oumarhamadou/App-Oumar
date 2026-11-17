@@ -1,6 +1,6 @@
 import React from "react";
 
-export type Platform = "instagram" | "x" | "youtube";
+export type Platform = "instagram" | "x" | "youtube" | "threads" | "facebook";
 
 /** Simplified platform marks, drawn as SVG. */
 export const PlatformLogo: React.FC<{ platform: Platform; size: number }> = ({
@@ -33,6 +33,41 @@ export const PlatformLogo: React.FC<{ platform: Platform; size: number }> = ({
         <path d="M27 25 H40 L74 75 H61 Z" fill="white" />
         <path d="M70 25 L55 42.5 L51.5 37.5 L64.5 25 Z" fill="white" />
         <path d="M30 75 L45.5 57 L49 62 L36.5 75 Z" fill="white" />
+      </svg>
+    );
+  }
+  if (platform === "threads") {
+    return (
+      <svg width={size} height={size} viewBox="0 0 100 100">
+        <rect x="0" y="0" width="100" height="100" rx="26" fill="#0B0B0C" />
+        <text
+          x="50"
+          y="71"
+          textAnchor="middle"
+          fill="white"
+          fontSize="66"
+          fontWeight="600"
+          fontFamily="Inter, sans-serif"
+        >
+          @
+        </text>
+      </svg>
+    );
+  }
+  if (platform === "facebook") {
+    return (
+      <svg width={size} height={size} viewBox="0 0 100 100">
+        <defs>
+          <clipPath id="fb-circle">
+            <circle cx="50" cy="50" r="48" />
+          </clipPath>
+        </defs>
+        <circle cx="50" cy="50" r="48" fill="#0866FF" />
+        <path
+          clipPath="url(#fb-circle)"
+          fill="white"
+          d="M57.5 100 V61 H69.5 L71.5 47 H57.5 V38.5 C57.5 34.5 59.5 31.5 65 31.5 H72 V19.5 C69.5 19 65.5 18.5 61 18.5 C49.5 18.5 42.5 25.5 42.5 37.5 V47 H30 V61 H42.5 V100 Z"
+        />
       </svg>
     );
   }

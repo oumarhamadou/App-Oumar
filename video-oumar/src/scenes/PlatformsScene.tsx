@@ -1,25 +1,19 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { CLAMP, EASE_IN, EASE_IN_OUT, outro, pop, ramp, reveal } from "../anim";
-import { Platform, PlatformLogo } from "../components/PlatformLogo";
+import { PlatformLogo } from "../components/PlatformLogo";
 import { ChevronIcon, Cursor } from "../components/shapes";
 import { FONT } from "../fonts";
 import { useCopy, useScene } from "../locales";
 
-const PLATFORMS: { id: Platform; label: string }[] = [
-  { id: "instagram", label: "Instagram" },
-  { id: "x", label: "X" },
-  { id: "youtube", label: "YouTube" },
-];
-
 const CAROUSEL_Y = 600;
 const ARROW_OFFSET = 255;
 
-/** "Alors, à partir d'aujourd'hui, je publie sur Instagram, X et YouTube." */
+/** "Alors, à partir d'aujourd'hui, je publie sur Instagram, X et YouTube." (platforms vary by language) */
 export const PlatformsScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { words, durationInFrames } = useScene("platforms");
-  const { prefix, line1, line2, badge, title, platformWords } = useCopy().platforms;
+  const { prefix, line1, line2, badge, title, items, platformWords } = useCopy().platforms;
   const [wInstagram, wX, wYoutube] = platformWords;
   const titleStart = words[title[0].word].at;
   const tileAt = words[title[title.length - 1].word].at;
@@ -140,7 +134,7 @@ export const PlatformsScene: React.FC = () => {
             ...reveal(tile, { distance: 60 }),
           }}
         >
-          {PLATFORMS.map((p, i) => {
+          {items.map((p, i) => {
             const inP = contentIn[i];
             const outP = contentOut[i];
             return (
@@ -187,7 +181,7 @@ export const PlatformsScene: React.FC = () => {
           </div>
         ))}
         <div style={{ position: "absolute", left: 0, right: 0, top: CAROUSEL_Y + 190, height: 70 }}>
-          {PLATFORMS.map((p, i) => (
+          {items.map((p, i) => (
             <div
               key={p.id}
               style={{
