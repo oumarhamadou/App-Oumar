@@ -9,7 +9,7 @@ import { useCopy, useScene } from "../locales";
 const CAROUSEL_Y = 600;
 const ARROW_OFFSET = 255;
 
-/** "Alors, à partir d'aujourd'hui, je publie sur Instagram, X et YouTube." (platforms vary by language) */
+/** "Alors, à partir d'aujourd'hui, je publie sur Instagram, Threads et Facebook." */
 export const PlatformsScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { words, durationInFrames } = useScene("platforms");

@@ -50,7 +50,7 @@ LANGS = {
             ("dropdown", "Aujourd'hui, j'ai zéro client,"),
             ("segmented", "pas d'audience, pas d'agence derrière moi,"),
             ("messages", "juste une obsession : créer de meilleures vidéos."),
-            ("platforms", "Alors, à partir d'aujourd'hui, je publie sur Instagram, X et YouTube."),
+            ("platforms", "Alors, à partir d'aujourd'hui, je publie sur Instagram, Threads et Facebook."),
             ("keep", "Je vais continuer à créer, continuer à publier, et voir ce qui se passe,"),
             ("client", "jusqu'à décrocher mon premier client."),
             ("calendar", "Honnêtement, je ne sais pas combien de temps ça va prendre."),

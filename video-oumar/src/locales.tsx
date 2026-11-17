@@ -95,8 +95,8 @@ const FR: Copy = {
     ],
     items: [
       { id: "instagram", label: "Instagram" },
-      { id: "x", label: "X" },
-      { id: "youtube", label: "YouTube" },
+      { id: "threads", label: "Threads" },
+      { id: "facebook", label: "Facebook" },
     ],
     platformWords: [7, 8, 10],
   },

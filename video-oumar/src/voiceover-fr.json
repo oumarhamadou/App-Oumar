@@ -1,7 +1,7 @@
 {
   "lang": "fr",
   "voice": "fr-FR-RemyMultilingualNeural",
-  "durationInSeconds": 36.754,
+  "durationInSeconds": 37.12,
   "scenes": [
     {
       "id": "intro",
@@ -314,62 +314,62 @@
     },
     {
       "id": "platforms",
-      "text": "Alors, à partir d'aujourd'hui, je publie sur Instagram, X et YouTube.",
+      "text": "Alors, à partir d'aujourd'hui, je publie sur Instagram, Threads et Facebook.",
       "words": [
         {
           "text": "Alors",
           "start": 19.411,
-          "end": 19.811
+          "end": 19.823
         },
         {
           "text": "à",
-          "start": 20.042,
-          "end": 20.078
+          "start": 20.054,
+          "end": 20.09
         },
         {
           "text": "partir",
-          "start": 20.078,
-          "end": 20.406
+          "start": 20.09,
+          "end": 20.418
         },
         {
           "text": "d'aujourd'hui",
-          "start": 20.406,
-          "end": 20.988
+          "start": 20.418,
+          "end": 21.0
         },
         {
           "text": "je",
-          "start": 21.34,
-          "end": 21.449
+          "start": 21.352,
+          "end": 21.462
         },
         {
           "text": "publie",
-          "start": 21.449,
-          "end": 21.777
+          "start": 21.462,
+          "end": 21.789
         },
         {
           "text": "sur",
-          "start": 21.777,
-          "end": 21.983
+          "start": 21.789,
+          "end": 21.995
         },
         {
           "text": "Instagram",
-          "start": 21.983,
-          "end": 22.663
+          "start": 21.996,
+          "end": 22.736
         },
         {
-          "text": "X",
-          "start": 22.93,
-          "end": 23.173
+          "text": "Threads",
+          "start": 23.003,
+          "end": 23.415
         },
         {
           "text": "et",
-          "start": 23.221,
-          "end": 23.258
+          "start": 23.513,
+          "end": 23.573
         },
         {
-          "text": "YouTube",
-          "start": 23.258,
-          "end": 23.889
+          "text": "Facebook",
+          "start": 23.573,
+          "end": 24.277
         }
       ]
     },
@@ -379,73 +379,73 @@
       "words": [
         {
           "text": "Je",
-          "start": 24.585,
-          "end": 24.743
+          "start": 24.973,
+          "end": 25.131
         },
         {
           "text": "vais",
-          "start": 24.743,
-          "end": 24.84
+          "start": 25.131,
+          "end": 25.228
         },
         {
           "text": "continuer",
-          "start": 24.84,
-          "end": 25.313
+          "start": 25.228,
+          "end": 25.701
         },
         {
           "text": "à",
-          "start": 25.313,
-          "end": 25.386
+          "start": 25.701,
+          "end": 25.774
         },
         {
           "text": "créer",
-          "start": 25.386,
-          "end": 25.871
+          "start": 25.774,
+          "end": 26.26
         },
         {
           "text": "continuer",
-          "start": 26.102,
-          "end": 26.527
+          "start": 26.49,
+          "end": 26.915
         },
         {
           "text": "à",
-          "start": 26.527,
-          "end": 26.575
+          "start": 26.915,
+          "end": 26.964
         },
         {
           "text": "publier",
-          "start": 26.575,
-          "end": 27.121
+          "start": 26.964,
+          "end": 27.51
         },
         {
           "text": "et",
-          "start": 27.473,
-          "end": 27.546
+          "start": 27.862,
+          "end": 27.934
         },
         {
           "text": "voir",
-          "start": 27.546,
-          "end": 27.74
+          "start": 27.934,
+          "end": 28.129
         },
         {
           "text": "ce",
-          "start": 27.74,
-          "end": 27.825
+          "start": 28.129,
+          "end": 28.214
         },
         {
           "text": "qui",
-          "start": 27.825,
-          "end": 27.947
+          "start": 28.214,
+          "end": 28.335
         },
         {
           "text": "se",
-          "start": 27.947,
-          "end": 28.08
+          "start": 28.335,
+          "end": 28.468
         },
         {
           "text": "passe",
-          "start": 28.08,
-          "end": 28.517
+          "start": 28.468,
+          "end": 28.905
         }
       ]
     },
@@ -455,28 +455,28 @@
       "words": [
         {
           "text": "jusqu'à",
-          "start": 28.876,
-          "end": 29.167
+          "start": 29.264,
+          "end": 29.556
         },
         {
           "text": "décrocher",
-          "start": 29.167,
-          "end": 29.604
+          "start": 29.556,
+          "end": 29.993
         },
         {
           "text": "mon",
-          "start": 29.604,
-          "end": 29.713
+          "start": 29.993,
+          "end": 30.102
         },
         {
           "text": "premier",
-          "start": 29.714,
-          "end": 29.981
+          "start": 30.102,
+          "end": 30.369
         },
         {
           "text": "client",
-          "start": 29.981,
-          "end": 30.417
+          "start": 30.369,
+          "end": 30.806
         }
       ]
     },
@@ -486,58 +486,58 @@
       "words": [
         {
           "text": "Honnêtement",
-          "start": 31.101,
-          "end": 31.684
+          "start": 31.49,
+          "end": 32.072
         },
         {
           "text": "je",
-          "start": 32.145,
-          "end": 32.23
+          "start": 32.534,
+          "end": 32.618
         },
         {
           "text": "ne",
-          "start": 32.23,
-          "end": 32.303
+          "start": 32.618,
+          "end": 32.691
         },
         {
           "text": "sais",
-          "start": 32.303,
-          "end": 32.412
+          "start": 32.691,
+          "end": 32.8
         },
         {
           "text": "pas",
-          "start": 32.412,
-          "end": 32.546
+          "start": 32.801,
+          "end": 32.934
         },
         {
           "text": "combien",
-          "start": 32.546,
-          "end": 32.898
+          "start": 32.934,
+          "end": 33.286
         },
         {
           "text": "de",
-          "start": 32.898,
-          "end": 33.007
+          "start": 33.286,
+          "end": 33.395
         },
         {
           "text": "temps",
-          "start": 33.007,
-          "end": 33.152
+          "start": 33.395,
+          "end": 33.541
         },
         {
           "text": "ça",
-          "start": 33.152,
-          "end": 33.274
+          "start": 33.541,
+          "end": 33.662
         },
         {
           "text": "va",
-          "start": 33.274,
-          "end": 33.371
+          "start": 33.662,
+          "end": 33.759
         },
         {
           "text": "prendre",
-          "start": 33.371,
-          "end": 33.917
+          "start": 33.759,
+          "end": 34.305
         }
       ]
     },
@@ -547,38 +547,38 @@
       "words": [
         {
           "text": "Et",
-          "start": 34.601,
-          "end": 34.686
+          "start": 34.989,
+          "end": 35.074
         },
         {
           "text": "c'est",
-          "start": 34.686,
-          "end": 34.832
+          "start": 35.074,
+          "end": 35.22
         },
         {
           "text": "justement",
-          "start": 34.832,
-          "end": 35.317
+          "start": 35.22,
+          "end": 35.705
         },
         {
           "text": "ça",
-          "start": 35.317,
-          "end": 35.523
+          "start": 35.705,
+          "end": 35.912
         },
         {
           "text": "qui",
-          "start": 35.523,
-          "end": 35.681
+          "start": 35.912,
+          "end": 36.069
         },
         {
           "text": "est",
-          "start": 35.681,
-          "end": 35.718
+          "start": 36.069,
+          "end": 36.106
         },
         {
           "text": "excitant",
-          "start": 35.718,
-          "end": 36.373
+          "start": 36.106,
+          "end": 36.761
         }
       ]
     }

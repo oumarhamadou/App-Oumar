@@ -19,7 +19,7 @@ Deux compositions partagent les mêmes scènes :
 mille dollars grâce au montage vidéo. Depuis quelques années, je fais ce que j'aime le plus :
 monter des vidéos. Aujourd'hui, j'ai zéro client, pas d'audience, pas d'agence derrière moi,
 juste une obsession : créer de meilleures vidéos. Alors, à partir d'aujourd'hui, je publie sur
-Instagram, X et YouTube. Je vais continuer à créer, continuer à publier, et voir ce qui se passe,
+Instagram, Threads et Facebook. Je vais continuer à créer, continuer à publier, et voir ce qui se passe,
 jusqu'à décrocher mon premier client. Honnêtement, je ne sais pas combien de temps ça va prendre.
 Et c'est justement ça qui est excitant.
 
