@@ -1,0 +1,585 @@
+{
+  "voice": "fr-FR-RemyMultilingualNeural",
+  "durationInSeconds": 36.754,
+  "scenes": [
+    {
+      "id": "intro",
+      "text": "Salut, je suis motion designer,",
+      "words": [
+        {
+          "text": "Salut",
+          "start": 0.061,
+          "end": 0.485
+        },
+        {
+          "text": "je",
+          "start": 0.728,
+          "end": 0.837
+        },
+        {
+          "text": "suis",
+          "start": 0.837,
+          "end": 0.971
+        },
+        {
+          "text": "motion",
+          "start": 0.971,
+          "end": 1.25
+        },
+        {
+          "text": "designer",
+          "start": 1.25,
+          "end": 1.881
+        }
+      ]
+    },
+    {
+      "id": "name",
+      "text": "je m'appelle Oumar,",
+      "words": [
+        {
+          "text": "je",
+          "start": 2.204,
+          "end": 2.289
+        },
+        {
+          "text": "m'appelle",
+          "start": 2.289,
+          "end": 2.556
+        },
+        {
+          "text": "Oumar",
+          "start": 2.556,
+          "end": 2.956
+        }
+      ]
+    },
+    {
+      "id": "challenge",
+      "text": "et je me lance un défi :",
+      "words": [
+        {
+          "text": "et",
+          "start": 3.412,
+          "end": 3.437
+        },
+        {
+          "text": "je",
+          "start": 3.437,
+          "end": 3.546
+        },
+        {
+          "text": "me",
+          "start": 3.546,
+          "end": 3.619
+        },
+        {
+          "text": "lance",
+          "start": 3.619,
+          "end": 3.837
+        },
+        {
+          "text": "un",
+          "start": 3.837,
+          "end": 3.898
+        },
+        {
+          "text": "défi",
+          "start": 3.898,
+          "end": 4.323
+        }
+      ]
+    },
+    {
+      "id": "stepper",
+      "text": "gagner mille dollars grâce au montage vidéo.",
+      "words": [
+        {
+          "text": "gagner",
+          "start": 4.982,
+          "end": 5.237
+        },
+        {
+          "text": "mille",
+          "start": 5.237,
+          "end": 5.419
+        },
+        {
+          "text": "dollars",
+          "start": 5.419,
+          "end": 5.808
+        },
+        {
+          "text": "grâce",
+          "start": 5.808,
+          "end": 6.087
+        },
+        {
+          "text": "au",
+          "start": 6.087,
+          "end": 6.123
+        },
+        {
+          "text": "montage",
+          "start": 6.123,
+          "end": 6.451
+        },
+        {
+          "text": "vidéo",
+          "start": 6.451,
+          "end": 6.924
+        }
+      ]
+    },
+    {
+      "id": "years",
+      "text": "Depuis quelques années,",
+      "words": [
+        {
+          "text": "Depuis",
+          "start": 7.608,
+          "end": 7.912
+        },
+        {
+          "text": "quelques",
+          "start": 7.912,
+          "end": 8.179
+        },
+        {
+          "text": "années",
+          "start": 8.179,
+          "end": 8.591
+        }
+      ]
+    },
+    {
+      "id": "prompt",
+      "text": "je fais ce que j'aime le plus : monter des vidéos.",
+      "words": [
+        {
+          "text": "je",
+          "start": 8.975,
+          "end": 9.096
+        },
+        {
+          "text": "fais",
+          "start": 9.096,
+          "end": 9.229
+        },
+        {
+          "text": "ce",
+          "start": 9.23,
+          "end": 9.327
+        },
+        {
+          "text": "que",
+          "start": 9.327,
+          "end": 9.436
+        },
+        {
+          "text": "j'aime",
+          "start": 9.436,
+          "end": 9.654
+        },
+        {
+          "text": "le",
+          "start": 9.654,
+          "end": 9.739
+        },
+        {
+          "text": "plus",
+          "start": 9.739,
+          "end": 10.2
+        },
+        {
+          "text": "monter",
+          "start": 10.504,
+          "end": 10.783
+        },
+        {
+          "text": "des",
+          "start": 10.783,
+          "end": 10.88
+        },
+        {
+          "text": "vidéos",
+          "start": 10.88,
+          "end": 11.39
+        }
+      ]
+    },
+    {
+      "id": "dropdown",
+      "text": "Aujourd'hui, j'ai zéro client,",
+      "words": [
+        {
+          "text": "Aujourd'hui",
+          "start": 12.074,
+          "end": 12.632
+        },
+        {
+          "text": "j'ai",
+          "start": 12.887,
+          "end": 12.996
+        },
+        {
+          "text": "zéro",
+          "start": 12.996,
+          "end": 13.227
+        },
+        {
+          "text": "client",
+          "start": 13.227,
+          "end": 13.676
+        }
+      ]
+    },
+    {
+      "id": "segmented",
+      "text": "pas d'audience, pas d'agence derrière moi,",
+      "words": [
+        {
+          "text": "pas",
+          "start": 13.986,
+          "end": 14.083
+        },
+        {
+          "text": "d'audience",
+          "start": 14.083,
+          "end": 14.727
+        },
+        {
+          "text": "pas",
+          "start": 14.957,
+          "end": 15.054
+        },
+        {
+          "text": "d'agence",
+          "start": 15.054,
+          "end": 15.37
+        },
+        {
+          "text": "derrière",
+          "start": 15.37,
+          "end": 15.673
+        },
+        {
+          "text": "moi",
+          "start": 15.673,
+          "end": 15.904
+        }
+      ]
+    },
+    {
+      "id": "messages",
+      "text": "juste une obsession : créer de meilleures vidéos.",
+      "words": [
+        {
+          "text": "juste",
+          "start": 16.36,
+          "end": 16.603
+        },
+        {
+          "text": "une",
+          "start": 16.603,
+          "end": 16.688
+        },
+        {
+          "text": "obsession",
+          "start": 16.688,
+          "end": 17.246
+        },
+        {
+          "text": "créer",
+          "start": 17.549,
+          "end": 17.841
+        },
+        {
+          "text": "de",
+          "start": 17.841,
+          "end": 17.95
+        },
+        {
+          "text": "meilleures",
+          "start": 17.95,
+          "end": 18.217
+        },
+        {
+          "text": "vidéos",
+          "start": 18.217,
+          "end": 18.714
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "text": "Alors, à partir d'aujourd'hui, je publie sur Instagram, X et YouTube.",
+      "words": [
+        {
+          "text": "Alors",
+          "start": 19.411,
+          "end": 19.811
+        },
+        {
+          "text": "à",
+          "start": 20.042,
+          "end": 20.078
+        },
+        {
+          "text": "partir",
+          "start": 20.078,
+          "end": 20.406
+        },
+        {
+          "text": "d'aujourd'hui",
+          "start": 20.406,
+          "end": 20.988
+        },
+        {
+          "text": "je",
+          "start": 21.34,
+          "end": 21.449
+        },
+        {
+          "text": "publie",
+          "start": 21.449,
+          "end": 21.777
+        },
+        {
+          "text": "sur",
+          "start": 21.777,
+          "end": 21.983
+        },
+        {
+          "text": "Instagram",
+          "start": 21.983,
+          "end": 22.663
+        },
+        {
+          "text": "X",
+          "start": 22.93,
+          "end": 23.173
+        },
+        {
+          "text": "et",
+          "start": 23.221,
+          "end": 23.258
+        },
+        {
+          "text": "YouTube",
+          "start": 23.258,
+          "end": 23.889
+        }
+      ]
+    },
+    {
+      "id": "keep",
+      "text": "Je vais continuer à créer, continuer à publier, et voir ce qui se passe,",
+      "words": [
+        {
+          "text": "Je",
+          "start": 24.585,
+          "end": 24.743
+        },
+        {
+          "text": "vais",
+          "start": 24.743,
+          "end": 24.84
+        },
+        {
+          "text": "continuer",
+          "start": 24.84,
+          "end": 25.313
+        },
+        {
+          "text": "à",
+          "start": 25.313,
+          "end": 25.386
+        },
+        {
+          "text": "créer",
+          "start": 25.386,
+          "end": 25.871
+        },
+        {
+          "text": "continuer",
+          "start": 26.102,
+          "end": 26.527
+        },
+        {
+          "text": "à",
+          "start": 26.527,
+          "end": 26.575
+        },
+        {
+          "text": "publier",
+          "start": 26.575,
+          "end": 27.121
+        },
+        {
+          "text": "et",
+          "start": 27.473,
+          "end": 27.546
+        },
+        {
+          "text": "voir",
+          "start": 27.546,
+          "end": 27.74
+        },
+        {
+          "text": "ce",
+          "start": 27.74,
+          "end": 27.825
+        },
+        {
+          "text": "qui",
+          "start": 27.825,
+          "end": 27.947
+        },
+        {
+          "text": "se",
+          "start": 27.947,
+          "end": 28.08
+        },
+        {
+          "text": "passe",
+          "start": 28.08,
+          "end": 28.517
+        }
+      ]
+    },
+    {
+      "id": "client",
+      "text": "jusqu'à décrocher mon premier client.",
+      "words": [
+        {
+          "text": "jusqu'à",
+          "start": 28.876,
+          "end": 29.167
+        },
+        {
+          "text": "décrocher",
+          "start": 29.167,
+          "end": 29.604
+        },
+        {
+          "text": "mon",
+          "start": 29.604,
+          "end": 29.713
+        },
+        {
+          "text": "premier",
+          "start": 29.714,
+          "end": 29.981
+        },
+        {
+          "text": "client",
+          "start": 29.981,
+          "end": 30.417
+        }
+      ]
+    },
+    {
+      "id": "calendar",
+      "text": "Honnêtement, je ne sais pas combien de temps ça va prendre.",
+      "words": [
+        {
+          "text": "Honnêtement",
+          "start": 31.101,
+          "end": 31.684
+        },
+        {
+          "text": "je",
+          "start": 32.145,
+          "end": 32.23
+        },
+        {
+          "text": "ne",
+          "start": 32.23,
+          "end": 32.303
+        },
+        {
+          "text": "sais",
+          "start": 32.303,
+          "end": 32.412
+        },
+        {
+          "text": "pas",
+          "start": 32.412,
+          "end": 32.546
+        },
+        {
+          "text": "combien",
+          "start": 32.546,
+          "end": 32.898
+        },
+        {
+          "text": "de",
+          "start": 32.898,
+          "end": 33.007
+        },
+        {
+          "text": "temps",
+          "start": 33.007,
+          "end": 33.152
+        },
+        {
+          "text": "ça",
+          "start": 33.152,
+          "end": 33.274
+        },
+        {
+          "text": "va",
+          "start": 33.274,
+          "end": 33.371
+        },
+        {
+          "text": "prendre",
+          "start": 33.371,
+          "end": 33.917
+        }
+      ]
+    },
+    {
+      "id": "exciting",
+      "text": "Et c'est justement ça qui est excitant.",
+      "words": [
+        {
+          "text": "Et",
+          "start": 34.601,
+          "end": 34.686
+        },
+        {
+          "text": "c'est",
+          "start": 34.686,
+          "end": 34.832
+        },
+        {
+          "text": "justement",
+          "start": 34.832,
+          "end": 35.317
+        },
+        {
+          "text": "ça",
+          "start": 35.317,
+          "end": 35.523
+        },
+        {
+          "text": "qui",
+          "start": 35.523,
+          "end": 35.681
+        },
+        {
+          "text": "est",
+          "start": 35.681,
+          "end": 35.718
+        },
+        {
+          "text": "excitant",
+          "start": 35.718,
+          "end": 36.373
+        }
+      ]
+    }
+  ]
+}
