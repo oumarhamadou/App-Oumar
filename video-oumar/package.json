@@ -1,7 +1,7 @@
 {
   "name": "video-oumar",
   "version": "1.0.0",
-  "description": "Vidéo de présentation d'Oumar (voix off française), faite avec Remotion",
+  "description": "Vidéo de présentation d'Oumar (voix off française et russe), faite avec Remotion",
   "repository": {},
   "license": "UNLICENSED",
   "engines": {
@@ -27,10 +27,11 @@
   "scripts": {
     "dev": "remotion studio",
     "build": "remotion bundle",
-    "render:raw": "remotion render VideoOumar out/video-oumar-raw.mp4 --codec=h264 --crf=18 --audio-bitrate=320k",
-    "master": "remotion ffmpeg -y -i out/video-oumar-raw.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:a aac -b:a 192k out/video-oumar.mp4",
-    "render": "npm run render:raw && npm run master",
-    "voiceover": "python3 scripts/generate_voiceover.py",
+    "render:fr": "remotion render VideoOumar-FR out/video-oumar-fr-raw.mp4 --codec=h264 --crf=18 --audio-bitrate=320k && remotion ffmpeg -y -i out/video-oumar-fr-raw.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:a aac -b:a 192k out/video-oumar-fr.mp4",
+    "render:ru": "remotion render VideoOumar-RU out/video-oumar-ru-raw.mp4 --codec=h264 --crf=18 --audio-bitrate=320k && remotion ffmpeg -y -i out/video-oumar-ru-raw.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:a aac -b:a 192k out/video-oumar-ru.mp4",
+    "render": "npm run render:fr && npm run render:ru",
+    "voiceover:fr": "python3 scripts/generate_voiceover.py fr",
+    "voiceover:ru": "python3 scripts/generate_voiceover.py ru",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc"
   },

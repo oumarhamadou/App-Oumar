@@ -2,7 +2,7 @@ import React from "react";
 import { AbsoluteFill, interpolateColors, useCurrentFrame } from "remotion";
 import { outro, pop, reveal } from "../anim";
 import { EMOJI_FONT, FONT } from "../fonts";
-import { scene } from "../timeline";
+import { useCopy, useScene } from "../locales";
 
 const EMOJIS = [
   { char: "👋", x: 190, y: 230, delay: 0, rotate: -18 },
@@ -11,23 +11,13 @@ const EMOJIS = [
   { char: "🖥️", x: 870, y: 800, delay: 13, rotate: -8 },
 ];
 
-/** "Salut, je suis motion designer." — words pop in with the voice. */
+/** "Salut, je suis motion designer." — words pop in with the voice; the last one flashes pink. */
 export const IntroScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const { words, durationInFrames } = scene("intro");
+  const { words, durationInFrames } = useScene("intro");
   const exit = outro(frame, durationInFrames, 8);
 
-  const lines = [
-    [
-      { label: "Salut,", i: 0 },
-      { label: "je", i: 1 },
-      { label: "suis", i: 2 },
-    ],
-    [
-      { label: "motion", i: 3 },
-      { label: "designer.", i: 4 },
-    ],
-  ];
+  const { lines, accentWord, fontSize } = useCopy().intro;
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#F7F7F9", fontFamily: FONT }}>
@@ -73,15 +63,15 @@ export const IntroScene: React.FC = () => {
         >
           {lines.map((line, li) => (
             <div key={li} style={{ display: "flex", gap: 26 }}>
-              {line.map(({ label, i }) => {
+              {line.map(({ label, word: i }) => {
                 const p = pop(frame, words[i].at - 2);
-                const isDesigner = i === 4;
+                const isDesigner = i === accentWord;
                 return (
                   <span
                     key={label}
                     style={{
                       display: "inline-block",
-                      fontSize: 98,
+                      fontSize,
                       fontWeight: 800,
                       letterSpacing: "-0.035em",
                       color: isDesigner

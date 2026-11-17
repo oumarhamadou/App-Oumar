@@ -4,7 +4,7 @@ import { CLAMP, EASE_IN, EASE_IN_OUT, outro, pop, ramp, reveal } from "../anim";
 import { Platform, PlatformLogo } from "../components/PlatformLogo";
 import { ChevronIcon, Cursor } from "../components/shapes";
 import { FONT } from "../fonts";
-import { scene } from "../timeline";
+import { useCopy, useScene } from "../locales";
 
 const PLATFORMS: { id: Platform; label: string }[] = [
   { id: "instagram", label: "Instagram" },
@@ -18,21 +18,25 @@ const ARROW_OFFSET = 255;
 /** "Alors, à partir d'aujourd'hui, je publie sur Instagram, X et YouTube." */
 export const PlatformsScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const { words, durationInFrames } = scene("platforms");
+  const { words, durationInFrames } = useScene("platforms");
+  const { prefix, line1, line2, badge, title, platformWords } = useCopy().platforms;
+  const [wInstagram, wX, wYoutube] = platformWords;
+  const titleStart = words[title[0].word].at;
+  const tileAt = words[title[title.length - 1].word].at;
   const exit = outro(frame, durationInFrames, 8);
 
   // Part 1 — "À partir d'aujourd'hui" + "Jour 1".
-  const partOneOut = ramp(frame, words[4].at - 5, words[4].at + 2, EASE_IN);
+  const partOneOut = ramp(frame, titleStart - 3, titleStart + 3, EASE_IN);
   // Part 2 — "Je publie sur" + carousel.
-  const switchToX = words[8].at - 2;
-  const switchToYoutube = words[10].at - 2;
+  const switchToX = words[wX].at - 2;
+  const switchToYoutube = words[wYoutube].at - 2;
   const swap = (at: number) => Math.min(1, pop(frame, at, { damping: 20, stiffness: 280, mass: 0.6 }));
-  const contentIn = [pop(frame, words[7].at - 4), swap(switchToX), swap(switchToYoutube)];
+  const contentIn = [pop(frame, words[wInstagram].at - 4), swap(switchToX), swap(switchToYoutube)];
   const contentOut = [swap(switchToX), swap(switchToYoutube), 0];
-  const tile = pop(frame, words[6].at - 3, { damping: 14, stiffness: 160 });
+  const tile = pop(frame, tileAt - 3, { damping: 14, stiffness: 160 });
 
-  const cursorIn = ramp(frame, words[7].at - 2, words[7].at + 6);
-  const cursorTravel = interpolate(frame, [words[7].at, switchToX - 5], [0, 1], {
+  const cursorIn = ramp(frame, words[wInstagram].at - 2, words[wInstagram].at + 6);
+  const cursorTravel = interpolate(frame, [words[wInstagram].at, switchToX - 5], [0, 1], {
     ...CLAMP,
     easing: EASE_IN_OUT,
   });
@@ -72,16 +76,16 @@ export const PlatformsScene: React.FC = () => {
               letterSpacing: "-0.02em",
               color: "#6B7383",
               marginBottom: 6,
-              ...reveal(pop(frame, words[0].at - 3)),
+              ...reveal(pop(frame, words[prefix.word].at - 3)),
             }}
           >
-            Alors,
+            {prefix.label}
           </div>
           <div style={{ fontSize: 96, fontWeight: 800, letterSpacing: "-0.04em", color: "#0E1116" }}>
-            <span style={{ display: "inline-block", ...reveal(pop(frame, words[1].at - 3)) }}>À partir</span>
+            <span style={{ display: "inline-block", ...reveal(pop(frame, words[line1.word].at - 3)) }}>{line1.label}</span>
           </div>
           <div style={{ fontSize: 96, fontWeight: 800, letterSpacing: "-0.04em", color: "#0E1116", marginTop: -4 }}>
-            <span style={{ display: "inline-block", ...reveal(pop(frame, words[3].at - 3)) }}>d'aujourd'hui</span>
+            <span style={{ display: "inline-block", ...reveal(pop(frame, words[line2.word].at - 3)) }}>{line2.label}</span>
           </div>
           <div
             style={{
@@ -93,10 +97,10 @@ export const PlatformsScene: React.FC = () => {
               fontSize: 40,
               fontWeight: 700,
               boxShadow: "0 12px 30px rgba(31,123,255,0.35)",
-              ...reveal(pop(frame, words[3].at + 2, { damping: 11 }), { fromScale: 0.4 }),
+              ...reveal(pop(frame, words[line2.word].at + 2, { damping: 11 }), { fromScale: 0.4 }),
             }}
           >
-            Jour 1
+            {badge}
           </div>
         </AbsoluteFill>
 
@@ -116,9 +120,9 @@ export const PlatformsScene: React.FC = () => {
             color: "#0E1116",
           }}
         >
-          {["Je", "publie", "sur"].map((w, i) => (
-            <span key={w} style={{ display: "inline-block", ...reveal(pop(frame, words[4 + i].at - 3)) }}>
-              {w}
+          {title.map(({ label, word }) => (
+            <span key={label} style={{ display: "inline-block", ...reveal(pop(frame, words[word].at - 3)) }}>
+              {label}
             </span>
           ))}
         </div>
@@ -173,9 +177,9 @@ export const PlatformsScene: React.FC = () => {
               alignItems: "center",
               justifyContent: "center",
               boxShadow: "0 10px 24px rgba(47,128,255,0.4)",
-              ...reveal(pop(frame, words[6].at + 2 + (dir + 1) * 2), { fromScale: 0.3 }),
+              ...reveal(pop(frame, tileAt + 2 + (dir + 1) * 2), { fromScale: 0.3 }),
               scale: String(
-                Math.max(0, pop(frame, words[6].at + 2 + (dir + 1) * 2)) * (dir === 1 ? 1 - clicking * 0.15 : 1),
+                Math.max(0, pop(frame, tileAt + 2 + (dir + 1) * 2)) * (dir === 1 ? 1 - clicking * 0.15 : 1),
               ),
             }}
           >

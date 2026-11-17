@@ -2,7 +2,7 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { CLAMP, EASE_IN, outro, pop } from "../anim";
 import { FONT } from "../fonts";
-import { scene } from "../timeline";
+import { useCopy, useScene } from "../locales";
 
 const slideIn = (p: number): React.CSSProperties => ({
   display: "inline-block",
@@ -14,10 +14,11 @@ const slideIn = (p: number): React.CSSProperties => ({
 /** "Et c'est justement ça qui est excitant." */
 export const ExcitingScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const { words, durationInFrames } = scene("exciting");
+  const { words, durationInFrames } = useScene("exciting");
+  const { lines, big: bigWord } = useCopy().exciting;
   const exit = outro(frame, durationInFrames, 8);
   const p = (i: number) => pop(frame, words[i].at - 3, { damping: 16, stiffness: 180 });
-  const big = pop(frame, words[6].at - 3, { damping: 11, stiffness: 160 });
+  const big = pop(frame, words[bigWord.word].at - 3, { damping: 11, stiffness: 160 });
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000", fontFamily: FONT }}>
@@ -41,16 +42,15 @@ export const ExcitingScene: React.FC = () => {
           opacity: 1 - exit,
         }}
       >
-        <div style={{ display: "flex", gap: 20, fontSize: 74 }}>
-          <span style={slideIn(p(0))}>Et</span>
-          <span style={slideIn(p(1))}>c'est</span>
-          <span style={slideIn(p(2))}>justement</span>
-          <span style={slideIn(p(3))}>ça</span>
-        </div>
-        <div style={{ display: "flex", gap: 20, fontSize: 74, marginTop: 4 }}>
-          <span style={slideIn(p(4))}>qui</span>
-          <span style={slideIn(p(5))}>est</span>
-        </div>
+        {lines.map((line, li) => (
+          <div key={li} style={{ display: "flex", gap: 20, fontSize: 74, marginTop: li === 0 ? 0 : 4 }}>
+            {line.map(({ label, word }) => (
+              <span key={label + word} style={slideIn(p(word))}>
+                {label}
+              </span>
+            ))}
+          </div>
+        ))}
         <div
           style={{
             fontSize: 170,
@@ -61,7 +61,7 @@ export const ExcitingScene: React.FC = () => {
             scale: String(0.7 + 0.3 * big),
           }}
         >
-          excitant.
+          {bigWord.label}
         </div>
       </AbsoluteFill>
     </AbsoluteFill>

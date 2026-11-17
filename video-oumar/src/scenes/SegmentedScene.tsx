@@ -2,10 +2,9 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { CLAMP, EASE_IN, EASE_IN_OUT, outro, pop, settle } from "../anim";
 import { FONT } from "../fonts";
-import { scene } from "../timeline";
+import { useCopy, useScene } from "../locales";
 import { NavyBackground } from "./PromptScene";
 
-const LABELS = ["Pas d'audience", "Pas d'agence", "Derrière moi"];
 const CONTROL = { left: 80, width: 920, height: 116, padding: 10 };
 const SEGMENT = (CONTROL.width - CONTROL.padding * 2) / 3;
 const segmentCenter = (i: number) => CONTROL.left + CONTROL.padding + SEGMENT * (i + 0.5);
@@ -13,7 +12,8 @@ const segmentCenter = (i: number) => CONTROL.left + CONTROL.padding + SEGMENT * 
 /** "pas d'audience, pas d'agence derrière moi" — a segmented control switching tabs. */
 export const SegmentedScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const { words, durationInFrames } = scene("segmented");
+  const { words, durationInFrames } = useScene("segmented");
+  const { labels } = useCopy().segmented;
   const exit = outro(frame, durationInFrames, 8);
 
   const enter = pop(frame, 0, { damping: 16, stiffness: 160 });
@@ -69,7 +69,7 @@ export const SegmentedScene: React.FC = () => {
             }}
           />
           <div style={{ position: "absolute", inset: 0, display: "flex", padding: CONTROL.padding }}>
-            {LABELS.map((label, i) => (
+            {labels.map((label, i) => (
               <div
                 key={label}
                 style={{

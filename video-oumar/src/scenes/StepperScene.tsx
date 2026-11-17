@@ -3,7 +3,7 @@ import { AbsoluteFill, interpolate, interpolateColors, useCurrentFrame } from "r
 import { CLAMP, EASE_IN, EASE_OUT, outro, pop, reveal, settle } from "../anim";
 import { MinusIcon, PlusIcon } from "../components/shapes";
 import { FONT } from "../fonts";
-import { scene } from "../timeline";
+import { useCopy, useScene } from "../locales";
 
 const formatAmount = (n: number) =>
   String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -11,24 +11,26 @@ const formatAmount = (n: number) =>
 /** "gagner mille dollars grâce au montage vidéo" — an amount stepper counting to 1 000 $. */
 export const StepperScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const { words, durationInFrames } = scene("stepper");
+  const { words, durationInFrames } = useScene("stepper");
+  const { title, countUntilWord, expandWord } = useCopy().stepper;
+  const reachedAt = words[countUntilWord].end;
   const exit = outro(frame, durationInFrames, 8);
 
   const enter = pop(frame, 0, { damping: 15, stiffness: 150 });
   // Count up while "gagner mille dollars" is spoken.
-  const amount = interpolate(frame, [words[0].at, words[2].end], [0, 1000], {
+  const amount = interpolate(frame, [words[0].at, reachedAt], [0, 1000], {
     ...CLAMP,
     easing: EASE_OUT,
   });
-  const reached = settle(frame, words[2].end - 2, 18);
+  const reached = settle(frame, reachedAt - 2, 18);
   const plusPress = interpolate(
     frame,
-    [words[2].end - 4, words[2].end, words[2].end + 5],
+    [reachedAt - 4, reachedAt, reachedAt + 5],
     [1, 0.78, 1],
     CLAMP,
   );
   // Card expands when "montage vidéo" is spoken.
-  const expand = pop(frame, words[5].at - 3, { damping: 16, stiffness: 140 });
+  const expand = pop(frame, words[expandWord].at - 3, { damping: 16, stiffness: 140 });
   const width = 540 + 120 * expand;
   const height = 190 + 250 * expand;
   const blue = interpolateColors(reached, [0, 1], ["#9AA1AD", "#1F7BFF"]);
@@ -76,7 +78,7 @@ export const StepperScene: React.FC = () => {
               ...reveal(expand, { distance: 20 }),
             }}
           >
-            montage vidéo
+            {title}
           </div>
           <div
             style={{

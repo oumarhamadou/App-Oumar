@@ -9,8 +9,6 @@ import {
   PlusIcon,
 } from "./shapes";
 
-export const PROMPT_TEXT = "je fais ce que j'aime le plus : monter des vidéos";
-
 /** Layout constants, shared with the scenes that move the camera around the box. */
 export const BOX = {
   width: 940,
@@ -19,10 +17,10 @@ export const BOX = {
   flashCenter: { x: 758, y: 617 },
 };
 
-export const MENU_ITEMS = ["Aujourd'hui", "j'ai", "zéro client"];
-
 /** A dark "AI prompt" input box, like a chat composer. */
 export const PromptBox: React.FC<{
+  text: string;
+  menuItems: string[];
   typed: number;
   /** Index (in PROMPT_TEXT words) of the word to highlight, or -1. */
   highlightWord: number;
@@ -32,8 +30,17 @@ export const PromptBox: React.FC<{
   menuOpen?: number;
   /** Fractional index of the highlighted menu item. */
   menuActive?: number;
-}> = ({ typed, highlightWord, caretVisible, flashPressed = 0, menuOpen = 0, menuActive = -1 }) => {
-  const shown = PROMPT_TEXT.slice(0, typed);
+}> = ({
+  text,
+  menuItems,
+  typed,
+  highlightWord,
+  caretVisible,
+  flashPressed = 0,
+  menuOpen = 0,
+  menuActive = -1,
+}) => {
+  const shown = text.slice(0, typed);
   // Split the typed text into words, keeping whitespace, to colour the spoken one.
   const parts = shown.split(/(\s+)/);
   let wordIndex = -1;
@@ -143,7 +150,7 @@ export const PromptBox: React.FC<{
                   position: "absolute",
                   top: 66,
                   left: -40,
-                  width: 300,
+                  width: 320,
                   padding: 10,
                   borderRadius: 24,
                   background: "rgba(30,35,48,0.98)",
@@ -169,7 +176,7 @@ export const PromptBox: React.FC<{
                     }}
                   />
                 ) : null}
-                {MENU_ITEMS.map((item, i) => (
+                {menuItems.map((item, i) => (
                   <div
                     key={item}
                     style={{

@@ -2,20 +2,24 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { CLAMP, EASE_IN, pop, ramp } from "../anim";
 import { FONT } from "../fonts";
-import { scene } from "../timeline";
+import { useScene } from "../locales";
 
-/** Closing card: the name, glowing, letter by letter. */
+/** Closing card: the Instagram handle, glowing, letter by letter. */
 export const OutroScene: React.FC<{ signature: string; tagline: string }> = ({
   signature,
   tagline,
 }) => {
   const frame = useCurrentFrame();
-  const { durationInFrames } = scene("outro");
+  const { durationInFrames } = useScene("outro");
   const fadeOut = interpolate(frame, [durationInFrames - 14, durationInFrames], [0, 1], {
     ...CLAMP,
     easing: EASE_IN,
   });
   const halo = ramp(frame, 0, 24);
+  // Fit long handles on one line inside the safe area, zoom included
+  // (Inter ExtraBold is ~0.62 em per character).
+  const fontSize = Math.min(170, Math.floor(760 / (signature.length * 0.62)));
+  const stagger = signature.length > 8 ? 2 : 3;
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000", fontFamily: FONT }}>
@@ -33,18 +37,18 @@ export const OutroScene: React.FC<{ signature: string; tagline: string }> = ({
           alignItems: "center",
           flexDirection: "column",
           opacity: 1 - fadeOut,
-          scale: String(1 + frame * 0.0015),
+          scale: String(1 + frame * 0.001),
         }}
       >
         <div style={{ display: "flex" }}>
           {signature.split("").map((ch, i) => {
-            const p = pop(frame, 2 + i * 3, { damping: 18, stiffness: 120 });
+            const p = pop(frame, 2 + i * stagger, { damping: 18, stiffness: 120 });
             return (
               <span
                 key={i}
                 style={{
                   display: "inline-block",
-                  fontSize: 170,
+                  fontSize,
                   fontWeight: 800,
                   letterSpacing: "-0.04em",
                   color: "white",

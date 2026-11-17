@@ -2,7 +2,7 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { CLAMP, EASE_IN, EASE_OUT, pop, typedCount } from "../anim";
 import { EMOJI_FONT, FONT } from "../fonts";
-import { scene } from "../timeline";
+import { useCopy, useScene } from "../locales";
 
 const ICONS = [
   { emoji: "📅", bg: "linear-gradient(160deg,#FFFFFF,#ECECF1)" },
@@ -22,7 +22,8 @@ const RADIUS = 345;
 /** "et je me lance un défi" — a black pill with app icons orbiting around it. */
 export const ChallengeScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const { words, durationInFrames } = scene("challenge");
+  const { words, durationInFrames, text: spokenText } = useScene("challenge");
+  const { skipChars } = useCopy().challenge;
   const D = durationInFrames;
 
   // Ring rotation: fast spin-in, slow drift, fast spin-out.
@@ -38,9 +39,9 @@ export const ChallengeScene: React.FC = () => {
   const ringOut = interpolate(frame, [D - 12, D], [1, 0.05], { ...CLAMP, easing: EASE_IN });
   const radius = RADIUS * ringIn * ringOut;
 
-  const text = "je me lance un défi";
-  const spokenText = "et je me lance un défi";
-  const typed = Math.max(0, typedCount(spokenText, words, frame) - 3);
+  // The pill shows the spoken line without its leading "et " / "и ".
+  const text = spokenText.slice(skipChars).replace(/[\s:]+$/, "");
+  const typed = Math.min(text.length, Math.max(0, typedCount(spokenText, words, frame) - skipChars));
 
   const pill = pop(frame, 0, { damping: 13, stiffness: 160 });
   const pillOut = interpolate(frame, [D - 10, D], [1, 0.4], { ...CLAMP, easing: EASE_IN });

@@ -2,11 +2,9 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { CLAMP, EASE_IN, EASE_OUT, pop, ramp, reveal } from "../anim";
 import { FONT } from "../fonts";
-import { scene } from "../timeline";
+import { KeepToken, useCopy, useScene } from "../locales";
 
-type Token = { text: string; word: number; color?: string; wipe?: boolean; wave?: boolean };
-
-const Line: React.FC<{ tokens: Token[]; frame: number; at: (i: number) => number }> = ({
+const Line: React.FC<{ tokens: KeepToken[]; frame: number; at: (i: number) => number }> = ({
   tokens,
   frame,
   at,
@@ -17,7 +15,7 @@ const Line: React.FC<{ tokens: Token[]; frame: number; at: (i: number) => number
       const wipe = ramp(frame, at(t.word) - 3, at(t.word) + 7, EASE_OUT);
       return (
         <span
-          key={t.text + t.word}
+          key={t.label + t.word}
           style={{
             display: "inline-block",
             color: t.color,
@@ -31,72 +29,34 @@ const Line: React.FC<{ tokens: Token[]; frame: number; at: (i: number) => number
                 : reveal(p)),
           }}
         >
-          {t.text}
+          {t.label}
         </span>
       );
     })}
   </div>
 );
 
+// Light, then dark, then dark: the rhythm of the reference.
+const LOOKS = [
+  { bg: "#F7F7F9", ink: "#0E1116" },
+  { bg: "#000000", ink: "#FFFFFF" },
+  { bg: "#000000", ink: "#FFFFFF" },
+];
+
 /** "Je vais continuer à créer, continuer à publier, et voir ce qui se passe" */
 export const KeepScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const { words, durationInFrames } = scene("keep");
+  const { words, durationInFrames } = useScene("keep");
+  const copy = useCopy().keep;
   const at = (i: number) => words[i].at;
-  const b1 = at(5) - 3;
-  const b2 = at(8) - 3;
   const exit = ramp(frame, durationInFrames - 7, durationInFrames, EASE_IN);
 
-  const phases: { from: number; to: number; bg: string; ink: string; lines: Token[][] }[] = [
-    {
-      from: 0,
-      to: b1,
-      bg: "#F7F7F9",
-      ink: "#0E1116",
-      lines: [
-        [
-          { text: "Je", word: 0 },
-          { text: "vais", word: 1 },
-          { text: "continuer", word: 2 },
-        ],
-        [
-          { text: "à", word: 3 },
-          { text: "créer", word: 4, color: "#F2665A", wipe: true },
-        ],
-      ],
-    },
-    {
-      from: b1,
-      to: b2,
-      bg: "#000000",
-      ink: "#FFFFFF",
-      lines: [
-        [{ text: "continuer", word: 5 }],
-        [
-          { text: "à", word: 6 },
-          { text: "publier", word: 7, color: "#4C8DFF", wipe: true },
-        ],
-      ],
-    },
-    {
-      from: b2,
-      to: durationInFrames,
-      bg: "#000000",
-      ink: "#FFFFFF",
-      lines: [
-        [
-          { text: "et", word: 8, wave: true },
-          { text: "voir", word: 9, wave: true },
-        ],
-        [
-          { text: "ce", word: 10, wave: true },
-          { text: "qui", word: 11, wave: true },
-          { text: "se", word: 12, wave: true, color: "#FF4D5E" },
-          { text: "passe", word: 13, wave: true, color: "#FF4D5E" },
-        ],
-      ],
-    },
-  ];
+  const phases = copy.phases.map((ph, i) => ({
+    ...LOOKS[i],
+    lines: ph.lines,
+    from: i === 0 ? 0 : at(ph.startWord) - 3,
+    to: i < copy.phases.length - 1 ? at(copy.phases[i + 1].startWord) - 3 : durationInFrames,
+  }));
 
   const current = phases.find((ph) => frame >= ph.from && frame < ph.to) ?? phases[phases.length - 1];
 

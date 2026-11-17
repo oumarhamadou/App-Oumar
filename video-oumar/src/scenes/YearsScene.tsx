@@ -2,13 +2,13 @@ import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { outro, ramp, typedCount } from "../anim";
 import { FONT } from "../fonts";
-import { scene } from "../timeline";
+import { useCopy, useScene } from "../locales";
 
 /** "Depuis quelques années" — typed on a dark, golden backdrop with a glowing caret. */
 export const YearsScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const { words, durationInFrames } = scene("years");
-  const text = "Depuis quelques années";
+  const { words, durationInFrames } = useScene("years");
+  const { text, fontSize } = useCopy().years;
   const typed = typedCount(text, words, frame);
   const done = typed >= text.length;
   const exit = outro(frame, durationInFrames, 6);
@@ -33,7 +33,7 @@ export const YearsScene: React.FC = () => {
           opacity: 1 - exit,
         }}
       >
-        <div style={{ position: "relative", fontSize: 80, fontWeight: 700, letterSpacing: "-0.03em" }}>
+        <div style={{ position: "relative", fontSize, fontWeight: 700, letterSpacing: "-0.03em" }}>
           {/* Invisible full line keeps the layout centred while typing. */}
           <span style={{ color: "transparent", whiteSpace: "pre" }}>{text}</span>
           <div
@@ -60,7 +60,7 @@ export const YearsScene: React.FC = () => {
               style={{
                 display: "inline-block",
                 width: 9,
-                height: 104,
+                height: Math.round(fontSize * 1.3),
                 marginLeft: 6,
                 borderRadius: 5,
                 backgroundColor: "#FFC21A",

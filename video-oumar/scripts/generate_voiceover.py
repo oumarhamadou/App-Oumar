@@ -2,11 +2,11 @@
 
 Usage (from video-oumar/):
     pip install edge-tts
-    python scripts/generate_voiceover.py
+    python scripts/generate_voiceover.py fr      # or: ru
 
-Outputs:
-    public/voiceover/voix-oumar.mp3   the narration, one continuous take
-    src/voiceover.json                 scene ids, word timings (seconds)
+Outputs (for language <lang>):
+    public/voiceover/voix-oumar-<lang>.mp3   the narration, one continuous take
+    src/voiceover-<lang>.json                 scene ids, word timings (seconds)
 
 The whole script is synthesised in one take so the intonation flows like the
 reference; scene boundaries are recovered from the word timestamps.
@@ -17,6 +17,7 @@ import json
 import os
 import pathlib
 import subprocess
+import sys
 import tempfile
 import wave
 
@@ -29,37 +30,80 @@ if _ca:
 
 import edge_tts  # noqa: E402
 
-VOICE = "fr-FR-RemyMultilingualNeural"
-RATE = "+3%"
+# Scene ids must match the scenes in src/Video.tsx. The on-screen words of each
+# language live in src/locales.ts and refer to the spoken words by index.
+LANGS = {
+    "fr": {
+        "voice": "fr-FR-RemyMultilingualNeural",
+        "rate": "+3%",
+        # Extra silence (s) after each scene, and an optional cap on any gap.
+        "pause_after_comma": 0.08,
+        "pause_after_sentence": 0.32,
+        "max_gap": None,
+        "script": [
+            ("intro", "Salut, je suis motion designer,"),
+            ("name", "je m'appelle Oumar,"),
+            ("challenge", "et je me lance un défi :"),
+            ("stepper", "gagner mille dollars grâce au montage vidéo."),
+            ("years", "Depuis quelques années,"),
+            ("prompt", "je fais ce que j'aime le plus : monter des vidéos."),
+            ("dropdown", "Aujourd'hui, j'ai zéro client,"),
+            ("segmented", "pas d'audience, pas d'agence derrière moi,"),
+            ("messages", "juste une obsession : créer de meilleures vidéos."),
+            ("platforms", "Alors, à partir d'aujourd'hui, je publie sur Instagram, X et YouTube."),
+            ("keep", "Je vais continuer à créer, continuer à publier, et voir ce qui se passe,"),
+            ("client", "jusqu'à décrocher mon premier client."),
+            ("calendar", "Honnêtement, je ne sais pas combien de temps ça va prendre."),
+            ("exciting", "Et c'est justement ça qui est excitant."),
+        ],
+    },
+    "ru": {
+        "voice": "ru-RU-DmitryNeural",
+        "rate": "+7%",
+        # This voice already pauses for a long time between sentences: shorten those.
+        "pause_after_comma": 0.0,
+        "pause_after_sentence": 0.1,
+        "max_gap": 0.62,
+        # Let "Последние несколько лет" finish typing before the next scene.
+        "scene_pauses": {"years": 0.35},
+        "script": [
+            ("intro", "Привет, я моушн-дизайнер,"),
+            ("name", "меня зовут Умар,"),
+            ("challenge", "и я бросаю себе вызов:"),
+            ("stepper", "заработать тысячу долларов на монтаже видео."),
+            ("years", "Последние несколько лет"),
+            ("prompt", "я занимаюсь тем, что люблю больше всего: монтирую видео."),
+            ("dropdown", "Сейчас у меня ноль клиентов,"),
+            ("segmented", "ни аудитории, ни агентства за спиной,"),
+            ("messages", "только одержимость: делать видео лучше."),
+            # Cyrillic spelling so the voice says "икс" clearly; the screen still shows the logos.
+            ("platforms", "Поэтому с сегодняшнего дня я публикую в Инстаграм, Икс и Ютуб."),
+            ("keep", "Я буду продолжать создавать, продолжать публиковать и смотреть, что будет,"),
+            ("client", "пока не найду своего первого клиента."),
+            ("calendar", "Честно говоря, я не знаю, сколько времени это займёт."),
+            ("exciting", "И именно в этом весь азарт."),
+        ],
+    },
+}
+
+LANG = sys.argv[1] if len(sys.argv) > 1 else "fr"
+if LANG not in LANGS:
+    raise SystemExit(f"Unknown language {LANG!r}; choose one of {', '.join(LANGS)}")
+VOICE = LANGS[LANG]["voice"]
+RATE = LANGS[LANG]["rate"]
 PITCH = "+0Hz"
+SCRIPT = LANGS[LANG]["script"]
 
-# (scene id, spoken text). Scene ids must match the scenes in src/Video.tsx.
-SCRIPT = [
-    ("intro", "Salut, je suis motion designer,"),
-    ("name", "je m'appelle Oumar,"),
-    ("challenge", "et je me lance un défi :"),
-    ("stepper", "gagner mille dollars grâce au montage vidéo."),
-    ("years", "Depuis quelques années,"),
-    ("prompt", "je fais ce que j'aime le plus : monter des vidéos."),
-    ("dropdown", "Aujourd'hui, j'ai zéro client,"),
-    ("segmented", "pas d'audience, pas d'agence derrière moi,"),
-    ("messages", "juste une obsession : créer de meilleures vidéos."),
-    ("platforms", "Alors, à partir d'aujourd'hui, je publie sur Instagram, X et YouTube."),
-    ("keep", "Je vais continuer à créer, continuer à publier, et voir ce qui se passe,"),
-    ("client", "jusqu'à décrocher mon premier client."),
-    ("calendar", "Honnêtement, je ne sais pas combien de temps ça va prendre."),
-    ("exciting", "Et c'est justement ça qui est excitant."),
-]
-
-# Extra silence (seconds) inserted after each scene, so the edit can breathe
-# like the reference. Sentence ends get a longer pause than commas.
-PAUSE_AFTER_COMMA = 0.08
-PAUSE_AFTER_SENTENCE = 0.32
+# Extra silence inserted after each scene, so the edit can breathe like the
+# reference. Sentence ends get a longer pause than commas.
+PAUSE_AFTER_COMMA = LANGS[LANG]["pause_after_comma"]
+PAUSE_AFTER_SENTENCE = LANGS[LANG]["pause_after_sentence"]
+MAX_GAP = LANGS[LANG]["max_gap"]
 TARGET_LUFS = -16.0
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-MP3 = ROOT / "public" / "voiceover" / "voix-oumar.mp3"
-JSON_OUT = ROOT / "src" / "voiceover.json"
+MP3 = ROOT / "public" / "voiceover" / f"voix-oumar-{LANG}.mp3"
+JSON_OUT = ROOT / "src" / f"voiceover-{LANG}.json"
 
 
 async def synthesize(text: str):
@@ -103,7 +147,7 @@ def integrated_loudness(path: pathlib.Path) -> float:
 
 
 def insert_pauses(scene_words, pauses):
-    """Cut the take between scenes and insert silence; shift word timings."""
+    """Cut the take between scenes, insert (or remove) silence, shift word timings."""
     with tempfile.TemporaryDirectory() as tmp:
         raw = pathlib.Path(tmp) / "raw.wav"
         out = pathlib.Path(tmp) / "out.wav"
@@ -116,12 +160,23 @@ def insert_pauses(scene_words, pauses):
         ids = [i for i in scene_words if scene_words[i]]
         chunks, prev, shift = [], 0, 0.0
         for a, b in zip(ids, ids[1:]):
-            cut_t = (scene_words[a][-1]["end"] + scene_words[b][0]["start"]) / 2
-            cut = int(cut_t * rate) * width
-            chunks.append(data[prev:cut])
+            # Positions in the original take: scene `a` was already shifted, `b` not yet.
+            gap_start = scene_words[a][-1]["end"] - shift
+            gap_end = scene_words[b][0]["start"]
+            cut_t = (gap_start + gap_end) / 2
             pause = pauses[a]
-            chunks.append(b"\x00" * (int(pause * rate) * width))
-            prev = cut
+            if MAX_GAP is not None and (gap_end - gap_start) + pause > MAX_GAP:
+                pause = MAX_GAP - (gap_end - gap_start)
+            cut = int(cut_t * rate) * width
+            if pause >= 0:
+                chunks.append(data[prev:cut])
+                chunks.append(b"\x00" * (int(pause * rate) * width))
+                prev = cut
+            else:
+                # Drop -pause seconds of silence from the middle of the gap.
+                half = int(-pause / 2 * rate) * width
+                chunks.append(data[prev : cut - half])
+                prev = cut + half
             shift += pause
             for w in scene_words[b]:
                 w["start"] = round(w["start"] + shift, 3)
@@ -167,10 +222,12 @@ def main():
         scene_id: PAUSE_AFTER_SENTENCE if line.rstrip().endswith((".", ":")) else PAUSE_AFTER_COMMA
         for scene_id, line in SCRIPT
     }
+    pauses.update(LANGS[LANG].get("scene_pauses", {}))
     insert_pauses(scenes, pauses)
     duration = ffprobe_duration(MP3)
 
     out = {
+        "lang": LANG,
         "voice": VOICE,
         "durationInSeconds": round(duration, 3),
         "scenes": [

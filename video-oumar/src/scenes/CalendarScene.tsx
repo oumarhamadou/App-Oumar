@@ -2,7 +2,7 @@ import React from "react";
 import { AbsoluteFill, interpolate, interpolateColors, useCurrentFrame } from "remotion";
 import { CLAMP, EASE_IN, EASE_IN_OUT, outro, pop } from "../anim";
 import { FONT } from "../fonts";
-import { scene } from "../timeline";
+import { useCopy, useScene } from "../locales";
 
 const ROWS = [
   ["7", "8", "9", "10", "11", "12", "13", "14"],
@@ -16,22 +16,23 @@ const START_SCALE = 1.6;
 /** "Honnêtement, je ne sais pas combien de temps ça va prendre." — days keep adding up. */
 export const CalendarScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const { words, durationInFrames } = scene("calendar");
+  const { words, durationInFrames } = useScene("calendar");
+  const { growFrom, growTo, question: questionWord } = useCopy().calendar;
   const exit = outro(frame, durationInFrames, 8);
 
-  const grow = interpolate(frame, [words[1].at, words[9].end], [0, 1], {
+  const grow = interpolate(frame, [words[growFrom].at, words[growTo].end], [0, 1], {
     ...CLAMP,
     easing: EASE_IN_OUT,
   });
   const head = grow * 6;
-  const cam = interpolate(frame, [words[0].at + 4, words[10].at + 4], [0, 1], {
+  const cam = interpolate(frame, [words[0].at + 4, words[questionWord].at + 4], [0, 1], {
     ...CLAMP,
     easing: EASE_IN_OUT,
   });
   const s = START_SCALE - 0.58 * cam;
   const focusX = colX(0) + (545 - colX(0)) * cam;
   const gridIn = interpolate(frame, [2, 18], [0, 1], CLAMP);
-  const question = pop(frame, words[10].at - 3, { damping: 10, stiffness: 180 });
+  const question = pop(frame, words[questionWord].at - 3, { damping: 10, stiffness: 180 });
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#F7F7F9", fontFamily: FONT }}>

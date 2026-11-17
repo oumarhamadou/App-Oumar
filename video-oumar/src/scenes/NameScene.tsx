@@ -3,7 +3,7 @@ import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { outro, pop, ramp, reveal } from "../anim";
 import { Sparkle } from "../components/shapes";
 import { FONT } from "../fonts";
-import { scene } from "../timeline";
+import { useCopy, useScene } from "../locales";
 
 const SPARKLES = [
   { x: 205, y: 300, size: 46, delay: 2 },
@@ -16,10 +16,10 @@ const SPARKLES = [
 /** "je m'appelle Oumar" on a soft blue gradient, with twinkling sparkles. */
 export const NameScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const { words, durationInFrames } = scene("name");
+  const { words, durationInFrames } = useScene("name");
   const enter = ramp(frame, 0, 9);
   const exit = outro(frame, durationInFrames, 8);
-  const name = "Oumar";
+  const { lead, name, nameWord } = useCopy().name;
 
   return (
     <AbsoluteFill
@@ -63,7 +63,7 @@ export const NameScene: React.FC = () => {
           }}
         >
           <div style={{ display: "flex", gap: 22 }}>
-            {["je", "m'appelle"].map((label, i) => (
+            {lead.map(({ label, word }, i) => (
               <span
                 key={label}
                 style={{
@@ -73,7 +73,7 @@ export const NameScene: React.FC = () => {
                   letterSpacing: "-0.03em",
                   translate: `0px ${i === 1 ? -8 : 6}px`,
                   textShadow: "0 6px 30px rgba(10,40,120,0.25)",
-                  ...reveal(pop(frame, words[i].at - 3)),
+                  ...reveal(pop(frame, words[word].at - 3)),
                 }}
               >
                 {label}
@@ -82,7 +82,7 @@ export const NameScene: React.FC = () => {
           </div>
           <div style={{ display: "flex", marginTop: -6 }}>
             {name.split("").map((ch, i) => {
-              const p = pop(frame, words[2].at - 3 + i * 2, { damping: 11, stiffness: 190 });
+              const p = pop(frame, words[nameWord].at - 3 + i * 2, { damping: 11, stiffness: 190 });
               return (
                 <span
                   key={i}
