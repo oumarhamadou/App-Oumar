@@ -7,6 +7,7 @@ mots-clés en serif doré italique, empilements de texte, sortie en flou.
 **Vidéos finales :**
 - **Version 1** (référence n°1, serif doré) : [`montage-final.mp4`](./montage-final.mp4) — composition `Montage`
 - **Version 2** (référence n°2, grotesque épurée + jump cuts + flash lumineux) : [`montage-v2-final.mp4`](./montage-v2-final.mp4) — composition `MontageV2`
+- **Version 3** (référence n°3, carte sur fond blanc + typo noire/rouge + flash chaud) : [`montage-v3-final.mp4`](./montage-v3-final.mp4) — composition `MontageV3`
 
 ## Ce qui a été fait
 
@@ -45,6 +46,26 @@ Même vidéo source et même format (1090×1080), style de la 2ᵉ référence :
 - **Son** : aucune musique ; effets **uniquement sur les transitions**, très bas
   (souffles discrets sur les coupes, whoosh/riser/shimmer légers sur le flash). Réglages dans `src/v2/SoundV2.tsx`.
 
+## Version 3 (`src/v3/`)
+
+Même vidéo source et même format (1090×1080), style de la 3ᵉ référence :
+
+| Temps | Texte | Effet |
+|---|---|---|
+| 0:00 | You're **BEHIND** | Mot en capitales qui « se resserre » (lettres espacées → serrées) *derrière* la personne |
+| 0:02 | and you're in a **RUSH** | Capitales qui se resserrent en mode **Différence** |
+| 0:03 | because you feel **BEHIND,** | Capitales qui se resserrent (style « THINKING. » de la référence) |
+| 0:04 | and you feel **behind** because | La vidéo **rétrécit en carte arrondie** sur fond blanc, flotte, puis **glitch** (blocs de pixels) |
+| 0:06 | you're in a **different** *season.* than the people | **Intermède blanc** : typo noire, grand « SEASON » pâle en arrière-plan, « season. » qui grise |
+| 0:07 | you're **comparing yourself** to. | Mots **rouges** qui clignotent (comme « and failed ») |
+| 0:08–0:09 | — | Retour vidéo (coupe sèche) puis **flash chaud** rose/orange avec traînées de lumière vers le gros plan |
+| 0:09 | You're **NOT** behind. | « NOT » en **Différence**, lettres qui se resserrent |
+| 0:11 | You're just **early.** | Fin : la vidéo redevient une **carte** sur fond blanc, « early. » passe du blanc au noir |
+
+- Jump cuts avec recadrage (serré / large) comme la référence. Logo Instagram non repris.
+- **Son** : aucune musique ; petits effets **très bas** sur les animations de texte (ticks, pops, glitch) et
+  sur les transitions (carte, glitch, flash). Réglages dans `src/v3/MontageV3.tsx` (`HITS`).
+
 ## Polices
 Inter (texte), Inter Tight (mots lourds / différence), Instrument Serif (mots dorés) –
 licence OFL, incluses dans `public/fonts`.
@@ -56,6 +77,7 @@ npm i
 npx remotion studio            # prévisualiser et modifier
 npx remotion render src/index.ts Montage out/montage.mp4 --codec=h264 --crf=16
 npx remotion render src/index.ts MontageV2 out/montage-v2.mp4 --codec=h264 --crf=16
+npx remotion render src/index.ts MontageV3 out/montage-v3.mp4 --codec=h264 --crf=16
 ```
 
 - Timing des mots : `src/lib/constants.ts` (frames à 30 fps)
