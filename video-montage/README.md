@@ -4,7 +4,9 @@ Montage Remotion de la vidéo podcast (1090×1080, 30 fps, 12,7 s : **format d'o
 inspiré du style de la vidéo de référence : petits mots blancs qui apparaissent mot à mot,
 mots-clés en serif doré italique, empilements de texte, sortie en flou.
 
-**Vidéo finale : [`montage-final.mp4`](./montage-final.mp4)**
+**Vidéos finales :**
+- **Version 1** (référence n°1, serif doré) : [`montage-final.mp4`](./montage-final.mp4) — composition `Montage`
+- **Version 2** (référence n°2, grotesque épurée + jump cuts + flash lumineux) : [`montage-v2-final.mp4`](./montage-v2-final.mp4) — composition `MontageV2`
 
 ## Ce qui a été fait
 
@@ -27,6 +29,22 @@ mots-clés en serif doré italique, empilements de texte, sortie en flou.
 - Finition : étalonnage léger, grain film, vignette, mouvements de caméra (punch-in sur les mots forts).
 - Le logo Instagram de la référence n'a pas été repris.
 
+## Version 2 (`src/v2/`)
+
+Même vidéo source et même format (1090×1080), style de la 2ᵉ référence :
+
+- **Typo** : une seule grotesque serrée (Inter Tight, proche de Helvetica) en deux graisses —
+  petits mots qui s'ajoutent un par un, mots-clés en extra-gras (pop ou montée avec flou vertical),
+  mots fins qui passent du gris au blanc, révélation par balayage flou horizontal.
+- **Rythme viral** : jump cuts avec recadrage à chaque phrase (serré / large / serré…), petit « snap » de zoom à chaque coupe,
+  accroche serrée sur le visage dès la 1ʳᵉ image.
+- **Mode Différence** : **RUSH**, **COMPARING**, **NOT**.
+- **Mots derrière la personne** : **BEHIND**, **SEASON**.
+- **Transition** : balayage lumineux prismatique (blanc + magenta + cyan) qui brûle au blanc sur la coupe vers le gros plan,
+  puis frange colorée + aberration chromatique.
+- **Son** : aucune musique ; effets **uniquement sur les transitions**, très bas
+  (souffles discrets sur les coupes, whoosh/riser/shimmer légers sur le flash). Réglages dans `src/v2/SoundV2.tsx`.
+
 ## Polices
 Inter (texte), Inter Tight (mots lourds / différence), Instrument Serif (mots dorés) –
 licence OFL, incluses dans `public/fonts`.
@@ -37,6 +55,7 @@ licence OFL, incluses dans `public/fonts`.
 npm i
 npx remotion studio            # prévisualiser et modifier
 npx remotion render src/index.ts Montage out/montage.mp4 --codec=h264 --crf=16
+npx remotion render src/index.ts MontageV2 out/montage-v2.mp4 --codec=h264 --crf=16
 ```
 
 - Timing des mots : `src/lib/constants.ts` (frames à 30 fps)
